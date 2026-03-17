@@ -6980,7 +6980,7 @@
       // 找到概要列和编码索引列的索引（兼容"概览"和"概要"两种列名）
       const summaryColIdx = headerRow.findIndex(h => {
         const name = String(h ?? '').trim();
-        return name === '概览' || name === '概要';
+        return name === '概览' || name === '概要' || name === 'Tóm lược';
       });
       const indexColIdx = headerRow.findIndex(h => {
         const n = String(h ?? '').trim();
