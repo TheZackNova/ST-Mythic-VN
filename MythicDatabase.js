@@ -1765,7 +1765,579 @@
     "deletable": true
   }
 ];
-  const DEFAULT_TABLE_TEMPLATE_ACU = `"{\n  \"sheet_dCudvUnH\": {\n    \"uid\": \"sheet_dCudvUnH\",\n    \"name\": \"全局数据表\",\n    \"sourceData\": {\n      \"note\": \"记录当前主角所在地点及时间相关参数。此表有且仅有一行。\\n- 列0: 主角当前所在地点 - 主角当前所在的具体场景名称。\\n- 列1: 当前时间 - 游戏世界的当前时间。格式：“YYYY-MM-DD HH:MM”，初始化时如果剧情没有明确具体的日期和时间，则必须根据世界观和设定自行设定一个明确的日期时间。\\n- 列2: 上轮场景时间 - 上一轮交互结束时的时间。\\n- 列3: 经过的时间 - 根据当前与上轮时间计算得出的文本描述（如：“几分钟”）。\",\n      \"initNode\": \"插入一条关于当前世界状态的记录。\",\n      \"deleteNode\": \"禁止删除。\",\n      \"updateNode\": \"当主角从当前所在区域离开时，更新所在地点。每轮必须更新时间。\",\n      \"insertNode\": \"禁止操作。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"主角当前所在地点\",\n        \"当前时间\",\n        \"上轮场景时间\",\n        \"经过的时间\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": false,\n      \"splitByRow\": false,\n      \"entryName\": \"全局数据表\",\n      \"entryType\": \"constant\",\n      \"keywords\": \"\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": false,\n      \"extraIndexEntryName\": \"全局数据表-索引\",\n      \"extraIndexColumns\": [],\n      \"extraIndexColumnModes\": {},\n      \"extraIndexInjectionTemplate\": \"\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"before_char\",\n        \"depth\": 2,\n        \"order\": 99981\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"before_char\",\n        \"depth\": 2,\n        \"order\": 99982\n      }\n    },\n    \"orderNo\": 0\n  },\n  \"sheet_DpKcVGqg\": {\n    \"uid\": \"sheet_DpKcVGqg\",\n    \"name\": \"主角信息\",\n    \"sourceData\": {\n      \"note\": \"记录主角的核心身份信息。此表有且仅有一行。\\n- 列0: 人物名称 - 主角的名字。\\n- 列1: 性别/年龄 - 主角的生理性别和年龄。\\n- 列2: 外貌特征 - 对主角外貌的客观文字描写。\\n- 列3: 职业/身份 - 主角在社会中的主要角色。\\n- 列4: 过往经历 - 记录主角的背景故事和后续的关键经历，随剧情增量更新，不超过300字，超过时需压缩。\\n- 列5: 性格特点 - 对主角核心性格的概括。\",\n      \"initNode\": \"游戏初始化时，插入主角的唯一条目。\",\n      \"deleteNode\": \"禁止删除。\",\n      \"updateNode\": \"‘过往经历’列会根据剧情发展持续增量更新，当主角各项状态发生改变时更新。\",\n      \"insertNode\": \"禁止操作。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"人物名称\",\n        \"性别/年龄\",\n        \"外貌特征\",\n        \"职业/身份\",\n        \"过往经历\",\n        \"性格特点\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": false,\n      \"splitByRow\": false,\n      \"entryName\": \"主角信息\",\n      \"entryType\": \"constant\",\n      \"keywords\": \"\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": false,\n      \"extraIndexEntryName\": \"主角信息-索引\",\n      \"extraIndexColumns\": [],\n      \"extraIndexColumnModes\": {},\n      \"extraIndexInjectionTemplate\": \"\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99990\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99991\n      }\n    },\n    \"orderNo\": 1\n  },\n  \"sheet_NcBlYRH5\": {\n    \"uid\": \"sheet_NcBlYRH5\",\n    \"name\": \"重要角色表\",\n    \"sourceData\": {\n      \"note\": \"记录所有关键NPC的详细信息和动态状态。\\n- 列0: 姓名 - NPC的名字。\\n- 列1: 性别/年龄 - NPC的生理性别和年龄。\\n- 列2: 一句话介绍 – 用不超过15字概括角色身份背景，不含主观评价。\\n- 列3: 外貌特征 - 对NPC外貌和当前衣着的详细描述，对女性角色可包含身材描写；对男性角色无需描写。\\n- 列4: 持有的重要物品 - NPC拥有的关键重要物品列表，用分号分隔。\\n- 列5: 是否离场 - 判断该角色是否能直接与主角互动，填写“是”或“否”。\\n- 列6: 过往经历 - 记录角色背景与关键事件，随剧情增量更新，不超过300字，超过时需压缩。\",\n      \"initNode\": \"游戏初始化时为当前在场的重要人物分别插入一个条目。\",\n      \"deleteNode\": \"禁止删除。\",\n      \"updateNode\": \"已有角色的状态、关系、想法或经历变化时更新；若角色死亡需在姓名旁标注（已死亡）。\",\n      \"insertNode\": \"剧情中有未记录的重要人物登场时添加。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"姓名\",\n        \"性别/年龄\",\n        \"一句话介绍\",\n        \"外貌特征\",\n        \"持有的重要物品\",\n        \"是否离场\",\n        \"过往经历\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": true,\n      \"splitByRow\": true,\n      \"entryName\": \"重要人物表\",\n      \"entryType\": \"keyword\",\n      \"keywords\": \"姓名\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": true,\n      \"extraIndexEntryName\": \"重要人物表-索引\",\n      \"extraIndexColumns\": [\n        \"姓名\",\n        \"一句话介绍\"\n      ],\n      \"extraIndexColumnModes\": {\n        \"姓名\": \"both\",\n        \"一句话介绍\": \"index_only\"\n      },\n      \"extraIndexInjectionTemplate\": \"以下为已经登场过的角色：\\n<已登场角色>\\n$1\\n</已登场角色>\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 10000,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 10000,\n        \"order\": 8000\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 10000,\n        \"order\": 99983\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 10000,\n        \"order\": 99984\n      }\n    },\n    \"orderNo\": 2\n  },\n  \"sheet_lEARaBa8\": {\n    \"uid\": \"sheet_lEARaBa8\",\n    \"name\": \"主角技能表\",\n    \"sourceData\": {\n      \"note\": \"记录主角获得的所有技能项目。\\n- 列0: 技能名称 - 技能的名称。\\n- 列1: 技能类型 - 技能的类别（如：“被动”、“主动”）。\\n- 列2: 等级/阶段 - 技能的当前等级或阶段。\\n- 列3: 效果描述 - 技能在当前等级下的具体效果。\",\n      \"initNode\": \"游戏初始化时，根据设定为主角添加初始技能。\",\n      \"deleteNode\": \"技能因剧情被剥夺或替换时删除。\",\n      \"updateNode\": \"已有技能被升级时更新其等级/阶段和效果描述。\",\n      \"insertNode\": \"主角获得新的技能时添加。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"技能名称\",\n        \"技能类型\",\n        \"等级/阶段\",\n        \"效果描述\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": false,\n      \"splitByRow\": false,\n      \"entryName\": \"主角技能表\",\n      \"entryType\": \"constant\",\n      \"keywords\": \"\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": false,\n      \"extraIndexEntryName\": \"主角技能表-索引\",\n      \"extraIndexColumns\": [],\n      \"extraIndexColumnModes\": {},\n      \"extraIndexInjectionTemplate\": \"\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99990\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99991\n      }\n    },\n    \"orderNo\": 3\n  },\n  \"sheet_in05z9vz\": {\n    \"uid\": \"sheet_in05z9vz\",\n    \"name\": \"背包物品表\",\n    \"sourceData\": {\n      \"note\": \"记录主角拥有的所有物品、装备。\\n- 列0: 物品名称 - 物品的名称。\\n- 列1: 数量 - 拥有的数量。\\n- 列2: 描述/效果 - 物品的功能或背景描述。\\n- 列3: 类别 - 物品的类别（如：“武器”、“消耗品”、“杂物”）。\",\n      \"initNode\": \"游戏初始化时，根据剧情与设定添加主角的初始携带物品。\",\n      \"deleteNode\": \"物品被完全消耗、丢弃或摧毁时删除。\",\n      \"updateNode\": \"获得已有的物品，使其数量增加时更新，已有物品状态变化时更新。\",\n      \"insertNode\": \"主角获得背包中没有的全新物品时添加。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"物品名称\",\n        \"数量\",\n        \"描述/效果\",\n        \"类别\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": false,\n      \"splitByRow\": false,\n      \"entryName\": \"背包物品表\",\n      \"entryType\": \"constant\",\n      \"keywords\": \"\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": false,\n      \"extraIndexEntryName\": \"背包物品表-索引\",\n      \"extraIndexColumns\": [],\n      \"extraIndexColumnModes\": {},\n      \"extraIndexInjectionTemplate\": \"\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99990\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99991\n      }\n    },\n    \"orderNo\": 4\n  },\n  \"sheet_etak47Ve\": {\n    \"uid\": \"sheet_etak47Ve\",\n    \"name\": \"任务与事件表\",\n    \"sourceData\": {\n      \"note\": \"记录所有当前正在进行的任务。\\n- 列0: 任务名称 - 任务的标题。\\n- 列1: 任务类型 - “主线任务”或“支线任务”。\\n- 列2: 发布者 - 发布该任务的角色或势力。\\n- 列3: 详细描述 - 任务的目标和要求。\\n- 列4: 当前进度 - 对任务完成度的简要描述。\\n- 列5: 任务时限 - 完成任务的剩余时间。\\n- 列6: 奖励 - 完成任务可获得的奖励。\\n- 列7: 惩罚 - 任务失败的后果。\",\n      \"initNode\": \"游戏初始化时，根据剧情与设定添加一条主线剧情。\",\n      \"deleteNode\": \"任务完成、失败或过期时删除。\",\n      \"updateNode\": \"任务取得关键进展时进行更新。\",\n      \"insertNode\": \"主角接取或触发新的主线或支线任务时添加。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"任务名称\",\n        \"任务类型\",\n        \"发布者\",\n        \"详细描述\",\n        \"当前进度\",\n        \"任务时限\",\n        \"奖励\",\n        \"惩罚\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": false,\n      \"splitByRow\": false,\n      \"entryName\": \"任务与事件表\",\n      \"entryType\": \"constant\",\n      \"keywords\": \"\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": false,\n      \"extraIndexEntryName\": \"任务与事件表-索引\",\n      \"extraIndexColumns\": [],\n      \"extraIndexColumnModes\": {},\n      \"extraIndexInjectionTemplate\": \"\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99990\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99991\n      }\n    },\n    \"orderNo\": 5\n  },\n  \"sheet_3NoMc1wI\": {\n    \"uid\": \"sheet_3NoMc1wI\",\n    \"name\": \"纪要表\",\n    \"sourceData\": {\n      \"note\": \"轮次日志，每轮交互后必须立即插入一条新记录。\\n- 列0: 时间跨度 - 本轮事件发生的精确时间范围。\\n- 列1: 地点 - 本轮事件发生的地点，从大到小描述。\\n- 列2: 纪要 - 以第三方视角客观记录本轮事件，不得加入推测、情绪化语言、负面解读或主观判断。内容必须基于正文明确发生的事实，不得补充未出现的情节，不少于300字，结尾部分禁止进行总结或者升华。\\n- 列3: 概要 - 30字以内，一句话概括纪要内容。\\n- 列4: 编码索引 - 格式为 AMXX，XX从01递增。\\n\",\n      \"initNode\": \"故事初始化时，插入一条新记录用于记录初始化剧情。\",\n      \"deleteNode\": \"禁止删除。\",\n      \"updateNode\": \"禁止操作。\",\n      \"insertNode\": \"每轮交互结束后插入一条新记录。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"时间跨度\",\n        \"地点\",\n        \"纪要\",\n        \"概览\",\n        \"编码索引\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": true,\n      \"splitByRow\": true,\n      \"entryName\": \"纪要\",\n      \"entryType\": \"keyword\",\n      \"keywords\": \"编码索引\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"<记忆回溯>\\n$1\\n</记忆回溯>\",\n      \"extraIndexEnabled\": true,\n      \"extraIndexEntryName\": \"纪要索引\",\n      \"extraIndexColumns\": [\n        \"概览\",\n        \"编码索引\"\n      ],\n      \"extraIndexColumnModes\": {\n        \"概览\": \"index_only\",\n        \"编码索引\": \"both\"\n      },\n      \"extraIndexInjectionTemplate\": \"<已发生的事件概览>\\n$1\\n</已发生的事件概览>\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 999,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 1000,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 9999,\n        \"order\": 99987\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 9999,\n        \"order\": 99988\n      }\n    },\n    \"orderNo\": 6\n  },\n  \"sheet_OptionsNew\": {\n    \"uid\": \"sheet_OptionsNew\",\n    \"name\": \"选项表\",\n    \"sourceData\": {\n      \"note\": \"记录每轮主角可以进行的动作选项。此表有且仅有一行。\\n- 列0: 选项一 – 以第三人称描述主角可采取的合理行动，偏向策略或推进剧情。\\n- 列1: 选项二 – 以第三人称描述主角可采取的中立行动，不偏向任何立场。\\n- 列2: 选项三 – 以第三人称描述主角可采取的善意行动，体现帮助、保护或安抚。\\n- 列3: 选项四 – 以第三人称描述主角可采取的 NSFW 相关行动，但必须符合剧情逻辑，不得代替主角说话。\\n所有选项必须使用第三人称（如“主角尝试…”，“主角决定…”），不得代替主角发言；必须紧扣当前剧情；四个选项需风格明确、互不重复。\",\n      \"initNode\": \"游戏初始化时，生成四个初始选项。\",\n      \"deleteNode\": \"禁止删除。\",\n      \"updateNode\": \"每轮交互后必须更新此表，根据当前剧情生成新的四个选项覆盖原有内容。\",\n      \"insertNode\": \"禁止操作。\"\n    },\n    \"content\": [\n      [\n        null,\n        \"选项一\",\n        \"选项二\",\n        \"选项三\",\n        \"选项四\"\n      ]\n    ],\n    \"updateConfig\": {\n      \"uiSentinel\": -1,\n      \"contextDepth\": -1,\n      \"updateFrequency\": -1,\n      \"batchSize\": -1,\n      \"skipFloors\": -1\n    },\n    \"exportConfig\": {\n      \"enabled\": false,\n      \"splitByRow\": false,\n      \"entryName\": \"选项表\",\n      \"entryType\": \"constant\",\n      \"keywords\": \"\",\n      \"preventRecursion\": true,\n      \"injectionTemplate\": \"\",\n      \"extraIndexEnabled\": false,\n      \"extraIndexEntryName\": \"选项表-索引\",\n      \"extraIndexColumns\": [],\n      \"extraIndexColumnModes\": {},\n      \"extraIndexInjectionTemplate\": \"\",\n      \"entryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10000\n      },\n      \"extraIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 10010\n      },\n      \"fixedEntryPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99990\n      },\n      \"fixedIndexPlacement\": {\n        \"position\": \"at_depth_as_system\",\n        \"depth\": 2,\n        \"order\": 99991\n      },\n      \"injectIntoWorldbook\": false\n    },\n    \"orderNo\": 7\n  },\n  \"mate\": {\n    \"type\": \"chatSheets\",\n    \"version\": 1,\n    \"updateConfigUiSentinel\": -1,\n    \"globalInjectionConfig\": {\n      \"readableEntryPlacement\": {\n        \"position\": \"before_char\",\n        \"depth\": 2,\n        \"order\": 99981\n      },\n      \"wrapperPlacement\": {\n        \"position\": \"before_char\",\n        \"depth\": 2,\n        \"order\": 99982\n      }\n    }\n  }\n}"`;
+  const DEFAULT_TABLE_TEMPLATE_ACU = `{
+  "mate": {
+    "type": "chatSheets",
+    "version": 2
+  },
+  "sheet_dCudvUnH": {
+    "uid": "sheet_dCudvUnH",
+    "name": "Bảng dữ liệu toàn cục",
+    "sourceData": {
+      "note": "Ghi lại địa điểm hiện tại của nhân vật chính và các tham số liên quan đến thời gian. Bảng này có và chỉ có một hàng.\n- Cột 0: Địa điểm hiện tại của nhân vật chính - Tên cảnh cụ thể nơi nhân vật chính đang ở.\n- Cột 1: Thời gian hiện tại - Thời gian hiện tại của thế giới trò chơi. Định dạng: “YYYY-MM-DD HH:MM”, khi khởi tạo nếu cốt truyện không có ngày giờ cụ thể rõ ràng, thì phải tự thiết lập một ngày giờ rõ ràng dựa trên thế giới quan và cài đặt, không được dùng ẩn số để thay thế.\n- Cột 2: Thời gian cảnh vòng trước - Thời gian khi kết thúc tương tác vòng trước.\n- Cột 3: Thời gian đã trôi qua - Mô tả văn bản được tính toán dựa trên thời gian hiện tại và thời gian vòng trước (ví dụ: “Vài phút”).",
+      "initNode": "Chèn một bản ghi về trạng thái thế giới hiện tại.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Khi nhân vật chính rời khỏi khu vực hiện tại, cập nhật địa điểm. Mỗi vòng bắt buộc cập nhật thời gian.",
+      "insertNode": "Cấm thao tác."
+    },
+    "content": [
+      [
+        null,
+        "Địa điểm hiện tại của nhân vật chính",
+        "Thời gian hiện tại",
+        "Thời gian cảnh vòng trước",
+        "Thời gian đã trôi qua"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng dữ liệu toàn cục",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng dữ liệu toàn cục-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "before_char",
+        "depth": 2,
+        "order": 99981
+      },
+      "fixedIndexPlacement": {
+        "position": "before_char",
+        "depth": 2,
+        "order": 99982
+      }
+    },
+    "orderNo": 0
+  },
+  "sheet_DpKcVGqg": {
+    "uid": "sheet_DpKcVGqg",
+    "name": "Thông tin nhân vật chính",
+    "sourceData": {
+      "note": "Ghi lại thông tin danh tính cốt lõi của nhân vật chính. Bảng này có và chỉ có một hàng.\n- Cột 0: Tên nhân vật - Tên của nhân vật chính.\n- Cột 1: Giới tính/Tuổi - Giới tính sinh học và tuổi của nhân vật chính.\n- Cột 2: Đặc điểm ngoại hình - Mô tả bằng văn bản khách quan về ngoại hình của nhân vật chính.\n- Cột 3: Nghề nghiệp/Danh tính - Vai trò chính của nhân vật chính trong xã hội.\n- Cột 4: Trải nghiệm quá khứ - Ghi lại câu chuyện bối cảnh của nhân vật chính và các trải nghiệm quan trọng tiếp theo. Cột này sẽ liên tục được cập nhật tăng dần theo sự phát triển của cốt truyện, tối đa không quá 300 chữ, vượt quá 300 chữ sẽ được tinh chỉnh và nén xuống dưới 300 chữ (khi nén cố gắng giữ tính trọn vẹn của trải nghiệm, logic xuyên suốt từ lúc bắt đầu đến sự kiện mới nhất).\n- Cột 5: Đặc điểm tính cách - Tóm tắt tính cách cốt lõi của nhân vật chính.\n【Kiểm tra】Kiểm tra xem trạng thái và trải nghiệm của nhân vật chính đã được lên kế hoạch cập nhật theo tóm tắt cốt truyện hay chưa.",
+      "initNode": "Khi khởi tạo trò chơi, chèn mục duy nhất của nhân vật chính.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cột ‘Trải nghiệm quá khứ’ sẽ liên tục được cập nhật tăng dần theo sự phát triển của cốt truyện, cập nhật khi các trạng thái của nhân vật chính có sự thay đổi.",
+      "insertNode": "Cấm thao tác."
+    },
+    "content": [
+      [
+        null,
+        "Tên nhân vật",
+        "Giới tính/Tuổi",
+        "Đặc điểm ngoại hình",
+        "Nghề nghiệp/Danh tính",
+        "Trải nghiệm quá khứ",
+        "Đặc điểm tính cách"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Thông tin nhân vật chính",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Thông tin nhân vật chính-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 1
+  },
+  "sheet_NcBlYRH5": {
+    "uid": "sheet_NcBlYRH5",
+    "name": "Bảng nhân vật quan trọng",
+    "sourceData": {
+      "note": "Ghi lại thông tin chi tiết và trạng thái động của tất cả NPC quan trọng.\n- Cột 0: Họ tên - Tên của NPC.\n- Cột 1: Giới tính/Tuổi - Giới tính sinh học và tuổi của NPC.\n- Cột 2: Đặc điểm ngoại hình - Mô tả chi tiết về ngoại hình và trang phục hiện tại của NPC, đối với nhân vật nữ cần mô tả chi tiết số đo ba vòng và vóc dáng, hỗ trợ NSFW; đối với nhân vật nam không cần miêu tả.\n- Cột 3: Vật phẩm quan trọng sở hữu - Danh sách các vật phẩm quan trọng then chốt mà NPC sở hữu, phân tách bằng dấu chấm phẩy.\n- Cột 4: Đã rời đi chưa - Mỗi vòng cần phán đoán xem nhân vật đó có thể tương tác trực tiếp với nhân vật chính không, nếu không thể thì coi như đã rời đi, điền “Có” hoặc “Không”.\n- Cột 5: Trải nghiệm quá khứ - Ghi lại câu chuyện bối cảnh của nhân vật đó và các trải nghiệm quan trọng tiếp theo. Cột này sẽ liên tục được cập nhật tăng dần theo sự phát triển của cốt truyện, tối đa không quá 300 chữ, vượt quá 300 chữ sẽ được tinh chỉnh và nén xuống dưới 300 chữ. (Khi nén cố gắng giữ tính trọn vẹn của trải nghiệm, logic xuyên suốt từ lúc bắt đầu đến sự kiện mới nhất)\n【Kiểm tra】Kiểm tra xem trạng thái và trải nghiệm của nhân vật quan trọng đã được lên kế hoạch cập nhật theo tóm tắt cốt truyện hay chưa, mỗi vòng cần kiểm tra trải nghiệm quá khứ của tất cả nhân vật đó xem có vượt quá 300 chữ không, nếu vượt quá cần sắp xếp tinh chỉnh và nén lại.",
+      "initNode": "Khi khởi tạo trò chơi, chèn một mục riêng cho từng nhân vật quan trọng hiện có mặt",
+      "deleteNode": "Cấm xóa",
+      "updateNode": "Cập nhật khi có sự thay đổi thông tin động như trạng thái, mối quan hệ, suy nghĩ hoặc trải nghiệm của các nhân vật đã có trong mục, nếu nhân vật đó chết trong cốt truyện thì bắt buộc phải ghi chú (đã tử vong) trong ngoặc đơn bên cạnh họ tên.",
+      "insertNode": "Thêm vào khi có nhân vật quan trọng chưa được ghi chép xuất hiện trong cốt truyện."
+    },
+    "content": [
+      [
+        null,
+        "Họ tên",
+        "Giới tính/Tuổi",
+        "Đặc điểm ngoại hình",
+        "Vật phẩm quan trọng sở hữu",
+        "Đã rời đi chưa",
+        "Trải nghiệm quá khứ"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng nhân vật quan trọng",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng nhân vật quan trọng-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 10000,
+        "order": 99983
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 10000,
+        "order": 99984
+      }
+    },
+    "orderNo": 2
+  },
+  "sheet_lEARaBa8": {
+    "uid": "sheet_lEARaBa8",
+    "name": "Bảng kỹ năng nhân vật chính",
+    "sourceData": {
+      "note": "Ghi lại tất cả các hạng mục kỹ năng mà nhân vật chính nhận được.\n- Cột 0: Tên kỹ năng - Tên của kỹ năng.\n- Cột 1: Loại kỹ năng - Phân loại của kỹ năng (ví dụ: “Bị động”, “Chủ động”).\n- Cột 2: Cấp độ/Giai đoạn - Cấp độ hoặc giai đoạn hiện tại của kỹ năng.\n- Cột 3: Mô tả hiệu ứng - Hiệu ứng cụ thể của kỹ năng ở cấp độ hiện tại.",
+      "initNode": "Khi khởi tạo trò chơi, thêm kỹ năng ban đầu cho nhân vật chính dựa trên cài đặt.",
+      "deleteNode": "Xóa khi kỹ năng bị tước bỏ hoặc thay thế do cốt truyện.",
+      "updateNode": "Khi kỹ năng hiện có được nâng cấp, cập nhật cấp độ/giai đoạn và mô tả hiệu ứng của nó.",
+      "insertNode": "Thêm vào khi nhân vật chính nhận được kỹ năng mới."
+    },
+    "content": [
+      [
+        null,
+        "Tên kỹ năng",
+        "Loại kỹ năng",
+        "Cấp độ/Giai đoạn",
+        "Mô tả hiệu ứng"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng kỹ năng nhân vật chính",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng kỹ năng nhân vật chính-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 3
+  },
+  "sheet_in05z9vz": {
+    "uid": "sheet_in05z9vz",
+    "name": "Bảng vật phẩm trong balo",
+    "sourceData": {
+      "note": "Ghi lại tất cả vật phẩm, trang bị mà nhân vật chính sở hữu.\n- Cột 0: Tên vật phẩm - Tên của vật phẩm.\n- Cột 1: Số lượng - Số lượng sở hữu.\n- Cột 2: Mô tả/Hiệu ứng - Mô tả chức năng hoặc bối cảnh của vật phẩm.\n- Cột 3: Phân loại - Loại của vật phẩm (ví dụ: “Vũ khí”, “Vật phẩm tiêu hao”, “Tạp vật”).",
+      "initNode": "Khi khởi tạo trò chơi, thêm vật phẩm mang theo ban đầu của nhân vật chính dựa trên cốt truyện và cài đặt.",
+      "deleteNode": "Xóa khi vật phẩm bị tiêu thụ hoàn toàn, vứt bỏ hoặc bị phá hủy.",
+      "updateNode": "Cập nhật khi nhận được vật phẩm hiện có làm tăng số lượng, cập nhật khi trạng thái vật phẩm hiện có thay đổi.",
+      "insertNode": "Thêm vào khi nhân vật chính nhận được vật phẩm hoàn toàn mới chưa có trong balo."
+    },
+    "content": [
+      [
+        null,
+        "Tên vật phẩm",
+        "Số lượng",
+        "Mô tả/Hiệu ứng",
+        "Phân loại"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng vật phẩm trong balo",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng vật phẩm trong balo-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 4
+  },
+  "sheet_etak47Ve": {
+    "uid": "sheet_etak47Ve",
+    "name": "Bảng nhiệm vụ và sự kiện",
+    "sourceData": {
+      "note": "Ghi lại tất cả các nhiệm vụ hiện đang tiến hành.\n- Cột 0: Tên nhiệm vụ - Tiêu đề của nhiệm vụ.\n- Cột 1: Loại nhiệm vụ - “Nhiệm vụ chính tuyến” hoặc “Nhiệm vụ phụ tuyến”.\n- Cột 2: Người giao - Nhân vật hoặc thế lực giao nhiệm vụ đó.\n- Cột 3: Mô tả chi tiết - Mục tiêu và yêu cầu của nhiệm vụ.\n- Cột 4: Tiến độ hiện tại - Mô tả ngắn gọn về mức độ hoàn thành nhiệm vụ.\n- Cột 5: Thời hạn nhiệm vụ - Thời gian còn lại để hoàn thành nhiệm vụ.\n- Cột 6: Phần thưởng - Phần thưởng có thể nhận được khi hoàn thành nhiệm vụ.\n- Cột 7: Hình phạt - Hậu quả khi nhiệm vụ thất bại.",
+      "initNode": "Khi khởi tạo trò chơi, thêm một cốt truyện chính tuyến dựa trên cốt truyện và cài đặt",
+      "deleteNode": "Xóa khi nhiệm vụ hoàn thành, thất bại hoặc quá hạn.",
+      "updateNode": "Tiến hành cập nhật khi nhiệm vụ đạt được tiến triển then chốt",
+      "insertNode": "Thêm vào khi nhân vật chính tiếp nhận hoặc kích hoạt nhiệm vụ chính tuyến hoặc phụ tuyến mới."
+    },
+    "content": [
+      [
+        null,
+        "Tên nhiệm vụ",
+        "Loại nhiệm vụ",
+        "Người giao",
+        "Mô tả chi tiết",
+        "Tiến độ hiện tại",
+        "Thời hạn nhiệm vụ",
+        "Phần thưởng",
+        "Hình phạt"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng nhiệm vụ và sự kiện",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng nhiệm vụ và sự kiện-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 5
+  },
+  "sheet_3NoMc1wI": {
+    "uid": "sheet_3NoMc1wI",
+    "name": "Bảng tổng kết",
+    "sourceData": {
+      "note": "Nhật ký vòng chơi, sau mỗi vòng tương tác bắt buộc phải chèn ngay một bản ghi mới.\n- Cột 0: Khoảng thời gian - Phạm vi thời gian chính xác xảy ra sự kiện của vòng này.\n- Cột 1: Địa điểm - Địa điểm xảy ra sự kiện của vòng này, mô tả từ lớn đến nhỏ (ví dụ: Quốc gia-Thành phố-Địa điểm cụ thể).\n- Cột 2: Tóm lược - Mô tả kỷ thực khách quan về nội dung chính. Yêu cầu loại bỏ tất cả các biện pháp tu từ, hội thoại trong nội dung chính được ghi chép, ghi lại tất cả các sự việc xảy ra trong nội dung chính một cách trung lập và khách quan dưới góc nhìn của bên thứ ba, không thêm bất kỳ bình luận nào, nội dung không dưới 300 chữ. Nếu ngữ cảnh bao gồm nhiều vòng tương tác, hãy tóm tắt thành một bản ghi.\n- Cột 3: Hội thoại quan trọng - Chỉ trích xuất chính phần lời thoại quan trọng gây ra trọng điểm sự thật trong nguyên tác (cần chỉ rõ do ai nói), tổng số token không được vượt quá 80 token.\n- Cột 4: Chỉ mục mã hóa - Tạo một chỉ mục mã hóa duy nhất cho bảng tổng kết của vòng này, định dạng là AMXX, XX tăng dần bắt đầu từ 01.\n【Kiểm tra】Kiểm tra xem các mục được chèn trong bảng tổng kết vòng này và bảng đại cương tổng thể có chứa cùng một chỉ mục mã hóa hay không, và định dạng là \`AM\`+số (ví dụ \`AM01\`), nếu thiếu một trong hai hoặc cả hai không nhất quán, thì cần phải sửa chữa.",
+      "initNode": "Khi khởi tạo câu chuyện, chèn một bản ghi mới dùng để ghi lại cốt truyện chính, nếu phần chính được cung cấp bao gồm nhiều vòng tương tác, hãy tóm tắt nó thành một bản ghi rồi chèn vào.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cấm thao tác.",
+      "insertNode": "Sau mỗi vòng tương tác kết thúc, chèn một bản ghi mới, nếu phần chính được cung cấp bao gồm nhiều vòng tương tác, hãy tóm tắt nó thành một bản ghi rồi chèn vào."
+    },
+    "content": [
+      [
+        null,
+        "Khoảng thời gian",
+        "Địa điểm",
+        "Tóm lược",
+        "Hội thoại quan trọng",
+        "Chỉ mục mã hóa"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng tổng kết",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng tổng kết-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 9999,
+        "order": 99987
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 9999,
+        "order": 99988
+      }
+    },
+    "orderNo": 6
+  },
+  "sheet_PfzcX5v2": {
+    "uid": "sheet_PfzcX5v2",
+    "name": "Đại cương tổng thể",
+    "sourceData": {
+      "note": "Tinh chỉnh ‘Bảng tổng kết’ của mỗi vòng để tạo thành xương sống của câu chuyện.\n- Cột 0: Khoảng thời gian - Phạm vi thời gian được ghi chép trong bảng tổng kết.\n- Cột 1: Đại cương - Tóm tắt tinh gọn các sự kiện cốt lõi của ‘Bảng tổng kết’ vòng này.\n- Cột 2: Chỉ mục mã hóa - Bắt buộc phải hoàn toàn nhất quán với chỉ mục mã hóa trong ‘Bảng tổng kết’ của vòng hiện tại.\n【Kiểm tra】Kiểm tra xem các mục được chèn trong bảng tổng kết vòng này và bảng đại cương tổng thể có chứa cùng một chỉ mục mã hóa hay không, và định dạng là \`AM\`+số (ví dụ \`AM01\`), nếu thiếu một trong hai hoặc cả hai không nhất quán, thì cần phải sửa chữa.\n",
+      "initNode": "Khi khởi tạo câu chuyện, chèn một bản ghi mới dùng để ghi lại cốt truyện khởi tạo.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cấm thao tác.",
+      "insertNode": "Sau mỗi vòng tương tác kết thúc, chèn một bản ghi mới."
+    },
+    "content": [
+      [
+        null,
+        "Khoảng thời gian",
+        "Đại cương",
+        "Chỉ mục mã hóa"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Đại cương tổng thể",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Đại cương tổng thể-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 9998,
+        "order": 99985
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 9998,
+        "order": 99986
+      }
+    },
+    "orderNo": 7
+  },
+  "sheet_OptionsNew": {
+    "uid": "sheet_OptionsNew",
+    "name": "Bảng tùy chọn",
+    "sourceData": {
+      "note": "Ghi lại các tùy chọn hành động mà nhân vật chính có thể thực hiện mỗi vòng. Bảng này có và chỉ có một hàng.\n- Cột 0: Tùy chọn một - Mỗi vòng tạo ra một tùy chọn hành động phù hợp mà nhân vật chính có thể thực hiện. (Hợp logic)\n- Cột 1: Tùy chọn hai - Mỗi vòng tạo ra một tùy chọn hành động phù hợp mà nhân vật chính có thể thực hiện. (Trung lập).\n- Cột 2: Tùy chọn ba - Mỗi vòng tạo ra một tùy chọn hành động phù hợp mà nhân vật chính có thể thực hiện. (Lương thiện)\n- Cột 3: Tùy chọn bốn - Mỗi vòng tạo ra một tùy chọn hành động phù hợp mà nhân vật chính có thể thực hiện. (Liên quan đến NSFW)",
+      "initNode": "Khi khởi tạo trò chơi, tạo ra bốn tùy chọn ban đầu.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Sau mỗi vòng tương tác bắt buộc phải cập nhật bảng này, tạo ra bốn tùy chọn mới dựa trên cốt truyện hiện tại để ghi đè nội dung cũ.",
+      "insertNode": "Cấm thao tác."
+    },
+    "content": [
+      [
+        null,
+        "Tùy chọn một",
+        "Tùy chọn hai",
+        "Tùy chọn ba",
+        "Tùy chọn bốn"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng tùy chọn",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng tùy chọn-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      },
+      "injectIntoWorldbook": false
+    },
+    "orderNo": 8
+  }
+}`;
   let TABLE_TEMPLATE_ACU = DEFAULT_TABLE_TEMPLATE_ACU;
 
   // [剧情推进] 默认世界书选择（独立于填表 worldbookConfig）
@@ -5376,7 +5948,8 @@
   function isSummaryOrOutlineTable_ACU(tableName) {
       if (!tableName || typeof tableName !== 'string') return false;
       const trimmedName = tableName.trim();
-      return trimmedName === '总结表' || trimmedName === '总体大纲' || trimmedName === '纪要表';
+      return trimmedName === '总结表' || trimmedName === '总体大纲' || trimmedName === '纪要表'
+          || trimmedName === 'Bảng tổng kết' || trimmedName === 'Đại cương tổng thể';
   }
 
   // [新增] 辅助函数：判断表格是否是标准表（非总结表和总体大纲表）
@@ -5863,12 +6436,15 @@
         // Extract special tables
         switch (table.name.trim()) {
             case '重要人物表':
+            case 'Bảng nhân vật quan trọng':
                 importantPersonsTable = table;
                 return; // Skip from main output
             case '总结表':
+            case 'Bảng tổng kết':
                 summaryTable = table;
                 return; // Skip from main output
             case '总体大纲':
+            case 'Đại cương tổng thể':
                 outlineTable = table;
                 return; // Skip from main output
         }
@@ -6335,7 +6911,10 @@
         return '总体大纲表：未获取到表格数据。';
       }
       const sheets = Object.values(allTablesJson).filter(x => x && typeof x === 'object' && x.name && x.content);
-      const outline = sheets.find(s => String(s.name || '').trim() === '总体大纲');
+      const outline = sheets.find(s => {
+        const n = String(s.name || '').trim();
+        return n === '总体大纲' || n === 'Đại cương tổng thể';
+      });
       if (!outline || !Array.isArray(outline.content) || outline.content.length === 0) {
         return '总体大纲表：未找到该表或表结构为空。';
       }
@@ -6382,7 +6961,7 @@
       // 查找纪要表（兼容旧数据"总结表"）
       const summaryTable = sheets.find(s => {
         const name = String(s.name || '').trim();
-        return name === '纪要表' || name === '总结表';
+        return name === '纪要表' || name === '总结表' || name === 'Bảng tổng kết';
       });
       
       if (!summaryTable) {
@@ -6403,7 +6982,10 @@
         const name = String(h ?? '').trim();
         return name === '概览' || name === '概要';
       });
-      const indexColIdx = headerRow.findIndex(h => String(h ?? '').trim() === '编码索引');
+      const indexColIdx = headerRow.findIndex(h => {
+        const n = String(h ?? '').trim();
+        return n === '编码索引' || n === 'Chỉ mục mã hóa';
+      });
       
       if (summaryColIdx === -1 || indexColIdx === -1) {
         logWarn_ACU('[剧情推进] formatSummaryIndexForPlot_ACU: 未找到概要列或编码索引列，概要列索引=', summaryColIdx, ', 编码索引列索引=', indexColIdx);
@@ -9982,20 +10564,23 @@
   }
 
   function isSummaryTableName_ACU(name) {
-      return String(name || '').trim() === '总结表';
+      const n = String(name || '').trim();
+      return n === '总结表' || n === 'Bảng tổng kết';
   }
 
   function isOutlineTableName_ACU(name) {
-      return String(name || '').trim() === '总体大纲';
+      const n = String(name || '').trim();
+      return n === '总体大纲' || n === 'Đại cương tổng thể';
   }
 
   function isImportantPersonsTableName_ACU(name) {
-      return String(name || '').trim() === '重要人物表';
+      const n = String(name || '').trim();
+      return n === '重要人物表' || n === 'Bảng nhân vật quan trọng';
   }
 
   function isGlobalDataTableName_ACU(name) {
       const n = String(name || '').trim();
-      return n === '全局数据表' || n === '全局表';
+      return n === '全局数据表' || n === '全局表' || n === 'Bảng dữ liệu toàn cục';
   }
 
   function getFixedPlacementDefaultsForTable_ACU(tableName) {
@@ -10713,9 +11298,12 @@
             getFixedPlacementDefaultsForTable_ACU(summaryTable?.name || '总结表').entry
         );
         const headers = summaryTable.content[0].slice(1);
-        const keywordColumnIndex = headers.indexOf('编码索引');
+        const keywordColumnIndex = headers.findIndex(h => {
+            const n = String(h ?? '').trim();
+            return n === '编码索引' || n === 'Chỉ mục mã hóa';
+        });
         if (keywordColumnIndex === -1) {
-            logError_ACU('Cannot find "编码索引" column in 总结表. Cannot process summary entries.');
+            logError_ACU('Cannot find "编码索引"/"Chỉ mục mã hóa" column in summary table. Cannot process summary entries.');
             return;
         }
 
@@ -18210,7 +18798,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
             let startIndex = 0;
 
             // [新增] 如果是纪要表/总结表并且行数超过10，则只提取最新的10条（减少TK压力）
-            if ((table.name.trim() === '纪要表' || table.name.trim() === '总结表') && effectiveAllRows.length > 10) {
+            if ((table.name.trim() === '纪要表' || table.name.trim() === '总结表' || table.name.trim() === 'Bảng tổng kết') && effectiveAllRows.length > 10) {
                 startIndex = effectiveAllRows.length - 10;
                 rowsToProcess = effectiveAllRows.slice(-10);
                 tableDataText += `  - Note: Showing last ${rowsToProcess.length} of ${effectiveAllRows.length} entries.\n`;
@@ -18831,8 +19419,8 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 const table = sheets[tableIndex];
                 if (!table || !table.name) return;
                 if (!isSummaryOrOutlineTable_ACU(table.name)) return;
-                if (table.name === '总结表') summaryInsertCount++;
-                if (table.name === '总体大纲') outlineInsertCount++;
+                if (table.name === '总结表' || table.name === 'Bảng tổng kết') summaryInsertCount++;
+                if (table.name === '总体大纲' || table.name === 'Đại cương tổng thể') outlineInsertCount++;
             } catch (e) {
                 // 解析失败的不计入，避免“半条成功半条失败”导致误放行
             }
@@ -19337,7 +19925,8 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 查找纪要表（兼容旧数据"总结表"）
       const summaryKey = Object.keys(currentJsonTableData_ACU).find(k =>
           currentJsonTableData_ACU[k].name === '纪要表' ||
-          currentJsonTableData_ACU[k].name === '总结表'
+          currentJsonTableData_ACU[k].name === '总结表' ||
+          currentJsonTableData_ACU[k].name === 'Bảng tổng kết'
       );
       
       if (!summaryKey) return;
@@ -19409,7 +19998,8 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 查找纪要表（兼容旧数据"总结表"）
       const summaryKey = Object.keys(currentJsonTableData_ACU).find(k =>
           currentJsonTableData_ACU[k].name === '纪要表' ||
-          currentJsonTableData_ACU[k].name === '总结表'
+          currentJsonTableData_ACU[k].name === '总结表' ||
+          currentJsonTableData_ACU[k].name === 'Bảng tổng kết'
       );
 
       if (!summaryKey) throw new Error('未找到纪要表');
@@ -20048,7 +20638,8 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 查找纪要表（兼容旧数据"总结表"）
       const summaryKey = Object.keys(currentJsonTableData_ACU).find(k =>
           currentJsonTableData_ACU[k].name === '纪要表' ||
-          currentJsonTableData_ACU[k].name === '总结表'
+          currentJsonTableData_ACU[k].name === '总结表' ||
+          currentJsonTableData_ACU[k].name === 'Bảng tổng kết'
       );
 
       if (!summaryKey) {
