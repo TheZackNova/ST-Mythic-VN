@@ -20641,6 +20641,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           currentJsonTableData_ACU[k].name === '总结表' ||
           currentJsonTableData_ACU[k].name === 'Bảng tổng kết'
       );
+      const outlineKey = Object.keys(currentJsonTableData_ACU).find(k =>
+          currentJsonTableData_ACU[k].name === '总体大纲' ||
+          currentJsonTableData_ACU[k].name === 'Đại cương tổng thể'
+      );
 
       if (!summaryKey) {
           showToastr_ACU('warning', 'Không tìm thấy "Bảng biên bản", không thể hợp nhất.');
@@ -20648,6 +20652,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       }
 
       let fullSummaryRows = summaryKey ? (currentJsonTableData_ACU[summaryKey].content || []).slice(1) : [];
+      let fullOutlineRows = outlineKey ? (currentJsonTableData_ACU[outlineKey].content || []).slice(1) : [];
 
       if (fullSummaryRows.length === 0) {
           showToastr_ACU('info', `Hiện không có dữ liệu biên bản cần hợp nhất.`);
@@ -20709,6 +20714,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           const totalBatches = Math.ceil(maxRows / batchSize);
           
           let accumulatedSummary = [];
+          let accumulatedOutline = [];
 
           // [新增] 手动合并纪要：为"第一批次"提供一个稳定的索引锚点。
           // 规则：第一批次的纪要表从"本次合并范围起点 startIndex 之前"的已有表格数据中，
@@ -20730,6 +20736,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
               const formatRows = (rows, displayStartIndex) => rows.map((r, idx) => `[${displayStartIndex + idx}] ${r.slice(1).join(', ')}`).join('\n');
               const textA = batchSummaryRows.length > 0 ? formatRows(batchSummaryRows, (startIndex + 1) + startIdx) : "(本批次无新增纪要数据)";
+              
+              const batchOutlineRows = outlineKey ? fullOutlineRows.slice(startIdx, endIdx) : [];
+              const textB = batchOutlineRows.length > 0
+                  ? formatRows(batchOutlineRows, (startIndex + 1) + startIdx)
+                  : "(本批次无新增大纲数据)";
               
               let textBase = "";
               const summaryTableObj = currentJsonTableData_ACU[summaryKey];
@@ -20758,7 +20769,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
               if(summaryTableObj) textBase += formatTableStructure(summaryTableObj.name, summaryBaseData, summaryTableObj, 0);
 
-              let currentPrompt = promptTemplate.replace('$TARGET_COUNT', targetCount).replace('$A', textA).replace('$BASE_DATA', textBase);
+              const outlineBaseData = (i === 0)
+                  ? pickLastRowsBeforeIndex_ACU(fullOutlineRows, startIndex, 2)
+                  : accumulatedOutline.slice();
+              const outlineTableObj = outlineKey ? currentJsonTableData_ACU[outlineKey] : null;
+              if (outlineTableObj) textBase += formatTableStructure(outlineTableObj.name, outlineBaseData, outlineTableObj, 1);
+
+              let currentPrompt = promptTemplate.replace('$TARGET_COUNT', targetCount).replace('$A', textA).replace('$B', textB).replace('$BASE_DATA', textBase);
 
               let aiResponseText = "";
               let lastError = null;
@@ -20833,6 +20850,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
                       const editsString = extractResult.inner;
                       const newSummaryRows = [];
+                      const newOutlineRows = [];
                       
                       editsString.split('\n').forEach(line => {
                           const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{.*?\}|\[.*?\])\s*\)/);
@@ -20848,6 +20866,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                                   }
                                   // 只处理纪要表（tableIdx === 0）
                                   if (tableIdx === 0 && summaryKey) newSummaryRows.push(rowData);
+                                  if (tableIdx === 1 && outlineKey) newOutlineRows.push(rowData);
                               } catch (e) { logWarn_ACU('解析行失败:', line, e); }
                           }
                       });
@@ -20858,6 +20877,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       
                       // [修复] 将新批次的数据追加到累积数据中，而不是替换
                       accumulatedSummary = accumulatedSummary.concat(newSummaryRows);
+                      accumulatedOutline = accumulatedOutline.concat(newOutlineRows);
                       
                       lastError = null;
                       break;
@@ -20884,7 +20904,18 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               table.content = [table.content[0], ...newSummaryContent];
           }
 
-          const keysToSave = [summaryKey];
+          if (outlineKey && accumulatedOutline.length > 0) {
+              const table = currentJsonTableData_ACU[outlineKey];
+              const originalContent = table.content.slice(1);
+              const newOutlineContent = [
+                  ...originalContent.slice(0, startIndex),
+                  ...accumulatedOutline,
+                  ...originalContent.slice(actualEndIndex)
+              ];
+              table.content = [table.content[0], ...newOutlineContent];
+          }
+
+          const keysToSave = [summaryKey, outlineKey].filter(Boolean);
           await saveIndependentTableToChatHistory_ACU(SillyTavern_API_ACU.chat.length - 1, keysToSave, keysToSave);
           await updateReadableLorebookEntry_ACU(true);
           
