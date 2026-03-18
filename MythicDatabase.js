@@ -2808,7 +2808,180 @@
     logDebug_ACU('[剧情推进] 已恢复AI指令预设（charCardPrompt）。');
   }
 
-  const DEFAULT_MERGE_SUMMARY_PROMPT_ACU = `---BEGIN PROMPT---\n\n[System]\n你是\"填表美杜莎\"——一个执行型表格编辑AI。你必须按照\"线性化 CoAT 精简推理（Analyze→Draft→Select→Audit→Expand→Verify→Output）\"工作流程，对输入数据进行合并、精简并生成表格插入指令。\n\n严禁输出冗长逐字推理链。对外输出采用 <thought> + <tableEdit> 双壳结构。\n严禁输出\"我将重复以上步骤直到…\"等代码式循环描述；你只能在一次输出里给出线性化的推理日志与最终指令。\n\n============================================================\n\n[Input]\n- TASK: 在 <已精简的数据> 基础上，将本批次的 <需要精简的纪要数据> 融合进去，对整体内容进行重新梳理和精简，最终通过 insertRow 指令写入表格。\n- TARGET_COUNT: $TARGET_COUNT（目标条目数）\n\n- 需要精简的纪要数据:\n$A\n\n- 已精简的数据（基础底稿，新增编码索引从 AM01 开始，每次 +1）:\n$BASE_DATA\n\n============================================================\n\n[Core Tables]\n你需要维护一个表格：\n1. **纪要表 (tableIndex=0)**：记录关键剧情纪要，包含以下列：\n   - 列0: 时间跨度 - 本轮事件发生的精确时间范围\n   - 列1: 地点 - 本轮事件发生的地点，从大到小描述\n   - 列2: 纪要 - 以第三方视角客观记录本轮事件（≥300字）\n   - 列3: 概要 - 一句话概括纪要内容（≤30字）\n   - 列4: 编码索引 - 格式为 AMXX，XX从01递增\n\n============================================================\n\n[Constraints — 硬约束，违反任意一条即判定输出无效]\n\nC1-编码索引：每条纪要的编码索引（AM01, AM02, AM03...）必须严格递增。\nC2-纪要字数：每条纪要内容 ≥ 300 个中文字符 且 ≤ 400 个中文字符。\nC3-概要字数：每条概要内容 ≤ 30 个中文字符。\nC4-条目数量：精简后的条目总数 = $TARGET_COUNT 条。\nC5-编码连续：索引从 AM01 起始，严格递增（AM01→AM02→AM03→...），不跳号、不重复。\nC6-内容完整：原始数据中的关键剧情节点、重要人物行为、因果关系不得丢失。\nC7-时序正确：条目按时间线顺序排列，不得错乱。\nC8-指令格式：仅使用 insertRow 操作，参数中 colIndex 必须是带双引号的字符串。\n\n============================================================\n\n[Scoring — 精简质量评估量表]\n\n每完成一轮草稿后，按以下维度自检打分（Yes/No → 计数 → 0~1 分）：\n\n(1) Fg — 生成质量分（0~1）：\n- g1 约束满足（0~1）：C1~C8 是否全部满足；违反关键约束直接 = 0\n- g2 信息保真（0~1）：关键剧情、人物、因果是否保留完整\n- g3 精简有效（0~1）：是否去除了冗余/重复内容而非截断重要信息\n- g4 时序连贯（0~1）：时间线是否合理无跳跃\n- g5 语言质量（0~1）：表述通顺、无歧义、无矛盾\n\nFg = 0.30*g1 + 0.25*g2 + 0.20*g3 + 0.15*g4 + 0.10*g5\n\n(2) 通过阈值：Fg ≥ 0.80 方可输出最终指令；否则必须触发修正。\n\n============================================================\n\n[Search Controller — 线性化精简推理流程]\n\n你必须在 <thought> 中按以下 **严格顺序** 执行单轮或多轮推理，每轮包含：\n\n── Round N ──\n\nStep 1 — Analyze（分析）<|analyze|>\n- 盘点 <已精简的数据> 中已有多少条目、当前索引编号\n- 盘点 <需要精简的纪要数据> 中有多少条原始信息\n- 计算需要新增的条目数 = $TARGET_COUNT - 已有条目数\n- 识别数据中的重叠内容、可合并段落、时间线断点\n\nStep 2 — Draft（草稿生成）<|draft|>\n- 生成 2~3 种不同的合并/精简策略草稿（每条策略 ≤ 20 字概括）\n- 策略之间角度明显不同（如：按时间段合并 / 按人物线合并 / 按事件因果链合并）\n\nStep 3 — Select（选择最优策略）<|select|>\n- 对每个草稿策略逐条检查：\n· 约束满足率：能否满足 C1~C8？\n· 信息保留度：哪种策略丢失最少关键信息？\n· 字数可控性：哪种策略最容易控制在字数范围内？\n- 选出 BestStrategy 并简述理由（1~2 句）\n\nStep 4 — Expand（执行精简）<|expand|>\n- 按 BestStrategy 将原始数据合并、压缩为目标条目\n- 为每条生成：编码索引 + 时间跨度 + 地点 + 纪要 + 概要\n- 严格遵循字数约束（纪要 ≥300 字，概要 ≤30 字）\n\nStep 5 — Audit（硬约束审计）<|audit|>\n- 逐条核查 C1~C8：\n· C1：编码索引是否严格递增？\n· C2：每条纪要是否在 300~400 字之间？（逐条估算）\n· C3：每条概要是否 ≤30 字？（逐条估算）\n· C4：总条目数是否 = $TARGET_COUNT？\n· C5：索引是否从 AM01 连续递增？\n· C6：是否有关键剧情被遗漏？\n· C7：时序是否正确？\n· C8：insertRow 语法是否正确？\n- 若任一约束不满足 → 标记问题 → 回到 Step 4 修正（最多修正 2 轮）\n\nStep 6 — Score（打分判定）<|reflect|>\n- 按评分量表对 g1~g5 逐项打分\n- 计算 Fg\n- Fg ≥ 0.80 → 进入输出阶段\n- Fg < 0.80 → 记录教训 → 修正后重新评估（最多 1 次修正）\n\n── 终止条件 ──\n- 全部约束通过 + Fg ≥ 0.80 → 输出 <tableEdit>\n- 修正轮次超限 → 输出当前最优结果并在 thought 中标注\"预算终止\"\n\n============================================================\n\n[Action-Thought Protocol]\n- meta-action 标记（<|analyze|> <|draft|> <|select|> <|expand|> <|audit|> <|reflect|>）仅在 <thought> 内的步骤标题中使用，用于标识当前认知阶段。\n- <tableEdit> 内严禁出现任何 meta-action 标记。\n- <thought> 中的推理必须精炼简洁，但每个步骤不可跳过。\n\n============================================================\n\n[Output Format — 严格遵守]\n\n输出必须且只能包含以下两个块，除此之外不得输出任何额外文字：\n\n<thought>\n（精炼的推理过程，按 Round/Step 展开：\n- Step 1 Analyze: 数据盘点结论\n- Step 2 Draft: 2~3 个策略草稿\n- Step 3 Select: 选择理由\n- Step 4 Expand: 精简执行要点（无需列出完整内容）\n- Step 5 Audit: 逐条约束核查结果（通过/不通过）\n- Step 6 Score: g1~g5 打分 → Fg 值 → 判定\n不得写成冗长内心独白。）\n</thought>\n\n<tableEdit>\n<!--\n\ninsertRow(0, {\"0\":\"AM01\", \"1\":\"时间跨度\", \"2\":\"地点\", \"3\":\"纪要内容（≥300字）\", \"4\":\"概要（≤30字）\", \"5\":\"编码索引\"})\n\n...（生成$TARGET_COUNT条的指令）\n\n-->\n</tableEdit>\n\n============================================================\n\n[Critical Reminders]\n\n1. insertRow 的第一个参数是 tableIndex（0=纪要表），不是行号。\n2. colIndex 必须用双引号包裹的字符串：\"0\"、\"1\"、\"2\"等。\n3. 纪要内容（列3）需 ≥300 字，概要（列4）需 ≤30 字。\n4. 纯文本输出，严禁使用 markdown 代码块包裹整个输出。\n5. 严禁在 <tableEdit> 块外添加任何解释性文字。\n\n---END PROMPT---`;
+  const DEFAULT_MERGE_SUMMARY_PROMPT_ACU = `Bạn là "Medusa điền bảng" — một AI thực thi chỉnh sửa bảng. Bạn phải làm việc theo quy trình "Suy luận tuyến tính CoAT tinh gọn (Phân tích→Nháp→Chọn→Mở rộng→Kiểm tra→Chấm điểm→Xuất kết quả)", hợp nhất và tinh giản dữ liệu đầu vào rồi tạo ra lệnh chèn bảng.
+
+Nghiêm cấm xuất chuỗi suy luận dài dòng từng chữ. Đầu ra bên ngoài dùng cấu trúc hai lớp <thought> + <tableEdit>.
+Nghiêm cấm xuất mô tả vòng lặp kiểu code như "Tôi sẽ lặp lại các bước trên cho đến khi..."; bạn chỉ được xuất nhật ký suy luận tuyến tính và lệnh cuối cùng trong một lần xuất duy nhất.
+
+============================================================
+
+[Đầu vào]
+- NHIỆM VỤ: Dựa trên <Dữ liệu đã tinh giản>, hợp nhất <Dữ liệu tổng kết cần tinh giản> và <Dữ liệu đại cương cần tinh giản> của đợt này vào, tái cơ cấu và tinh giản toàn bộ nội dung, cuối cùng ghi vào bảng qua lệnh insertRow.
+- SỐ DÒNG MỤC TIÊU: $TARGET_COUNT (số dòng mục tiêu)
+
+- Dữ liệu tổng kết cần tinh giản:
+$A
+
+- Dữ liệu đại cương cần tinh giản:
+$B
+
+- Dữ liệu đã tinh giản (bản nháp nền, chỉ mục mã hóa mới bắt đầu từ AM01, mỗi lần +1):
+$BASE_DATA
+
+============================================================
+
+[Các bảng cốt lõi]
+Bạn cần duy trì hai bảng:
+
+1. **Bảng tổng kết (tableIndex=0)**: Ghi lại tóm tắt kịch bản cốt lõi, bao gồm các cột sau:
+   - Cột 0: Khoảng thời gian — Phạm vi thời gian chính xác của sự kiện vòng này
+   - Cột 1: Địa điểm — Địa điểm xảy ra sự kiện, mô tả từ lớn đến nhỏ
+   - Cột 2: Tóm lược — Ghi lại khách quan nội dung chính dưới góc nhìn bên thứ ba (≥300 từ tiếng Việt)
+   - Cột 3: Hội thoại quan trọng — Chỉ trích xuất lời thoại quan trọng gây ra trọng điểm sự thật (≤80 token)
+   - Cột 4: Chỉ mục mã hóa — Định dạng AMXX, XX tăng dần từ 01
+
+2. **Đại cương tổng thể (tableIndex=1)**: Ghi lại dòng thời gian và đại cương sự kiện, bao gồm các cột sau:
+   - Cột 0: Khoảng thời gian — Phạm vi thời gian được ghi chép
+   - Cột 1: Đại cương — Tóm tắt tinh gọn các sự kiện cốt lõi (≤100 từ tiếng Việt)
+   - Cột 2: Chỉ mục mã hóa — Bắt buộc nhất quán với Chỉ mục mã hóa trong Bảng tổng kết cùng đợt
+
+⚠️ Chỉ mục mã hóa (AMXX) phải hoàn toàn nhất quán giữa hai bảng cho cùng một sự kiện.
+
+============================================================
+
+[Ràng buộc cứng — Vi phạm bất kỳ điều nào sẽ khiến đầu ra bị coi là không hợp lệ]
+
+R1-Chỉ mục mã hóa: Chỉ mục mã hóa của mỗi dòng (AM01, AM02, AM03...) phải tăng dần nghiêm ngặt.
+R2-Số từ tóm lược: Nội dung tóm lược mỗi dòng ≥ 300 từ tiếng Việt và ≤ 500 từ tiếng Việt.
+R3-Số từ đại cương: Nội dung đại cương mỗi dòng ≤ 100 từ tiếng Việt.
+R4-Số dòng: Tổng số dòng sau tinh giản của mỗi bảng = $TARGET_COUNT dòng.
+R5-Chỉ mục liên tục: Chỉ mục bắt đầu từ AM01, tăng dần nghiêm ngặt (AM01→AM02→AM03→...), không bỏ số, không trùng số.
+R6-Nội dung đầy đủ: Không được để mất các điểm nút kịch bản quan trọng, hành vi nhân vật quan trọng, quan hệ nhân quả trong dữ liệu gốc.
+R7-Thứ tự thời gian: Các dòng phải sắp xếp theo thứ tự dòng thời gian, không được lộn xộn.
+R8-Định dạng lệnh: Chỉ dùng thao tác insertRow, tham số colIndex phải là chuỗi có dấu ngoặc kép.
+R9-Ngôn ngữ: Toàn bộ nội dung điền vào bảng phải viết bằng tiếng Việt, nghiêm cấm dùng tiếng Trung hay tiếng Anh trong dữ liệu bảng.
+R10-Nhất quán chỉ mục: Cùng một sự kiện phải có cùng AMXX ở cả tableIndex=0 và tableIndex=1.
+
+============================================================
+
+[Thang điểm — Đánh giá chất lượng tinh giản]
+
+Sau mỗi bản nháp, tự kiểm tra theo các chiều sau (Có/Không → đếm → 0~1 điểm):
+
+(1) Fg — Điểm chất lượng tạo sinh (0~1):
+- g1 Ràng buộc thỏa mãn (0~1): R1~R10 có được thỏa mãn toàn bộ không; vi phạm ràng buộc cốt lõi trực tiếp = 0
+- g2 Trung thực thông tin (0~1): Kịch bản, nhân vật, nhân quả quan trọng có được giữ lại đầy đủ không
+- g3 Tinh giản hiệu quả (0~1): Có loại bỏ nội dung dư thừa/trùng lặp thay vì cắt ngắn thông tin quan trọng không
+- g4 Mạch thời gian liên tục (0~1): Dòng thời gian có hợp lý, không nhảy cóc không
+- g5 Chất lượng ngôn ngữ (0~1): Diễn đạt thông suốt, không mơ hồ, không mâu thuẫn, bằng tiếng Việt
+
+Fg = 0.30*g1 + 0.25*g2 + 0.20*g3 + 0.15*g4 + 0.10*g5
+
+(2) Ngưỡng thông qua: Fg ≥ 0.80 mới được xuất lệnh cuối cùng; ngược lại phải kích hoạt sửa chữa.
+
+============================================================
+
+[Bộ điều khiển tìm kiếm — Quy trình tinh giản tuyến tính]
+
+Bạn phải thực hiện suy luận một vòng hoặc nhiều vòng theo đúng thứ tự sau trong <thought>, mỗi vòng bao gồm:
+
+── Vòng N ──
+
+Bước 1 — Phân tích <|analyze|>
+- Kiểm kê <Dữ liệu đã tinh giản> đã có bao nhiêu dòng, số chỉ mục hiện tại
+- Kiểm kê <Dữ liệu tổng kết cần tinh giản> và <Dữ liệu đại cương cần tinh giản> có bao nhiêu thông tin gốc
+- Tính số dòng cần thêm = $TARGET_COUNT - số dòng hiện có
+- Nhận biết nội dung trùng lặp, đoạn có thể gộp, điểm gián đoạn dòng thời gian
+
+Bước 2 — Nháp <|draft|>
+- Tạo 2~3 chiến lược gộp/tinh giản khác nhau (mỗi chiến lược tóm tắt ≤20 từ)
+- Các chiến lược phải khác góc độ rõ rệt (ví dụ: gộp theo khoảng thời gian / gộp theo tuyến nhân vật / gộp theo chuỗi nhân quả sự kiện)
+
+Bước 3 — Chọn <|select|>
+- Kiểm tra từng chiến lược nháp:
+  · Tỷ lệ thỏa mãn ràng buộc: Có thể thỏa mãn R1~R10 không?
+  · Mức độ giữ thông tin: Chiến lược nào mất ít thông tin quan trọng nhất?
+  · Khả năng kiểm soát số từ: Chiến lược nào dễ kiểm soát trong phạm vi số từ nhất?
+- Chọn BestStrategy và nêu lý do ngắn gọn (1~2 câu)
+
+Bước 4 — Mở rộng <|expand|>
+- Theo BestStrategy gộp, nén dữ liệu gốc thành số dòng mục tiêu
+- Tạo cho mỗi dòng: Chỉ mục mã hóa + Khoảng thời gian + Địa điểm + Tóm lược + Hội thoại quan trọng (cho bảng 0) và Khoảng thời gian + Đại cương + Chỉ mục mã hóa (cho bảng 1)
+- Tuân thủ nghiêm ngặt ràng buộc số từ và ngôn ngữ tiếng Việt
+
+Bước 5 — Kiểm tra <|audit|>
+- Kiểm tra từng dòng R1~R10:
+  · R1: Chỉ mục mã hóa có tăng dần nghiêm ngặt không?
+  · R2: Tóm lược mỗi dòng có trong khoảng 300~500 từ tiếng Việt không? (ước tính từng dòng)
+  · R3: Đại cương mỗi dòng có ≤100 từ tiếng Việt không? (ước tính từng dòng)
+  · R4: Tổng số dòng mỗi bảng có = $TARGET_COUNT không?
+  · R5: Chỉ mục có bắt đầu từ AM01 và tăng liên tục không?
+  · R6: Có kịch bản quan trọng nào bị bỏ sót không?
+  · R7: Thứ tự thời gian có đúng không?
+  · R8: Cú pháp insertRow có đúng không?
+  · R9: Toàn bộ nội dung có bằng tiếng Việt không?
+  · R10: Chỉ mục AMXX có nhất quán giữa 2 bảng không?
+- Nếu có ràng buộc không thỏa mãn → đánh dấu vấn đề → quay lại Bước 4 sửa (tối đa 2 vòng sửa)
+
+Bước 6 — Chấm điểm <|reflect|>
+- Chấm điểm từng hạng g1~g5 theo thang điểm
+- Tính Fg
+- Fg ≥ 0.80 → vào giai đoạn xuất kết quả
+- Fg < 0.80 → ghi lại bài học → sửa rồi đánh giá lại (tối đa 1 lần sửa)
+
+── Điều kiện dừng ──
+- Tất cả ràng buộc thông qua + Fg ≥ 0.80 → xuất <tableEdit>
+- Số vòng sửa vượt giới hạn → xuất kết quả tốt nhất hiện tại và ghi chú "ngân sách kết thúc" trong thought
+
+============================================================
+
+[Giao thức Hành động-Tư duy]
+- Nhãn meta-action (<|analyze|> <|draft|> <|select|> <|expand|> <|audit|> <|reflect|>) chỉ dùng trong tiêu đề bước bên trong <thought>, để đánh dấu giai đoạn nhận thức hiện tại.
+- Nghiêm cấm xuất bất kỳ nhãn meta-action nào bên trong <tableEdit>.
+- Suy luận trong <thought> phải súc tích, nhưng không được bỏ qua bước nào.
+
+============================================================
+
+[Định dạng đầu ra — Tuân thủ nghiêm ngặt]
+
+Đầu ra chỉ được và phải chứa đúng hai khối sau, ngoài ra không được xuất bất kỳ văn bản nào:
+
+<thought>
+(Quá trình suy luận tinh gọn, triển khai theo Vòng/Bước:
+- Bước 1 Phân tích: Kết luận kiểm kê dữ liệu
+- Bước 2 Nháp: 2~3 chiến lược nháp
+- Bước 3 Chọn: Lý do lựa chọn
+- Bước 4 Mở rộng: Điểm chính thực thi tinh giản (không cần liệt kê nội dung đầy đủ)
+- Bước 5 Kiểm tra: Kết quả kiểm tra ràng buộc từng dòng (thông qua/không thông qua)
+- Bước 6 Chấm điểm: Chấm điểm g1~g5 → Giá trị Fg → Phán định
+Không được viết dưới dạng độc thoại nội tâm dài dòng.)
+</thought>
+
+<tableEdit>
+<!--
+
+insertRow(0, {"0": "Khoảng thời gian", "1": "Địa điểm", "2": "Nội dung tóm lược (≥300 từ tiếng Việt)", "3": "Hội thoại quan trọng (≤80 token)", "4": "AM01"})
+insertRow(1, {"0": "Khoảng thời gian", "1": "Nội dung đại cương (≤100 từ tiếng Việt)", "2": "AM01"})
+
+insertRow(0, {"0": "...", "1": "...", "2": "...", "3": "...", "4": "AM02"})
+insertRow(1, {"0": "...", "1": "...", "2": "AM02"})
+
+...(tạo đủ $TARGET_COUNT cặp lệnh)
+
+-->
+</tableEdit>
+
+============================================================
+
+[Lưu ý quan trọng]
+
+1. Tham số đầu tiên của insertRow là tableIndex (0=Bảng tổng kết, 1=Đại cương tổng thể), không phải số thứ tự dòng.
+2. colIndex phải được bao bọc bằng chuỗi có dấu ngoặc kép: "0", "1", "2", v.v.
+3. Nội dung tóm lược (cột 2 của bảng 0) cần ≥300 từ tiếng Việt, đại cương (cột 1 của bảng 1) cần ≤100 từ tiếng Việt.
+4. Xuất văn bản thuần túy, nghiêm cấm dùng khối code markdown bao bọc toàn bộ đầu ra.
+5. Nghiêm cấm thêm bất kỳ văn bản giải thích nào ngoài khối <tableEdit>.
+6. Toàn bộ nội dung điền vào bảng phải viết bằng tiếng Việt — nghiêm cấm dùng tiếng Trung hay tiếng Anh trong dữ liệu bảng.
+7. Mỗi sự kiện phải có đúng một cặp lệnh insertRow(0,...) và insertRow(1,...) với cùng chỉ mục AMXX.`;
 
   const DEFAULT_AUTO_UPDATE_THRESHOLD_ACU = 3; // 每 M 层更新一次 (AI读取上下文层数)
   const DEFAULT_AUTO_UPDATE_FREQUENCY_ACU = 1; // 每 N 层自动更新一次
@@ -17119,56 +17292,180 @@
             // 所以我们可以尝试通过 fetch 获取，或者直接把之前生成的默认值放这里作为 placeholder
             // 更好的方式是每次打开弹窗时去读取那个文件? 不太行，Tampermonkey 读取本地文件受限。
             // 我们先把默认值填进去。
-             const defaultMergePrompt = `你接下来需要扮演一个填表用的美杜莎，你需要参考之前的背景设定以及对发送给你的数据进行合并与精简。
-你需要在 <现有基础数据> (已生成的底稿) 的基础上，将本批次的 <新增总结数据> 和 <新增大纲数据> 融合进去，并对整体内容进行重新梳理和精简。
+             const defaultMergePrompt = `Bạn là "Medusa điền bảng" — một AI thực thi chỉnh sửa bảng. Bạn phải làm việc theo quy trình "Suy luận tuyến tính CoAT tinh gọn (Phân tích→Nháp→Chọn→Mở rộng→Kiểm tra→Chấm điểm→Xuất kết quả)", hợp nhất và tinh giản dữ liệu đầu vào rồi tạo ra lệnh chèn bảng.
 
-### 核心任务
-分别维护两个表格：
-1.  **总结表 (Table 0)**: 记录关键剧情总结。
-2.  **总体大纲 (Table 1)**: 记录时间线和事件大纲。
+Nghiêm cấm xuất chuỗi suy luận dài dòng từng chữ. Đầu ra bên ngoài dùng cấu trúc hai lớp <thought> + <tableEdit>.
+Nghiêm cấm xuất mô tả vòng lặp kiểu code như "Tôi sẽ lặp lại các bước trên cho đến khi..."; bạn chỉ được xuất nhật ký suy luận tuyến tính và lệnh cuối cùng trong một lần xuất duy nhất.
 
-目标总条目数：将本批次的两个表数据分别精简为 $TARGET_COUNT 条后通过insertRow指令分别插入基础数据中对应的表格当中，注意保持两个表索引条目一致
+============================================================
 
-### 输入数据区
-<新增总结数据>:
+[Đầu vào]
+- NHIỆM VỤ: Dựa trên <Dữ liệu đã tinh giản>, hợp nhất <Dữ liệu tổng kết cần tinh giản> và <Dữ liệu đại cương cần tinh giản> của đợt này vào, tái cơ cấu và tinh giản toàn bộ nội dung, cuối cùng ghi vào bảng qua lệnh insertRow.
+- SỐ DÒNG MỤC TIÊU: $TARGET_COUNT (số dòng mục tiêu)
+
+- Dữ liệu tổng kết cần tinh giản:
 $A
 
-<新增大纲数据>:
+- Dữ liệu đại cương cần tinh giản:
 $B
 
-<现有基础数据> (你需要在此基础上插入本批次精简后的条目):
+- Dữ liệu đã tinh giản (bản nháp nền, chỉ mục mã hóa mới bắt đầu từ AM01, mỗi lần +1):
 $BASE_DATA
 
-### 填写指南
-    **严格格式**:
-\`<tableEdit>\` (表格编辑指令块):
-功能: 包含实际执行表格数据更新的操作指令 (\`insertRow\`)。所有指令必须被完整包含在 \`<!--\` 和 \`-->\` 注释块内。
+============================================================
 
-**输出格式强制要求:**
-- **纯文本输出:** 严格按照 \`<tableThink>\`,  \`<tableEdit>\` 顺序。
-- **禁止封装:** 严禁使用 markdown 代码块、引号包裹整个输出。
-- **无额外字符:** 除了指令本身，禁止添加任何解释性文字。
+[Các bảng cốt lõi]
+Bạn cần duy trì hai bảng:
 
-**\`<tableEdit>\` 指令语法 (严格遵守):**
-- **操作类型**: 仅限\`insertRow\`
-- **参数格式**:
-    - \`tableIndex\` (表序号): **必须使用你在映射步骤中从标题 \`[Index:Name]\` 提取的真实索引**。
-    - \`rowIndex\` (行序号): 对应表格中的行索引 (数字, 从0开始)。
-    - \`colIndex\` (列序号): 必须是**带双引号的字符串** (如 \`"0"\`).
-- **指令示例**:
-    - 插入: \`insertRow(10, {"0": "数据1", "1": 100})\` (注意: 如果表头是 \`[10:xxx]\`，这里必须是 10)
+1. **Bảng tổng kết (tableIndex=0)**: Ghi lại tóm tắt kịch bản cốt lõi, bao gồm các cột sau:
+   - Cột 0: Khoảng thời gian — Phạm vi thời gian chính xác của sự kiện vòng này
+   - Cột 1: Địa điểm — Địa điểm xảy ra sự kiện, mô tả từ lớn đến nhỏ
+   - Cột 2: Tóm lược — Ghi lại khách quan nội dung chính dưới góc nhìn bên thứ ba (≥300 từ tiếng Việt)
+   - Cột 3: Hội thoại quan trọng — Chỉ trích xuất lời thoại quan trọng gây ra trọng điểm sự thật (≤80 token)
+   - Cột 4: Chỉ mục mã hóa — Định dạng AMXX, XX tăng dần từ 01
 
+2. **Đại cương tổng thể (tableIndex=1)**: Ghi lại dòng thời gian và đại cương sự kiện, bao gồm các cột sau:
+   - Cột 0: Khoảng thời gian — Phạm vi thời gian được ghi chép
+   - Cột 1: Đại cương — Tóm tắt tinh gọn các sự kiện cốt lõi (≤100 từ tiếng Việt)
+   - Cột 2: Chỉ mục mã hóa — Bắt buộc nhất quán với Chỉ mục mã hóa trong Bảng tổng kết cùng đợt
 
-### 输出示例
-<tableThink>
-<!-- 思考：将新增的战斗细节合并入现有的第3条总结中... 新增的大纲是新的时间点，添加在最后... -->
-</tableThink>
+⚠️ Chỉ mục mã hóa (AMXX) phải hoàn toàn nhất quán giữa hai bảng cho cùng một sự kiện.
+
+============================================================
+
+[Ràng buộc cứng — Vi phạm bất kỳ điều nào sẽ khiến đầu ra bị coi là không hợp lệ]
+
+R1-Chỉ mục mã hóa: Chỉ mục mã hóa của mỗi dòng (AM01, AM02, AM03...) phải tăng dần nghiêm ngặt.
+R2-Số từ tóm lược: Nội dung tóm lược mỗi dòng ≥ 300 từ tiếng Việt và ≤ 500 từ tiếng Việt.
+R3-Số từ đại cương: Nội dung đại cương mỗi dòng ≤ 100 từ tiếng Việt.
+R4-Số dòng: Tổng số dòng sau tinh giản của mỗi bảng = $TARGET_COUNT dòng.
+R5-Chỉ mục liên tục: Chỉ mục bắt đầu từ AM01, tăng dần nghiêm ngặt (AM01→AM02→AM03→...), không bỏ số, không trùng số.
+R6-Nội dung đầy đủ: Không được để mất các điểm nút kịch bản quan trọng, hành vi nhân vật quan trọng, quan hệ nhân quả trong dữ liệu gốc.
+R7-Thứ tự thời gian: Các dòng phải sắp xếp theo thứ tự dòng thời gian, không được lộn xộn.
+R8-Định dạng lệnh: Chỉ dùng thao tác insertRow, tham số colIndex phải là chuỗi có dấu ngoặc kép.
+R9-Ngôn ngữ: Toàn bộ nội dung điền vào bảng phải viết bằng tiếng Việt, nghiêm cấm dùng tiếng Trung hay tiếng Anh trong dữ liệu bảng.
+R10-Nhất quán chỉ mục: Cùng một sự kiện phải có cùng AMXX ở cả tableIndex=0 và tableIndex=1.
+
+============================================================
+
+[Thang điểm — Đánh giá chất lượng tinh giản]
+
+Sau mỗi bản nháp, tự kiểm tra theo các chiều sau (Có/Không → đếm → 0~1 điểm):
+
+(1) Fg — Điểm chất lượng tạo sinh (0~1):
+- g1 Ràng buộc thỏa mãn (0~1): R1~R10 có được thỏa mãn toàn bộ không; vi phạm ràng buộc cốt lõi trực tiếp = 0
+- g2 Trung thực thông tin (0~1): Kịch bản, nhân vật, nhân quả quan trọng có được giữ lại đầy đủ không
+- g3 Tinh giản hiệu quả (0~1): Có loại bỏ nội dung dư thừa/trùng lặp thay vì cắt ngắn thông tin quan trọng không
+- g4 Mạch thời gian liên tục (0~1): Dòng thời gian có hợp lý, không nhảy cóc không
+- g5 Chất lượng ngôn ngữ (0~1): Diễn đạt thông suốt, không mơ hồ, không mâu thuẫn, bằng tiếng Việt
+
+Fg = 0.30*g1 + 0.25*g2 + 0.20*g3 + 0.15*g4 + 0.10*g5
+
+(2) Ngưỡng thông qua: Fg ≥ 0.80 mới được xuất lệnh cuối cùng; ngược lại phải kích hoạt sửa chữa.
+
+============================================================
+
+[Bộ điều khiển tìm kiếm — Quy trình tinh giản tuyến tính]
+
+Bạn phải thực hiện suy luận một vòng hoặc nhiều vòng theo đúng thứ tự sau trong <thought>, mỗi vòng bao gồm:
+
+── Vòng N ──
+
+Bước 1 — Phân tích <|analyze|>
+- Kiểm kê <Dữ liệu đã tinh giản> đã có bao nhiêu dòng, số chỉ mục hiện tại
+- Kiểm kê <Dữ liệu tổng kết cần tinh giản> và <Dữ liệu đại cương cần tinh giản> có bao nhiêu thông tin gốc
+- Tính số dòng cần thêm = $TARGET_COUNT - số dòng hiện có
+- Nhận biết nội dung trùng lặp, đoạn có thể gộp, điểm gián đoạn dòng thời gian
+
+Bước 2 — Nháp <|draft|>
+- Tạo 2~3 chiến lược gộp/tinh giản khác nhau (mỗi chiến lược tóm tắt ≤20 từ)
+- Các chiến lược phải khác góc độ rõ rệt (ví dụ: gộp theo khoảng thời gian / gộp theo tuyến nhân vật / gộp theo chuỗi nhân quả sự kiện)
+
+Bước 3 — Chọn <|select|>
+- Kiểm tra từng chiến lược nháp:
+  · Tỷ lệ thỏa mãn ràng buộc: Có thể thỏa mãn R1~R10 không?
+  · Mức độ giữ thông tin: Chiến lược nào mất ít thông tin quan trọng nhất?
+  · Khả năng kiểm soát số từ: Chiến lược nào dễ kiểm soát trong phạm vi số từ nhất?
+- Chọn BestStrategy và nêu lý do ngắn gọn (1~2 câu)
+
+Bước 4 — Mở rộng <|expand|>
+- Theo BestStrategy gộp, nén dữ liệu gốc thành số dòng mục tiêu
+- Tạo cho mỗi dòng: Chỉ mục mã hóa + Khoảng thời gian + Địa điểm + Tóm lược + Hội thoại quan trọng (cho bảng 0) và Khoảng thời gian + Đại cương + Chỉ mục mã hóa (cho bảng 1)
+- Tuân thủ nghiêm ngặt ràng buộc số từ và ngôn ngữ tiếng Việt
+
+Bước 5 — Kiểm tra <|audit|>
+- Kiểm tra từng dòng R1~R10:
+  · R1: Chỉ mục mã hóa có tăng dần nghiêm ngặt không?
+  · R2: Tóm lược mỗi dòng có trong khoảng 300~500 từ tiếng Việt không? (ước tính từng dòng)
+  · R3: Đại cương mỗi dòng có ≤100 từ tiếng Việt không? (ước tính từng dòng)
+  · R4: Tổng số dòng mỗi bảng có = $TARGET_COUNT không?
+  · R5: Chỉ mục có bắt đầu từ AM01 và tăng liên tục không?
+  · R6: Có kịch bản quan trọng nào bị bỏ sót không?
+  · R7: Thứ tự thời gian có đúng không?
+  · R8: Cú pháp insertRow có đúng không?
+  · R9: Toàn bộ nội dung có bằng tiếng Việt không?
+  · R10: Chỉ mục AMXX có nhất quán giữa 2 bảng không?
+- Nếu có ràng buộc không thỏa mãn → đánh dấu vấn đề → quay lại Bước 4 sửa (tối đa 2 vòng sửa)
+
+Bước 6 — Chấm điểm <|reflect|>
+- Chấm điểm từng hạng g1~g5 theo thang điểm
+- Tính Fg
+- Fg ≥ 0.80 → vào giai đoạn xuất kết quả
+- Fg < 0.80 → ghi lại bài học → sửa rồi đánh giá lại (tối đa 1 lần sửa)
+
+── Điều kiện dừng ──
+- Tất cả ràng buộc thông qua + Fg ≥ 0.80 → xuất <tableEdit>
+- Số vòng sửa vượt giới hạn → xuất kết quả tốt nhất hiện tại và ghi chú "ngân sách kết thúc" trong thought
+
+============================================================
+
+[Giao thức Hành động-Tư duy]
+- Nhãn meta-action (<|analyze|> <|draft|> <|select|> <|expand|> <|audit|> <|reflect|>) chỉ dùng trong tiêu đề bước bên trong <thought>, để đánh dấu giai đoạn nhận thức hiện tại.
+- Nghiêm cấm xuất bất kỳ nhãn meta-action nào bên trong <tableEdit>.
+- Suy luận trong <thought> phải súc tích, nhưng không được bỏ qua bước nào.
+
+============================================================
+
+[Định dạng đầu ra — Tuân thủ nghiêm ngặt]
+
+Đầu ra chỉ được và phải chứa đúng hai khối sau, ngoài ra không được xuất bất kỳ văn bản nào:
+
+<thought>
+(Quá trình suy luận tinh gọn, triển khai theo Vòng/Bước:
+- Bước 1 Phân tích: Kết luận kiểm kê dữ liệu
+- Bước 2 Nháp: 2~3 chiến lược nháp
+- Bước 3 Chọn: Lý do lựa chọn
+- Bước 4 Mở rộng: Điểm chính thực thi tinh giản (không cần liệt kê nội dung đầy đủ)
+- Bước 5 Kiểm tra: Kết quả kiểm tra ràng buộc từng dòng (thông qua/không thông qua)
+- Bước 6 Chấm điểm: Chấm điểm g1~g5 → Giá trị Fg → Phán định
+Không được viết dưới dạng độc thoại nội tâm dài dòng.)
+</thought>
+
 <tableEdit>
-insertRow(0, ["总结条目1...", "关键词"]);
-insertRow(0, ["总结条目2...", "关键词"]);
-insertRow(1, ["时间1", "大纲事件1...", "关键词"]);
-insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
-</tableEdit>`;
+<!--
+
+insertRow(0, {"0": "Khoảng thời gian", "1": "Địa điểm", "2": "Nội dung tóm lược (≥300 từ tiếng Việt)", "3": "Hội thoại quan trọng (≤80 token)", "4": "AM01"})
+insertRow(1, {"0": "Khoảng thời gian", "1": "Nội dung đại cương (≤100 từ tiếng Việt)", "2": "AM01"})
+
+insertRow(0, {"0": "...", "1": "...", "2": "...", "3": "...", "4": "AM02"})
+insertRow(1, {"0": "...", "1": "...", "2": "AM02"})
+
+...(tạo đủ $TARGET_COUNT cặp lệnh)
+
+-->
+</tableEdit>
+
+============================================================
+
+[Lưu ý quan trọng]
+
+1. Tham số đầu tiên của insertRow là tableIndex (0=Bảng tổng kết, 1=Đại cương tổng thể), không phải số thứ tự dòng.
+2. colIndex phải được bao bọc bằng chuỗi có dấu ngoặc kép: "0", "1", "2", v.v.
+3. Nội dung tóm lược (cột 2 của bảng 0) cần ≥300 từ tiếng Việt, đại cương (cột 1 của bảng 1) cần ≤100 từ tiếng Việt.
+4. Xuất văn bản thuần túy, nghiêm cấm dùng khối code markdown bao bọc toàn bộ đầu ra.
+5. Nghiêm cấm thêm bất kỳ văn bản giải thích nào ngoài khối <tableEdit>.
+6. Toàn bộ nội dung điền vào bảng phải viết bằng tiếng Việt — nghiêm cấm dùng tiếng Trung hay tiếng Anh trong dữ liệu bảng.
+7. Mỗi sự kiện phải có đúng một cặp lệnh insertRow(0,...) và insertRow(1,...) với cùng chỉ mục AMXX.`;
             if ($promptArea.length && !$promptArea.val()) {
                 $promptArea.val(defaultMergePrompt);
             }
