@@ -495,7 +495,7 @@
   function createACUWindow(options) {
     const {
       id,
-      title = '窗口',
+      title = 'Cửa sổ',
       content = '',
       width = 900,
       height = 700,
@@ -570,8 +570,8 @@
             <span>${title}</span>
           </div>
           <div class="acu-window-controls">
-            ${showMaximizeBtn ? '<button class="acu-window-btn maximize" title="最大化/还原"><i class="fa-solid fa-expand"></i></button>' : ''}
-            <button class="acu-window-btn close" title="关闭"><i class="fa-solid fa-times"></i></button>
+            ${showMaximizeBtn ? '<button class="acu-window-btn maximize" title="Phóng to/Thu nhỏ"><i class="fa-solid fa-expand"></i></button>' : ''}
+            <button class="acu-window-btn close" title="Đóng"><i class="fa-solid fa-times"></i></button>
           </div>
         </div>
         <div class="acu-window-body">${content}</div>
@@ -1309,7 +1309,7 @@
           const prev = keepValue ? String($select.val() || '') : '';
           const names = listTemplatePresetNames_ACU();
           $select.empty();
-          $select.append(jQuery_API_ACU('<option/>').val('').text('（选择预设以切换）'));
+          $select.append(jQuery_API_ACU('<option/>').val('').text('（Chọn cài đặt để chuyển）'));
           names.forEach(n => {
               // 注意：value/text 必须用 DOM 赋值，避免 HTML 转义导致取值失真（比如 &、<、" 等）
               $select.append(jQuery_API_ACU('<option/>').val(String(n)).text(String(n)));
@@ -1552,7 +1552,7 @@
   let suppressWorldbookInjectionInGreeting_ACU = false;
 
   // --- [剧情推进] 相关常量 ---
-  const STORAGE_KEY_PLOT_SETTINGS_ACU = `${SCRIPT_ID_PREFIX_ACU}_plotSettings`; // 剧情推进设置存储键
+  const STORAGE_KEY_PLOT_SETTINGS_ACU = `${SCRIPT_ID_PREFIX_ACU}_plotSettings`; // Cài đặt thúc đẩy cốt truyện存储键
 
   // [剧情推进] 循环状态管理
   const loopState_ACU = {
@@ -2556,7 +2556,7 @@
     return cloned;
   }
 
-  function renderExcludeRuleRows_ACU(containerSelector, rules, { startPlaceholder = '开始词', endPlaceholder = '结束词', fallbackRules = [] } = {}) {
+  function renderExcludeRuleRows_ACU(containerSelector, rules, { startPlaceholder = 'Từ bắt đầu', endPlaceholder = 'Từ kết thúc', fallbackRules = [] } = {}) {
     if (!$popupInstance_ACU) return;
     const $container = $popupInstance_ACU.find(containerSelector);
     if (!$container.length) return;
@@ -2572,7 +2572,7 @@
         <div class="acu-exclude-rule-row" style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
           <input type="text" class="text_pole acu-exclude-rule-start" placeholder="${escapeHtml_ACU(startPlaceholder)}" style="flex:1;" value="${escapeHtml_ACU(rule.start || '')}">
           <input type="text" class="text_pole acu-exclude-rule-end" placeholder="${escapeHtml_ACU(endPlaceholder)}" style="flex:1;" value="${escapeHtml_ACU(rule.end || '')}">
-          <button type="button" class="button acu-exclude-rule-delete" title="删除规则" style="padding:4px 8px;">删除</button>
+          <button type="button" class="button acu-exclude-rule-delete" title="Xóa quy tắc" style="padding:4px 8px;">Xóa</button>
         </div>
       `;
       $container.append(rowHtml);
@@ -2582,7 +2582,7 @@
     rows.forEach(rule => appendRow(rule));
   }
 
-  function appendExcludeRuleRow_ACU(containerSelector, { startPlaceholder = '开始词', endPlaceholder = '结束词' } = {}) {
+  function appendExcludeRuleRow_ACU(containerSelector, { startPlaceholder = 'Từ bắt đầu', endPlaceholder = 'Từ kết thúc' } = {}) {
     if (!$popupInstance_ACU) return;
     const $container = $popupInstance_ACU.find(containerSelector);
     if (!$container.length) return;
@@ -2590,7 +2590,7 @@
       <div class="acu-exclude-rule-row" style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
         <input type="text" class="text_pole acu-exclude-rule-start" placeholder="${escapeHtml_ACU(startPlaceholder)}" style="flex:1;" value="">
         <input type="text" class="text_pole acu-exclude-rule-end" placeholder="${escapeHtml_ACU(endPlaceholder)}" style="flex:1;" value="">
-        <button type="button" class="button acu-exclude-rule-delete" title="删除规则" style="padding:4px 8px;">删除</button>
+        <button type="button" class="button acu-exclude-rule-delete" title="Xóa quy tắc" style="padding:4px 8px;">Xóa</button>
       </div>
     `;
     $container.append(rowHtml);
@@ -2656,7 +2656,7 @@
     if (item) item.content = content ?? '';
   }
 
-  // --- [剧情推进] 循环提示词列表渲染和管理 ---
+  // --- [剧情推进] Danh sách lệnh nhắc vòng lặp渲染和管理 ---
   function renderLoopPromptsList_ACU() {
     const $container = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-prompts-container`);
     if (!$container.length) return;
@@ -2670,7 +2670,7 @@
     $container.empty();
 
     if (prompts.length === 0) {
-      $container.html('<div style="padding: 20px; text-align: center; color: var(--text_secondary); border: 1px dashed var(--border_color_light); border-radius: 6px;">暂无提示词，点击上方"添加提示词"按钮添加</div>');
+      $container.html('<div style="padding: 20px; text-align: center; color: var(--text_secondary); border: 1px dashed var(--border_color_light); border-radius: 6px;">Chưa có lệnh nhắc, nhấn nút "Thêm lệnh nhắc" ở trên để thêm</div>');
       return;
     }
 
@@ -2688,14 +2688,14 @@
         style: 'display: flex; align-items: center; gap: 8px;'
       }).append($('<span>', {
         style: 'font-size: 0.85em; color: var(--text_secondary); font-weight: 500;',
-        text: `提示词 #${index + 1}`
+        text: `Lệnh nhắc #${index + 1}`
       })));
       
       const $textarea = $('<textarea>', {
         class: 'loop-prompt-textarea text_pole',
         'data-index': index,
         rows: 2,
-        placeholder: '输入循环提示词内容...',
+        placeholder: 'Nhập nội dung lệnh nhắc vòng lặp...',
         style: 'resize: vertical; width: 100%;',
         text: prompt || ''
       });
@@ -2706,7 +2706,7 @@
         class: 'loop-prompt-delete-btn button',
         'data-index': index,
         style: 'padding: 6px 10px; color: var(--danger); background: transparent; border: 1px solid var(--danger); border-radius: 4px; cursor: pointer; flex-shrink: 0;',
-        title: '删除此提示词',
+        title: 'Xóa lệnh nhắc này',
         html: '<i class="fa-solid fa-trash"></i>'
       });
       
@@ -2928,7 +2928,7 @@
       tableMaxRetries: 3,
       importSplitSize: 10000,
       skipUpdateFloors: 0, // 全局有效楼层 (UI参数) - 影响所有表
-      retainRecentLayers: 100, // [新增] 保留最近N层本地数据 (0或空=全部保留，按AI楼层计数)
+      retainRecentLayers: 100, // [新增] 保留最近N层本地数据 (0或Trống=giữ tất cả，按AI楼层计数)
       // [新增] 表格顺序（用户手动调整后持久化）。为空时使用模板顺序。
       tableKeyOrder: [], // ['sheet_xxx', 'sheet_yyy', ...]
       manualSelectedTables: [], // 手动更新时使用UI参数的表格key列表
@@ -3133,15 +3133,15 @@
                       <div style="display:flex; align-items:center; gap:8px;">
                           <select class="prompt-segment-role">
                               <option value="assistant" ${roleUpper === 'AI' || roleUpper === 'ASSISTANT' || roleLower === 'assistant' ? 'selected' : ''}>AI</option>
-                              <option value="SYSTEM" ${roleUpper === 'SYSTEM' || roleLower === 'system' ? 'selected' : ''}>系统</option>
-                              <option value="USER" ${roleUpper === 'USER' || roleLower === 'user' ? 'selected' : ''}>用户</option>
+                              <option value="SYSTEM" ${roleUpper === 'SYSTEM' || roleLower === 'system' ? 'selected' : ''}>Hệ thống</option>
+                              <option value="USER" ${roleUpper === 'USER' || roleLower === 'user' ? 'selected' : ''}>Người dùng</option>
                           </select>
-                          <label style="display:flex; align-items:center; gap:6px; font-size:0.8em; cursor:pointer; user-select:none;" title="用于运行时替换/合并注入的主提示词槽位。A/B 均不可删除；剧情推进会优先覆盖 A(系统) + B(用户)。">
-                              <span style="opacity:0.85;">主提示词</span>
+                          <label style="display:flex; align-items:center; gap:6px; font-size:0.8em; cursor:pointer; user-select:none;" title="Vị trí nhắc chính để thay thế/hợp nhất khi chạy. A/B không thể xóa; thúc đẩy cốt truyện sẽ ưu tiên ghi đè A(Hệ thống) + B(Người dùng).">
+                              <span style="opacity:0.85;">Nhắc chính</span>
                               <select class="prompt-segment-main-slot" style="font-size:0.85em;">
-                                  <option value="" ${!isMainPrompt ? 'selected' : ''}>普通</option>
-                                  <option value="A" ${isMainA ? 'selected' : ''}>A(建议System)</option>
-                                  <option value="B" ${isMainB ? 'selected' : ''}>B(建议User)</option>
+                                  <option value="" ${!isMainPrompt ? 'selected' : ''}>Thông thường</option>
+                                  <option value="A" ${isMainA ? 'selected' : ''}>A(Khuyến nghị System)</option>
+                                  <option value="B" ${isMainB ? 'selected' : ''}>B(Khuyến nghị User)</option>
                               </select>
                           </label>
                       </div>
@@ -3291,15 +3291,15 @@
                       <div style="display:flex; align-items:center; gap:8px;">
                           <select class="plot-prompt-segment-role">
                               <option value="assistant" ${roleUpper === 'AI' || roleUpper === 'ASSISTANT' || roleLower === 'assistant' ? 'selected' : ''}>AI</option>
-                              <option value="SYSTEM" ${roleUpper === 'SYSTEM' || roleLower === 'system' ? 'selected' : ''}>系统</option>
-                              <option value="USER" ${roleUpper === 'USER' || roleLower === 'user' ? 'selected' : ''}>用户</option>
+                              <option value="SYSTEM" ${roleUpper === 'SYSTEM' || roleLower === 'system' ? 'selected' : ''}>Hệ thống</option>
+                              <option value="USER" ${roleUpper === 'USER' || roleLower === 'user' ? 'selected' : ''}>Người dùng</option>
                           </select>
-                          <label style="display:flex; align-items:center; gap:6px; font-size:0.8em; cursor:pointer; user-select:none;" title="用于兼容旧预设的A/B槽位。A/B 均不可删除；但运行时不会再对其进行自动替换，完全由本提示词组决定。">
-                              <span style="opacity:0.85;">主提示词</span>
+                          <label style="display:flex; align-items:center; gap:6px; font-size:0.8em; cursor:pointer; user-select:none;" title="Vị trí A/B tương thích cài đặt cũ. A/B không thể xóa; nhưng khi chạy sẽ không tự động thay thế, hoàn toàn do nhóm nhắc này quyết định.">
+                              <span style="opacity:0.85;">Nhắc chính</span>
                               <select class="plot-prompt-segment-main-slot" style="font-size:0.85em;">
-                                  <option value="" ${!isMainPrompt ? 'selected' : ''}>普通</option>
-                                  <option value="A" ${isMainA ? 'selected' : ''}>A(建议System)</option>
-                                  <option value="B" ${isMainB ? 'selected' : ''}>B(建议User)</option>
+                                  <option value="" ${!isMainPrompt ? 'selected' : ''}>Thông thường</option>
+                                  <option value="A" ${isMainA ? 'selected' : ''}>A(Khuyến nghị System)</option>
+                                  <option value="B" ${isMainB ? 'selected' : ''}>B(Khuyến nghị User)</option>
                               </select>
                           </label>
                       </div>
@@ -3345,7 +3345,7 @@
       ensurePlotPromptGroup_ACU(settings_ACU.plotSettings);
       settings_ACU.plotSettings.promptGroup = getPlotPromptGroupFromUI_ACU();
       saveSettings_ACU();
-      if (!silent) showToastr_ACU('success', '剧情推进提示词组已保存。');
+      if (!silent) showToastr_ACU('success', 'Đã lưu nhóm lệnh nhắc thúc đẩy cốt truyện.');
   }
 
   function resetPlotPromptGroupToDefault_ACU() {
@@ -3354,7 +3354,7 @@
       settings_ACU.plotSettings.promptGroup = buildDefaultPlotPromptGroup_ACU();
       saveSettings_ACU();
       renderPlotPromptSegments_ACU(settings_ACU.plotSettings.promptGroup);
-      showToastr_ACU('success', '剧情推进提示词组已恢复默认。');
+      showToastr_ACU('success', 'Đã khôi phục nhóm lệnh nhắc mặc định.');
   }
 
   let isAutoUpdatingCard_ACU = false; // Tracks if an update is in progress
@@ -3394,7 +3394,7 @@
             openNewVisualizer_ACU();
         } else {
             console.error('[ACU] openNewVisualizer_ACU is not defined inside closure.');
-            showToastr_ACU('error', '可视化编辑器加载失败。');
+            showToastr_ACU('error', 'Tải trình chỉnh sửa trực quan thất bại.');
         }
     },
     // 导出当前表格数据（返回合并后的数据，同步函数以兼容前端）
@@ -3407,7 +3407,7 @@
     importTableAsJson: async function(jsonString) {
         if (typeof jsonString !== 'string' || jsonString.trim() === '') {
             logError_ACU('importTableAsJson received invalid input.');
-            showToastr_ACU('error', '导入数据失败：输入为空。');
+            showToastr_ACU('error', 'Nhập dữ liệu thất bại: Đầu vào rỗng.');
             return false;
         }
         try {
@@ -3528,11 +3528,11 @@
                 await refreshMergedDataAndNotify_ACU();
                 return true;
             } else {
-                throw new Error('导入的JSON缺少关键结构 (mate, sheet_*)。');
+                throw new Error('JSON nhập thiếu cấu trúc quan trọng (mate, sheet_*).');
             }
         } catch (error) {
             logError_ACU('Failed to import table data from JSON:', error);
-            showToastr_ACU('error', `导入数据失败: ${error.message}`);
+            showToastr_ACU('error', `Nhập dữ liệu thất bại: ${error.message}`);
             return false;
         }
     },
@@ -3540,7 +3540,7 @@
     triggerUpdate: async function() {
         logDebug_ACU('External trigger for database update received.');
         if (isAutoUpdatingCard_ACU) {
-            showToastr_ACU('info', '已有更新任务在后台进行中。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
+            showToastr_ACU('info', 'Đã có tác vụ cập nhật đang chạy nền.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
             return false;
         }
         isAutoUpdatingCard_ACU = true;
@@ -3697,13 +3697,13 @@
     switchTemplatePreset: async function(presetName) {
         try {
             const name = String(presetName || '').trim();
-            if (!name) return { success: false, message: '预设名为空' };
+            if (!name) return { success: false, message: 'Tên cài đặt trống' };
             const ok = await applyTemplatePresetToCurrent_ACU(name);
             if (ok) {
                 refreshTemplatePresetSelectInUI_ACU({ selectName: name, keepValue: false });
-                return { success: true, message: `模板预设已切换：${name}` };
+                return { success: true, message: `Đã chuyển cài đặt mẫu: ${name}` };
             }
-            return { success: false, message: `模板预设切换失败：${name}` };
+            return { success: false, message: `Chuyển cài đặt mẫu thất bại: ${name}` };
         } catch (e) {
             logError_ACU('switchTemplatePreset failed:', e);
             return { success: false, message: `模板预设切换失败：${e.message}` };
@@ -4032,8 +4032,8 @@
                     `#${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules`,
                     normalizeExtractRules_ACU(targetPreset.contextExtractRules, targetPreset.contextExtractTags || ''),
                     {
-                        startPlaceholder: '开始词（例如：<think）',
-                        endPlaceholder: '结束词（例如：</think>）',
+                        startPlaceholder: 'Từ bắt đầu (ví dụ: <think)',
+                        endPlaceholder: 'Từ kết thúc (ví dụ: </think>)',
                         fallbackRules: getDefaultPlotContextExtractRules_ACU(),
                     },
                 );
@@ -4041,8 +4041,8 @@
                     `#${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules`,
                     normalizeExcludeRules_ACU(targetPreset.contextExcludeRules, targetPreset.contextExcludeTags || ''),
                     {
-                        startPlaceholder: '开始词（例如：<thinking）',
-                        endPlaceholder: '结束词（例如：</thinking>）',
+                        startPlaceholder: 'Từ bắt đầu (ví dụ: <thinking)',
+                        endPlaceholder: 'Từ kết thúc (ví dụ: </thinking>)',
                         fallbackRules: getDefaultPlotContextExcludeRules_ACU(),
                     },
                 );
@@ -4686,7 +4686,7 @@
   }
 
   // --- Toast / 通知（仅影响本插件的提示外观，不改变业务逻辑） ---
-  const ACU_TOAST_TITLE_ACU = '魔·数据库';
+  const ACU_TOAST_TITLE_ACU = 'Mythic·Database';
   const _acuToastDedup_ACU = new Map(); // key -> ts
   let _acuToastStyleInjected_ACU = false;
 
@@ -4912,7 +4912,7 @@
 
         // 填表/规划成功
         if (t === 'success' && (has('填表') || has('规划'))) return true;
-        if (t === 'success' && (has('更新') && has('成功'))) return true;
+        if (t === 'success' && (has('更新') && has('Thành công'))) return true;
 
         // 手动填表/合并填表/外部导入提示
         const allowKeywords = ['手动填表', '手动更新', '合并', '外部导入', '导入', '注入'];
@@ -5038,7 +5038,7 @@
                       logDebug_ACU('[模板解析] 方案1第一次解析成功，类型:', typeof unquoted);
                       if (typeof unquoted === 'string') {
                           obj = safeJsonParse_ACU(unquoted, null);
-                          logDebug_ACU('[模板解析] 方案1第二次解析结果:', obj ? '成功' : '失败');
+                          logDebug_ACU('[模板解析] 方案1第二次解析结果:', obj ? 'Thành công' : '失败');
                           if (obj) {
                               logDebug_ACU('[模板解析] 方案1成功！');
                               return stripSeedRows ? stripSeedRowsFromTemplate_ACU(obj) : obj;
@@ -5063,7 +5063,7 @@
                       logDebug_ACU('[模板解析] 方案2第一次解析成功，类型:', typeof unquoted);
                       if (typeof unquoted === 'string') {
                           obj = safeJsonParse_ACU(unquoted, null);
-                          logDebug_ACU('[模板解析] 方案2第二次解析结果:', obj ? '成功' : '失败');
+                          logDebug_ACU('[模板解析] 方案2第二次解析结果:', obj ? 'Thành công' : '失败');
                           if (obj) {
                               logDebug_ACU('[模板解析] 方案2成功！');
                               return stripSeedRows ? stripSeedRowsFromTemplate_ACU(obj) : obj;
@@ -5096,7 +5096,7 @@
           if (!obj) {
               logDebug_ACU('[模板解析] 尝试safeJsonParse_ACU...');
               obj = safeJsonParse_ACU(cleanTemplate, null);
-              logDebug_ACU('[模板解析] safeJsonParse_ACU结果:', obj ? '成功' : '失败');
+              logDebug_ACU('[模板解析] safeJsonParse_ACU结果:', obj ? 'Thành công' : '失败');
           }
           
           // 如果还是失败，尝试转义后解析
@@ -5105,7 +5105,7 @@
               try {
                   const escaped = escapeStringForJson_ACU(cleanTemplate);
                   obj = safeJsonParse_ACU(escaped, null);
-                  logDebug_ACU('[模板解析] 转义后解析结果:', obj ? '成功' : '失败');
+                  logDebug_ACU('[模板解析] 转义后解析结果:', obj ? 'Thành công' : '失败');
               } catch (e) {
                   logDebug_ACU('[模板解析] 转义后解析异常:', e.message);
               }
@@ -6725,17 +6725,17 @@
         } else {
             if (isIndexedDbAvailable_ACU()) {
                 console.warn(`[${SCRIPT_ID_PREFIX_ACU}] 未连接到酒馆服务端设置：已保存到 IndexedDB（仅本浏览器可用，跨浏览器不同步）。请检查顶层 bridge 是否注入成功。`);
-                try { showToastr_ACU('info', '当前未连接酒馆设置：已保存到 IndexedDB（仅本浏览器可用）。', { timeOut: 6000 }); } catch (e) {}
+                try { showToastr_ACU('info', 'Chưa kết nối cài đặt SillyTavern: Đã lưu vào IndexedDB (chỉ dùng trình duyệt này).', { timeOut: 6000 }); } catch (e) {}
             } else {
                 console.warn(`[${SCRIPT_ID_PREFIX_ACU}] 未连接到可持久化的 extension_settings，且 IndexedDB 不可用：本次保存仅在内存中生效，刷新会丢失。`);
-                try { showToastr_ACU('warning', '⚠️ 当前未连接酒馆设置且 IndexedDB 不可用，本次修改刷新后会丢失。', { timeOut: 8000 }); } catch (e) {}
+                try { showToastr_ACU('warning', '⚠️ Chưa kết nối cài đặt SillyTavern và IndexedDB không khả dụng, thay đổi lần này sẽ mất sau khi làm mới.', { timeOut: 8000 }); } catch (e) {}
             }
             // 异步再尝试一次初始化（不阻塞 UI）
             void initTavernSettingsBridge_ACU();
         }
     } catch (error) {
         logError_ACU('Failed to save settings:', error);
-        showToastr_ACU('error', '保存设置时发生浏览器存储错误。');
+        showToastr_ACU('error', 'Đã xảy ra lỗi bộ nhớ trình duyệt khi lưu cài đặt.');
     }
   }
 
@@ -6756,20 +6756,20 @@
       // 使用主API或酒馆预设
       logDebug_ACU('[剧情推进] 通过酒馆主API发送请求...');
       if (typeof TavernHelper_API_ACU.generateRaw !== 'function') {
-        throw new Error('TavernHelper.generateRaw 函数不存在。请检查酒馆版本。');
+        throw new Error('Không tìm thấy hàm TavernHelper.generateRaw. Vui lòng kiểm tra phiên bản SillyTavern.');
       }
       const response = await TavernHelper_API_ACU.generateRaw({
         ordered_prompts: messages,
         should_stream: false,
       });
       if (typeof response !== 'string') {
-        throw new Error('主API调用未返回预期的文本响应。');
+        throw new Error('Lệnh gọi API chính không trả về phản hồi văn bản như mong đợi.');
       }
       return response.trim();
     } else {
       // 使用自定义API
       if (!effectiveApiConfig.url || !effectiveApiConfig.model) {
-        throw new Error('自定义API的URL或模型未配置。');
+        throw new Error('URL hoặc model của API tùy chỉnh chưa được cấu hình.');
       }
 
       const requestBody = {
@@ -6801,7 +6801,7 @@
 
       if (!response.ok) {
         const errTxt = await response.text();
-        throw new Error(`API请求失败: ${response.status} ${errTxt}`);
+        throw new Error(`Yêu cầu API thất bại: ${response.status} ${errTxt}`);
       }
 
       const data = await response.json();
@@ -6813,7 +6813,7 @@
       }
 
       const errorMessage = data?.error?.message || JSON.stringify(data);
-      throw new Error(`API调用返回无效响应: ${errorMessage}`);
+      throw new Error(`Lệnh gọi API trả về phản hồi không hợp lệ: ${errorMessage}`);
     }
   }
 
@@ -7115,7 +7115,7 @@
 
     // 检查是否有有效的提示词
     if (!loopSettings.quickReplyContent || !Array.isArray(loopSettings.quickReplyContent) || loopSettings.quickReplyContent.length === 0) {
-      showToastr_ACU('error', '请先添加至少一个循环提示词', '无法启动循环');
+      showToastr_ACU('error', 'Vui lòng thêm ít nhất một lệnh nhắc vòng lặp', 'Không thể khởi động vòng lặp');
       stopAutoLoop_ACU();
       return;
     }
@@ -7124,7 +7124,7 @@
     loopSettings.currentPromptIndex = 0;
 
     if (loopDuration <= 0) {
-        showToastr_ACU('error', '请设置有效的总倒计时 (大于0分钟)', '无法启动循环');
+        showToastr_ACU('error', 'Vui lòng đặt tổng đếm ngược hợp lệ (lớn hơn 0 phút)', 'Không thể khởi động vòng lặp');
         stopAutoLoop_ACU();
         return;
     }
@@ -7147,7 +7147,7 @@
 
         if (remaining <= 0) {
             stopAutoLoop_ACU();
-            showToastr_ACU('info', '总倒计时结束，自动化循环已停止。', '循环结束');
+            showToastr_ACU('info', 'Đếm ngược kết thúc, vòng lặp tự động đã dừng.', 'Kết thúc vòng lặp');
             return;
         }
 
@@ -7176,12 +7176,12 @@
     if (isRunning) {
       $startBtn.hide();
       $stopBtn.css('display', 'inline-flex').show();
-      $statusText.text('运行中').css('color', 'var(--green, #4CAF50)');
+      $statusText.text('Đang chạy').css('color', 'var(--green, #4CAF50)');
       $timerDisplay.show();
     } else {
       $stopBtn.hide();
       $startBtn.css('display', 'inline-flex').show();
-      $statusText.text('已停止').css('color', 'var(--red, #f44336)');
+      $statusText.text('Đã dừng').css('color', 'var(--red, #f44336)');
       $timerDisplay.hide().text('');
     }
   }
@@ -7191,7 +7191,7 @@
    */
   function updateLoopTimerDisplay_ACU(timeLeftFormatted) {
     if (!$popupInstance_ACU) return;
-    $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-loop-timer-display`).text(`(剩余: ${timeLeftFormatted})`);
+    $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-loop-timer-display`).text(`(Còn lại: ${timeLeftFormatted})`);
   }
 
   /**
@@ -7305,7 +7305,7 @@
     logDebug_ACU(`[剧情推进] 进入重试流程: ${loopState_ACU.retryCount}/${maxRetries}.`);
 
     if (loopState_ACU.retryCount > maxRetries) {
-      showToastr_ACU('error', `连续失败超过 ${maxRetries} 次，自动化循环已停止。`, '循环中止');
+      showToastr_ACU('error', `Thất bại liên tiếp hơn ${maxRetries} lần, vòng lặp tự động đã dừng.`, 'Vòng lặp bị hủy');
       stopAutoLoop_ACU();
       return;
     }
@@ -7728,8 +7728,8 @@
       // 创建带中止按钮的 Toast（使用 ACU 主题 toast class，保证风格统一）
       const toastMsg = `
           <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span class="toastr-message" style="margin-right: 10px;">正在读取过往的记忆并分析，请稍后...</span>
-              <button class="qrf-abort-btn">终止</button>
+            <span class="toastr-message" style="margin-right: 10px;">Đang đọc ký ức trước đó và phân tích, vui lòng chờ...</span>
+            <button class="qrf-abort-btn">Dừng</button>
           </div>
       `;
 
@@ -7772,7 +7772,7 @@
 
             setTimeout(() => {
               // 用户主动中止属于正常流程，不应触发“错误”类提示
-              showToastr_ACU('info', '规划任务已被用户中止。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.PLANNING });
+              showToastr_ACU('info', 'Tác vụ lập kế hoạch đã bị người dùng hủy.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.PLANNING });
             }, 500);
           });
           logDebug_ACU('[剧情推进] 中止按钮事件已绑定。');
@@ -7873,7 +7873,7 @@
       const plotExcludeRules = normalizeExcludeRules_ACU(plotSettings.contextExcludeRules, plotExcludeTags);
       const filterPlotInjectedContent = (value, placeholderKey = '') => {
         const text = value !== undefined && value !== null ? String(value) : '';
-        // 仅对注入内容做规则处理，避免影响基础提示词模板文本
+        // 仅对注入内容做规则处理，避免影响基础Mẫu lệnh nhắc文本
         if (!['$1', '$5', '$6', '$7', '$8', '$U', '$C'].includes(placeholderKey)) return text;
         return applyExcludeRulesToText_ACU(text, { excludeRules: plotExcludeRules, excludeTags: plotExcludeTags });
       };
@@ -7940,7 +7940,7 @@
           || window.power_user?.persona_description
           || SillyTavern_API_ACU?.powerUserSettings?.persona_description
           || '';
-        logDebug_ACU(`[剧情推进] $U (persona_description) 获取结果: ${userInfoContent_Plot ? '成功' : '为空'}`);
+        logDebug_ACU(`[剧情推进] $U (persona_description) 获取结果: ${userInfoContent_Plot ? 'Thành công' : '为空'}`);
       } catch (e) {
         logWarn_ACU('[剧情推进] 获取用户设定描述时出错:', e);
         userInfoContent_Plot = '';
@@ -7992,7 +7992,7 @@
       };
 
       // 1) 取剧情推进三段提示词（来自剧情推进UI/预设）
-      // --- [新增] 辅助函数：尝试调用酒馆提示词模板引擎 ---
+      // --- [新增] 辅助函数：尝试调用酒馆Mẫu lệnh nhắc引擎 ---
       const tryRenderWithEjs_ACU = async (content) => {
           if (!content) return '';
           // 检测接口是否存在
@@ -8019,7 +8019,7 @@
                   // 执行渲染
                   return await window.EjsTemplate.evalTemplate(content, context);
               } catch (e) {
-                  logWarn_ACU('[剧情推进] 提示词模板渲染失败，将使用原始文本:', e);
+                  logWarn_ACU('[剧情推进] Mẫu lệnh nhắc渲染失败，将使用原始文本:', e);
                   return content;
               }
           }
@@ -8087,7 +8087,7 @@
       // [修改] 统一重试逻辑，无论 minLength 是否大于0都支持重试
       for (let i = 0; i < maxRetries; i++) {
         checkAbort();
-        $toast.find('.toastr-message').text(`正在读取过往的记忆并分析，请稍后... (尝试 ${i + 1}/${maxRetries})`);
+        $toast.find('.toastr-message').text(`Đang đọc ký ức quá khứ và phân tích, vui lòng chờ... (Lần thử ${i + 1}/${maxRetries})`);
 
         if (willUseMainApiGenerateRaw) {
           planningGuard_ACU.ignoreNextGenerationEndedCount++;
@@ -8115,7 +8115,7 @@
             // 成功：没有错误且回复满足条件
             processedMessage = tempMessage;
             try { if ($toast) toastr_API_ACU.clear($toast); } catch (e) {}
-            showToastr_ACU('success', `剧情规划成功 (第 ${i + 1} 次尝试)。`, '成功', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.PLAN_OK });
+            showToastr_ACU('success', `Lập kế hoạch cốt truyện thành công (lần thử ${i + 1}).`, 'Thành công', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.PLAN_OK });
             break;
           }
         }
@@ -8123,9 +8123,9 @@
         // 需要重试的情况
         if (i < maxRetries - 1) {
           if (apiError) {
-            showToastr_ACU('warning', `API调用失败，5秒后重试... (${apiError.message.substring(0, 50)})`, '剧情规划大师', { timeOut: 5000 });
+            showToastr_ACU('warning', `Gọi API thất bại, thử lại sau 5 giây... (${apiError.message.substring(0, 50)})`, 'Người lập kế hoạch cốt truyện', { timeOut: 5000 });
           } else if (minLength > 0 && (!tempMessage || tempMessage.length < minLength)) {
-            showToastr_ACU('warning', `回复过短，5秒后重试...`, '剧情规划大师', { timeOut: 5000 });
+            showToastr_ACU('warning', `Phản hồi quá ngắn, sẽ thử lại sau 5 giây...`, 'Người lập kế hoạch cốt truyện', { timeOut: 5000 });
           }
           // 固定等待5秒后重试
           await new Promise(resolve => setTimeout(resolve, 5000));
@@ -8186,7 +8186,7 @@
             if (extractedParts.length > 0) {
               messageForTavern = extractedParts.join('\n\n');
               logDebug_ACU(`[剧情推进] 成功摘取标签: ${tagNames.join(', ')}`);
-              showToastr_ACU('info', `已成功摘取 [${tagNames.join(', ')}] 标签内容并注入。`, '标签摘取');
+              showToastr_ACU('info', `Đã trích xuất và tiêm nội dung thẻ [${tagNames.join(', ')}] thành công.`, 'Trích xuất thẻ');
             } else {
               logDebug_ACU(`[剧情推进] 在回复中未找到指定标签: ${tagNames.join(', ')}`);
             }
@@ -8202,13 +8202,13 @@
 
         try { if ($toast) toastr_API_ACU.clear($toast); } catch (e) {}
         if (minLength <= 0) {
-          showToastr_ACU('success', '剧情规划大师已完成规划。', '规划成功', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.PLAN_OK });
+          showToastr_ACU('success', 'Người lập kế hoạch đã hoàn thành lập kế hoạch.', 'Lập kế hoạch thành công', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.PLAN_OK });
         }
         return finalMessage;
       } else {
         try { if ($toast) toastr_API_ACU.clear($toast); } catch (e) {}
         if (minLength > 0) {
-          showToastr_ACU('error', `重试 ${maxRetries} 次后回复依然过短，操作已取消。`, '规划失败');
+          showToastr_ACU('error', `Sau ${maxRetries} lần thử lại phản hồi vẫn quá ngắn, thao tác đã hủy.`, 'Lập kế hoạch thất bại');
         }
         return null;
       }
@@ -8223,7 +8223,7 @@
       }
       logError_ACU('[剧情推进] 在核心优化逻辑中发生错误:', error);
       try { if ($toast) toastr_API_ACU.clear($toast); } catch (e) {}
-      showToastr_ACU('error', '剧情规划大师在处理时发生错误。', '规划失败', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+      showToastr_ACU('error', 'Người lập kế hoạch gặp lỗi khi xử lý.', 'Lập kế hoạch thất bại', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
       return null;
     } finally {
         planningGuard_ACU.inProgress = false;
@@ -8600,7 +8600,7 @@
           removeTags: '',
           importSplitSize: 10000,
           skipUpdateFloors: 0, // 跳过更新楼层（全局）
-          retainRecentLayers: 100, // [新增] 保留最近N层本地数据 (0或空=全部保留)
+          retainRecentLayers: 100, // [新增] 保留最近N层本地数据 (0或Trống=giữ tất cả)
           manualSelectedTables: [],
           // [新增] 表格更新锁定（按聊天+隔离标签存储；仅对 updateRow 生效）
           tableUpdateLocks: {},
@@ -8803,7 +8803,7 @@
           }
           if ($customApiModelSelect_ACU) {
               // 清空现有选项并添加默认选项
-              $customApiModelSelect_ACU.empty().append('<option value="">-- 请先加载模型列表 --</option>');
+              $customApiModelSelect_ACU.empty().append('<option value="">-- Vui lòng tải danh sách model trước --</option>');
               if (settings_ACU.apiConfig.model) {
                   // 将已保存的模型添加到select中
                   $customApiModelSelect_ACU.append(`<option value="${escapeHtml_ACU(settings_ACU.apiConfig.model)}">${escapeHtml_ACU(settings_ACU.apiConfig.model)}</option>`);
@@ -8823,12 +8823,12 @@
           renderExcludeRuleRows_ACU(
             `#${SCRIPT_ID_PREFIX_ACU}-table-context-extract-rules`,
             normalizeExtractRules_ACU(settings_ACU.tableContextExtractRules, settings_ACU.tableContextExtractTags || ''),
-            { startPlaceholder: '开始词（例如：<think）', endPlaceholder: '结束词（例如：</think>）' },
+            { startPlaceholder: 'Từ bắt đầu (ví dụ: <think)', endPlaceholder: 'Từ kết thúc (ví dụ: </think>)' },
           );
           renderExcludeRuleRows_ACU(
             `#${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-rules`,
             normalizeExcludeRules_ACU(settings_ACU.tableContextExcludeRules, settings_ACU.tableContextExcludeTags || ''),
-            { startPlaceholder: '开始词（例如：<thinking）', endPlaceholder: '结束词（例如：</thinking>）' },
+            { startPlaceholder: 'Từ bắt đầu (ví dụ: <thinking)', endPlaceholder: 'Từ kết thúc (ví dụ: </thinking>)' },
           );
           const $importSplitSizeInput = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-import-split-size`);
           if ($importSplitSizeInput.length) $importSplitSizeInput.val(settings_ACU.importSplitSize);
@@ -8960,12 +8960,12 @@
     const $select = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select`);
     const currentProfileId = settings_ACU.tavernProfile;
     
-    $select.empty().append('<option value="">-- 请选择一个酒馆预设 --</option>');
+    $select.empty().append('<option value="">-- Chọn một preset SillyTavern --</option>');
 
     try {
         const tavernProfiles = SillyTavern_API_ACU.extensionSettings?.connectionManager?.profiles || [];
         if (!tavernProfiles || tavernProfiles.length === 0) {
-            $select.append($('<option>', { value: '', text: '未找到酒馆预设', disabled: true }));
+            $select.append($('<option>', { value: '', text: 'Không tìm thấy cài đặt SillyTavern', disabled: true }));
             return;
         }
 
@@ -8990,7 +8990,7 @@
 
     } catch (error) {
         logError_ACU('加载酒馆API预设失败:', error);
-        showToastr_ACU('error', '无法加载酒馆API预设列表。');
+        showToastr_ACU('error', 'Không thể tải danh sách cài đặt API SillyTavern.');
     }
   }
 
@@ -9007,11 +9007,11 @@
 
 
     if (!url) {
-      showToastr_ACU('warning', 'API URL 不能为空。');
+      showToastr_ACU('warning', 'URL API không được để trống.');
       return;
     }
     if (!model) {
-      showToastr_ACU('warning', '请输入或选择一个模型。');
+      showToastr_ACU('warning', 'Vui lòng nhập hoặc chọn một model.');
       return;
     }
 
@@ -9027,21 +9027,21 @@
         $customApiModelSelect_ACU.append(`<option value="${escapeHtml_ACU(model)}">${escapeHtml_ACU(model)}</option>`);
     }
     saveSettings_ACU();
-    showToastr_ACU('success', 'API配置已保存！');
+    showToastr_ACU('success', 'Đã lưu cấu hình API!');
     loadSettings_ACU();
   }
 
   function clearApiConfig_ACU() {
     Object.assign(settings_ACU.apiConfig, { url: '', apiKey: '', model: '', max_tokens: 120000, temperature: 0.9 });
     saveSettings_ACU();
-    showToastr_ACU('info', 'API配置已清除！');
+    showToastr_ACU('info', 'Đã xóa cấu hình API!');
     loadSettings_ACU();
   }
 
-  // --- [新增] API预设管理函数 ---
+  // --- [新增] Quản lý cài đặt API函数 ---
   function saveApiPreset_ACU(presetName) {
     if (!presetName || !presetName.trim()) {
-      showToastr_ACU('warning', '请输入预设名称。');
+      showToastr_ACU('warning', 'Vui lòng nhập tên cài đặt.');
       return false;
     }
     presetName = presetName.trim();
@@ -9057,10 +9057,10 @@
     const existingIndex = settings_ACU.apiPresets.findIndex(p => p.name === presetName);
     if (existingIndex >= 0) {
       settings_ACU.apiPresets[existingIndex] = newPreset;
-      showToastr_ACU('success', `API预设 "${presetName}" 已更新。`);
+      showToastr_ACU('success', `Cài đặt API "${presetName}" đã được cập nhật.`);
     } else {
       settings_ACU.apiPresets.push(newPreset);
-      showToastr_ACU('success', `API预设 "${presetName}" 已保存。`);
+      showToastr_ACU('success', `Cài đặt API "${presetName}" đã được lưu.`);
     }
     
     saveSettings_ACU();
@@ -9071,7 +9071,7 @@
   function loadApiPreset_ACU(presetName) {
     const preset = settings_ACU.apiPresets.find(p => p.name === presetName);
     if (!preset) {
-      showToastr_ACU('error', `未找到预设 "${presetName}"。`);
+      showToastr_ACU('error', `Không tìm thấy cài đặt "${presetName}".`);
       return false;
     }
     
@@ -9081,14 +9081,14 @@
     
     saveSettings_ACU();
     loadSettings_ACU();
-    showToastr_ACU('success', `已加载API预设 "${presetName}"。`);
+    showToastr_ACU('success', `Đã tải cài đặt API "${presetName}".`);
     return true;
   }
 
   function deleteApiPreset_ACU(presetName) {
     const index = settings_ACU.apiPresets.findIndex(p => p.name === presetName);
     if (index < 0) {
-      showToastr_ACU('error', `未找到预设 "${presetName}"。`);
+      showToastr_ACU('error', `Không tìm thấy cài đặt "${presetName}".`);
       return false;
     }
     
@@ -9104,7 +9104,7 @@
     
     saveSettings_ACU();
     refreshApiPresetSelectors_ACU();
-    showToastr_ACU('info', `API预设 "${presetName}" 已删除。`);
+    showToastr_ACU('info', `Đã xóa cài đặt API "${presetName}".`);
     return true;
   }
 
@@ -9116,7 +9116,7 @@
     // 刷新API配置页面的预设选择器
     const $apiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-api-preset-select`);
     if ($apiPresetSelect.length) {
-      $apiPresetSelect.empty().append('<option value="">-- 选择预设 --</option>');
+      $apiPresetSelect.empty().append('<option value="">-- Chọn cài đặt --</option>');
       presets.forEach(p => {
         $apiPresetSelect.append(`<option value="${p.name}">${p.name}</option>`);
       });
@@ -9125,7 +9125,7 @@
     // 刷新填表的API预设选择器
     const $tableApiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-table-api-preset-select`);
     if ($tableApiPresetSelect.length) {
-      $tableApiPresetSelect.empty().append('<option value="">使用当前API配置</option>');
+      $tableApiPresetSelect.empty().append('<option value="">Dùng cấu hình API hiện tại</option>');
       presets.forEach(p => {
         $tableApiPresetSelect.append(`<option value="${p.name}">${p.name}</option>`);
       });
@@ -9135,7 +9135,7 @@
     // 刷新剧情推进的API预设选择器
     const $plotApiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select`);
     if ($plotApiPresetSelect.length) {
-      $plotApiPresetSelect.empty().append('<option value="">使用当前API配置</option>');
+      $plotApiPresetSelect.empty().append('<option value="">Dùng cấu hình API hiện tại</option>');
       presets.forEach(p => {
         $plotApiPresetSelect.append(`<option value="${p.name}">${p.name}</option>`);
       });
@@ -9183,7 +9183,7 @@
     }
     let newPromptSegments = getCharCardPromptFromUI_ACU();
     if (!newPromptSegments || newPromptSegments.length === 0 || (newPromptSegments.length === 1 && !newPromptSegments[0].content.trim())) {
-      showToastr_ACU('warning', '更新预设不能为空。');
+      showToastr_ACU('warning', 'Cài đặt cập nhật không được để trống.');
       return;
     }
 
@@ -9210,14 +9210,14 @@
     // 保存为JSON数组格式
     settings_ACU.charCardPrompt = newPromptSegments;
     saveSettings_ACU();
-    showToastr_ACU('success', '更新预设已保存！');
+    showToastr_ACU('success', 'Đã lưu cài đặt cập nhật!');
     loadSettings_ACU(); // This will re-render from the saved data.
   }
 
   function resetDefaultCharCardPrompt_ACU() {
     settings_ACU.charCardPrompt = DEFAULT_CHAR_CARD_PROMPT_ACU;
     saveSettings_ACU();
-    showToastr_ACU('info', '更新预设已恢复为默认值！');
+    showToastr_ACU('info', 'Đã khôi phục cài đặt cập nhật về mặc định!');
     // loadSettings will trigger renderPromptSegments_ACU which correctly handles the string default
     loadSettings_ACU();
   }
@@ -9238,15 +9238,15 @@
             try {
                 jsonData = JSON.parse(content);
             } catch (error) {
-                logError_ACU('导入提示词模板失败：JSON解析错误。', error);
-                showToastr_ACU('error', '文件不是有效的JSON格式。', { timeOut: 5000 });
+                logError_ACU('导入Mẫu lệnh nhắc失败：JSON解析错误。', error);
+                showToastr_ACU('error', 'Tệp không phải định dạng JSON hợp lệ.', { timeOut: 5000 });
                 return;
             }
             
             try {
                 // Basic validation: must be an array of objects with role and content
                 if (!Array.isArray(jsonData) || jsonData.some(item => typeof item.role === 'undefined' || typeof item.content === 'undefined')) {
-                    throw new Error('JSON格式不正确。它必须是一个包含 "role" 和 "content" 键的对象的数组。');
+                    throw new Error('Định dạng JSON không đúng. Nó phải là một mảng các đối tượng chứa khóa "role" và "content".');
                 }
                 
                 // Add deletable: true and normalize roles for consistency
@@ -9273,12 +9273,12 @@
 
                 // Use the existing render function
                 renderPromptSegments_ACU(segments);
-                showToastr_ACU('success', '提示词模板已成功加载！');
+                showToastr_ACU('success', 'Đã tải mẫu lời nhắc thành công!');
                 logDebug_ACU('New prompt template loaded from JSON file.');
 
             } catch (error) {
-                logError_ACU('导入提示词模板失败：结构验证失败。', error);
-                showToastr_ACU('error', `导入失败: ${error.message}`, { timeOut: 10000 });
+                logError_ACU('Nhập mẫu lời nhắc thất bại: xác thực cấu trúc thất bại.', error);
+                showToastr_ACU('error', `Nhập thất bại: ${error.message}`, { timeOut: 10000 });
             }
         };
         reader.readAsText(file, 'UTF-8');
@@ -9291,13 +9291,13 @@
     try {
       const segments = getCharCardPromptFromUI_ACU();
       if (!Array.isArray(segments) || segments.length === 0) {
-        showToastr_ACU('warning', '没有可导出的提示词模板。');
+        showToastr_ACU('warning', 'Không có mẫu lời nhắc để xuất.');
         return;
       }
       // 基础校验：必须包含 role/content
       const invalid = segments.some(s => !s || typeof s !== 'object' || typeof s.role === 'undefined' || typeof s.content === 'undefined');
       if (invalid) {
-        showToastr_ACU('error', '导出失败：提示词结构不完整（缺少 role 或 content）。');
+        showToastr_ACU('error', 'Xuất thất bại: cấu trúc lời nhắc không đầy đủ (thiếu role hoặc content).');
         return;
       }
 
@@ -9312,10 +9312,10 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      showToastr_ACU('success', '提示词模板已导出为JSON！', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
+      showToastr_ACU('success', 'Đã xuất mẫu lời nhắc thành JSON!', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
     } catch (e) {
-      logError_ACU('导出提示词模板失败:', e);
-      showToastr_ACU('error', '导出提示词模板失败，请检查控制台获取详情。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+      logError_ACU('Xuất mẫu lời nhắc thất bại:', e);
+      showToastr_ACU('error', 'Xuất mẫu lời nhắc thất bại, vui lòng kiểm tra console để biết chi tiết.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
     }
   }
   function saveAutoUpdateThreshold_ACU({ silent = false, skipReload = false } = {}) {
@@ -9330,12 +9330,12 @@
       settings_ACU.autoUpdateThreshold = newT;
       saveSettings_ACU();
       if (!silent) {
-        if (newT === 0) showToastr_ACU('success', '自动更新阈值已保存！标准表自动更新已禁用。');
-        else showToastr_ACU('success', '自动更新阈值已保存！');
+        if (newT === 0) showToastr_ACU('success', 'Đã lưu ngưỡng cập nhật tự động! Cập nhật bảng chuẩn tự động đã tắt.');
+        else showToastr_ACU('success', 'Đã lưu ngưỡng cập nhật tự động!');
       }
       if (!skipReload) loadSettings_ACU();
     } else {
-      if (!silent) showToastr_ACU('warning', `阈值 "${valStr}" 无效。请输入一个大于等于0的整数。恢复为: ${settings_ACU.autoUpdateThreshold}`);
+      if (!silent) showToastr_ACU('warning', `Ngưỡng "${valStr}" không hợp lệ. Vui lòng nhập số nguyên >= 0. Đã khôi phục về: ${settings_ACU.autoUpdateThreshold}`);
       $autoUpdateThresholdInput_ACU.val(settings_ACU.autoUpdateThreshold);
     }
   }
@@ -9351,10 +9351,10 @@
     if (!isNaN(newT) && newT >= 0) {
       settings_ACU.autoUpdateTokenThreshold = newT;
       saveSettings_ACU();
-      if (!silent) showToastr_ACU('success', '自动更新Token阈值已保存！');
+      if (!silent) showToastr_ACU('success', 'Đã lưu ngưỡng Token cập nhật tự động!');
       if (!skipReload) loadSettings_ACU();
     } else {
-      if (!silent) showToastr_ACU('warning', `Token阈值 "${valStr}" 无效。请输入一个大于等于0的整数。恢复为: ${settings_ACU.autoUpdateTokenThreshold}`);
+      if (!silent) showToastr_ACU('warning', `Ngưỡng Token "${valStr}" không hợp lệ. Vui lòng nhập số nguyên >= 0. Đã khôi phục về: ${settings_ACU.autoUpdateTokenThreshold}`);
       $autoUpdateTokenThresholdInput_ACU.val(settings_ACU.autoUpdateTokenThreshold);
     }
   }
@@ -9371,10 +9371,10 @@
     if (!isNaN(newR) && newR >= 1 && newR <= 10) {
       settings_ACU.tableMaxRetries = newR;
       saveSettings_ACU();
-      if (!silent) showToastr_ACU('success', '填表自动重试次数已保存！');
+      if (!silent) showToastr_ACU('success', 'Đã lưu số lần thử lại tự động điền bảng!');
       if (!skipReload) loadSettings_ACU();
     } else {
-      if (!silent) showToastr_ACU('warning', `重试次数 "${valStr}" 无效。请输入1-10之间的整数。恢复为: ${settings_ACU.tableMaxRetries || 3}`);
+      if (!silent) showToastr_ACU('warning', `Số lần thử lại "${valStr}" không hợp lệ. Vui lòng nhập số nguyên từ 1-10. Đã khôi phục về: ${settings_ACU.tableMaxRetries || 3}`);
       $tableMaxRetriesInput_ACU.val(settings_ACU.tableMaxRetries || 3);
     }
   }
@@ -9390,10 +9390,10 @@
     if (!isNaN(newF) && newF >= 1) {
       settings_ACU.autoUpdateFrequency = newF;
       saveSettings_ACU();
-      if (!silent) showToastr_ACU('success', '自动更新频率已保存！');
+      if (!silent) showToastr_ACU('success', 'Đã lưu tần suất cập nhật tự động!');
       if (!skipReload) loadSettings_ACU();
     } else {
-      if (!silent) showToastr_ACU('warning', `更新频率 "${valStr}" 无效。请输入一个大于0的整数。恢复为: ${settings_ACU.autoUpdateFrequency}`);
+      if (!silent) showToastr_ACU('warning', `Tần suất cập nhật "${valStr}" không hợp lệ. Vui lòng nhập số nguyên > 0. Đã khôi phục về: ${settings_ACU.autoUpdateFrequency}`);
       $autoUpdateFrequencyInput_ACU.val(settings_ACU.autoUpdateFrequency);
     }
   }
@@ -9411,10 +9411,10 @@
       if (!isNaN(newBatchSize) && newBatchSize >= 1) {
           settings_ACU.updateBatchSize = newBatchSize;
           saveSettings_ACU();
-          if (!silent) showToastr_ACU('success', '批处理大小已保存！');
+          if (!silent) showToastr_ACU('success', 'Đã lưu kích thước lô!');
           if (!skipReload) loadSettings_ACU();
       } else {
-          if (!silent) showToastr_ACU('warning', `批处理大小 "${valStr}" 无效。请输入一个大于0的整数。恢复为: ${settings_ACU.updateBatchSize}`);
+          if (!silent) showToastr_ACU('warning', `Kích thước lô "${valStr}" không hợp lệ. Vui lòng nhập số nguyên > 0. Đã khôi phục về: ${settings_ACU.updateBatchSize}`);
           $updateBatchSizeInput_ACU.val(settings_ACU.updateBatchSize);
       }
   }
@@ -9431,10 +9431,10 @@
       if (!isNaN(newLimit) && newLimit >= 1) {
           settings_ACU.maxConcurrentGroups = newLimit;
           saveSettings_ACU();
-          if (!silent) showToastr_ACU('success', '最大并发数已保存！');
+          if (!silent) showToastr_ACU('success', 'Đã lưu số luồng đồng thời tối đa!');
           if (!skipReload) loadSettings_ACU();
       } else {
-          if (!silent) showToastr_ACU('warning', `最大并发数 "${valStr}" 无效。请输入一个大于0的整数。恢复为: ${settings_ACU.maxConcurrentGroups || 1}`);
+          if (!silent) showToastr_ACU('warning', `Số luồng đồng thời tối đa "${valStr}" không hợp lệ. Vui lòng nhập số nguyên > 0. Đã khôi phục về: ${settings_ACU.maxConcurrentGroups || 1}`);
           $maxConcurrentGroupsInput_ACU.val(settings_ACU.maxConcurrentGroups || 1);
       }
   }
@@ -9451,10 +9451,10 @@
        if (!isNaN(newSkip) && newSkip >= 0) {
            settings_ACU.skipUpdateFloors = newSkip;
            saveSettings_ACU();
-           if (!silent) showToastr_ACU('success', '跳过更新楼层已保存！');
+           if (!silent) showToastr_ACU('success', 'Đã lưu số tầng bỏ qua cập nhật!');
            if (!skipReload) loadSettings_ACU();
        } else {
-           if (!silent) showToastr_ACU('warning', `跳过更新楼层 "${valStr}" 无效。请输入一个大于等于0的整数。恢复为: ${settings_ACU.skipUpdateFloors || 0}`);
+           if (!silent) showToastr_ACU('warning', `Số tầng bỏ qua cập nhật "${valStr}" không hợp lệ. Vui lòng nhập số nguyên >= 0. Đã khôi phục về: ${settings_ACU.skipUpdateFloors || 0}`);
            $skipUpdateFloorsInput_ACU.val(settings_ACU.skipUpdateFloors || 0);
        }
    }
@@ -9474,9 +9474,9 @@
        saveSettings_ACU();
        if (!silent) {
            if (newRetain === 0) {
-               showToastr_ACU('success', '保留层数已清空（将保留全部历史数据）！');
+               showToastr_ACU('success', 'Đã xóa số lớp giữ lại (sẽ giữ toàn bộ dữ liệu lịch sử)!');
            } else {
-               showToastr_ACU('success', `保留层数已保存：最近 ${newRetain} 层！`);
+               showToastr_ACU('success', `Đã lưu số lớp giữ lại: ${newRetain} lớp gần nhất!`);
            }
        }
        if (!skipReload) loadSettings_ACU();
@@ -9591,10 +9591,10 @@
       if (!isNaN(newSize) && newSize >= 100) {
           settings_ACU.importSplitSize = newSize;
           saveSettings_ACU();
-          showToastr_ACU('success', '导入分割大小已保存！');
+          showToastr_ACU('success', 'Đã lưu kích thước chia đoạn nhập!');
           loadSettings_ACU();
       } else {
-          showToastr_ACU('warning', `导入分割大小 "${valStr}" 无效。请输入一个大于等于100的整数。恢复为: ${settings_ACU.importSplitSize}`);
+          showToastr_ACU('warning', `Kích thước chia đoạn nhập "${valStr}" không hợp lệ. Vui lòng nhập số nguyên >= 100. Đã khôi phục về: ${settings_ACU.importSplitSize}`);
           $input.val(settings_ACU.importSplitSize);
       }
   }
@@ -9608,19 +9608,19 @@
       !$apiStatusDisplay_ACU
     ) {
       logError_ACU('加载模型列表失败：UI元素未初始化。');
-      showToastr_ACU('error', 'UI未就绪。');
+      showToastr_ACU('error', 'UI chưa sẵn sàng.');
       return;
     }
     const apiUrl = $customApiUrlInput_ACU.val().trim();
     const apiKey = $customApiKeyInput_ACU.val();
     if (!apiUrl) {
-      showToastr_ACU('warning', '请输入API基础URL。');
-      $apiStatusDisplay_ACU.text('状态:请输入API基础URL').css('color', 'orange');
+      showToastr_ACU('warning', 'Vui lòng nhập URL cơ sở API.');
+      $apiStatusDisplay_ACU.text('Trạng thái: Vui lòng nhập URL cơ sở API').css('color', 'orange');
       return;
     }
     const statusUrl = `/api/backends/chat-completions/status`;
-    $apiStatusDisplay_ACU.text('状态: 正在检查API端点状态...').css('color', '#61afef');
-    showToastr_ACU('info', '正在检查自定义API端点状态...');
+    $apiStatusDisplay_ACU.text('Trạng thái: Đang kiểm tra trạng thái điểm kết nối API...').css('color', '#61afef');
+    showToastr_ACU('info', 'Đang kiểm tra trạng thái điểm kết nối API tùy chỉnh...');
 
     try {
         const body = {
@@ -9654,7 +9654,7 @@
       // 保存当前选中的模型
       const currentSelectedModel = settings_ACU.apiConfig.model || '';
       // 清空select并添加默认选项
-      $customApiModelSelect_ACU.empty().append('<option value="">-- 请选择模型 --</option>');
+      $customApiModelSelect_ACU.empty().append('<option value="">-- Chọn model --</option>');
       let modelsFound = false;
       let modelsList = [];
       if (data && data.models && Array.isArray(data.models)) {
@@ -9682,17 +9682,17 @@
       if (modelsFound) {
         // 如果之前保存的模型不在列表中，也添加进去
         if (currentSelectedModel && $customApiModelSelect_ACU.find(`option[value="${escapeHtml_ACU(currentSelectedModel)}"]`).length === 0) {
-            $customApiModelSelect_ACU.append(`<option value="${escapeHtml_ACU(currentSelectedModel)}" selected>${escapeHtml_ACU(currentSelectedModel)} (已保存)</option>`);
+            $customApiModelSelect_ACU.append(`<option value="${escapeHtml_ACU(currentSelectedModel)}" selected>${escapeHtml_ACU(currentSelectedModel)} (đã lưu)</option>`);
         }
-        showToastr_ACU('success', `模型列表加载成功！共加载 ${modelsList.length} 个模型。`);
+        showToastr_ACU('success', `Tải danh sách model thành công! Đã tải ${modelsList.length} model.`);
       } else {
-        showToastr_ACU('warning', '未能解析模型数据或列表为空。');
-        $apiStatusDisplay_ACU.text('状态: 未能解析模型数据或列表为空。').css('color', 'orange');
+        showToastr_ACU('warning', 'Không thể phân tích dữ liệu model hoặc danh sách rỗng.');
+        $apiStatusDisplay_ACU.text('Trạng thái: Không thể phân tích dữ liệu model hoặc danh sách rỗng.').css('color', 'orange');
       }
     } catch (error) {
       logError_ACU('加载模型列表时出错:', error);
-      showToastr_ACU('error', `加载模型列表失败: ${error.message}`);
-      $apiStatusDisplay_ACU.text(`状态: 加载模型失败 - ${error.message}`).css('color', '#ff6b6b');
+      showToastr_ACU('error', `Tải danh sách model thất bại: ${error.message}`);
+      $apiStatusDisplay_ACU.text(`Trạng thái: Tải model thất bại - ${error.message}`).css('color', '#ff6b6b');
     }
     updateApiStatusDisplay_ACU();
   }
@@ -9700,15 +9700,15 @@
     if (!$popupInstance_ACU || !$apiStatusDisplay_ACU) return;
     if (settings_ACU.apiConfig.url && settings_ACU.apiConfig.model)
       $apiStatusDisplay_ACU.html(
-        `当前URL: <span style="color:lightgreen;word-break:break-all;">${escapeHtml_ACU(
+        `URL hiện tại: <span style="color:lightgreen;word-break:break-all;">${escapeHtml_ACU(
           settings_ACU.apiConfig.url,
-        )}</span><br>已选模型: <span style="color:lightgreen;">${escapeHtml_ACU(settings_ACU.apiConfig.model)}</span>`,
+        )}</span><br>Model đã chọn: <span style="color:lightgreen;">${escapeHtml_ACU(settings_ACU.apiConfig.model)}</span>`,
       );
     else if (settings_ACU.apiConfig.url)
       $apiStatusDisplay_ACU.html(
-        `当前URL: ${escapeHtml_ACU(settings_ACU.apiConfig.url)} - <span style="color:orange;">请加载并选择模型</span>`,
+        `URL hiện tại: ${escapeHtml_ACU(settings_ACU.apiConfig.url)} - <span style="color:orange;">Vui lòng tải và chọn model</span>`,
       );
-    else $apiStatusDisplay_ACU.html(`<span style="color:#ffcc80;">未配置自定义API。数据库更新功能可能不可用。</span>`);
+    else $apiStatusDisplay_ACU.html(`<span style="color:#ffcc80;">API tùy chỉnh chưa được cấu hình. Chức năng cập nhật cơ sở dữ liệu có thể không dùng được.</span>`);
   }
   function attemptToLoadCoreApis_ACU() {
     const parentWin = typeof window.parent !== 'undefined' ? window.parent : window;
@@ -10057,9 +10057,9 @@
         const maxConcurrentGroups = Math.max(1, settings_ACU.maxConcurrentGroups || 1);
         const needsChunking = totalGroups > maxConcurrentGroups;
         if (needsChunking) {
-            showToastr_ACU('info', `检测到 ${tablesToUpdate.length} 个表格需要更新，将分批并发处理 ${totalGroups} 组（每批最多 ${maxConcurrentGroups} 组）。`);
+            showToastr_ACU('info', `Phát hiện ${tablesToUpdate.length} bảng cần cập nhật, sẽ xử lý song song theo lô ${totalGroups} nhóm (mỗi lô tối đa ${maxConcurrentGroups} nhóm).`);
         } else {
-            showToastr_ACU('info', `检测到 ${tablesToUpdate.length} 个表格需要更新，将并发处理 ${totalGroups} 组。`);
+            showToastr_ACU('info', `Phát hiện ${tablesToUpdate.length} bảng cần cập nhật, sẽ xử lý song song ${totalGroups} nhóm.`);
         }
         
         isAutoUpdatingCard_ACU = true;
@@ -10094,7 +10094,7 @@
         
         if (failedGroupKeys.length > 0) {
             logWarn_ACU(`并发分组更新失败 ${failedGroupKeys.length}/${totalGroups} 组。`);
-            showToastr_ACU('warning', `并发分组更新有 ${failedGroupKeys.length} 组失败，请查看日志。`);
+            showToastr_ACU('warning', `Có ${failedGroupKeys.length} nhóm cập nhật song song thất bại, vui lòng kiểm tra nhật ký.`);
         }
         
         // [核心修复] 并发更新完成后统一刷新数据链条
@@ -10129,7 +10129,7 @@
       if (!$manualExtraHintCheckbox_ACU || !$manualExtraHintCheckbox_ACU.length) return;
       if (!$manualExtraHintCheckbox_ACU.is(':checked')) return;
 
-      const userInput = prompt('请输入本次手动填表的额外提示词（可留空）：', '');
+      const userInput = prompt('Nhập lời nhắc bổ sung cho lần điền bảng thủ công này (có thể để trống):', '');
       const trimmed = (userInput || '').trim();
       if (!trimmed) return;
 
@@ -10156,7 +10156,7 @@
       if (!$manualTableSelector_ACU || !$manualTableSelector_ACU.length || !currentJsonTableData_ACU) return;
       const availableKeys = getSortedSheetKeys_ACU(currentJsonTableData_ACU);
       if (availableKeys.length === 0) {
-          $manualTableSelector_ACU.html('<div class="notes">暂无表格可选。</div>');
+          $manualTableSelector_ACU.html('<div class="notes">Hiện không có bảng nào để chọn.</div>');
           return;
       }
       const resolvedSelection = getSelectedManualSheetKeys_ACU();
@@ -10239,12 +10239,12 @@
       if (!$importTableSelector_ACU || !$importTableSelector_ACU.length) return;
       const base = getImportBaseTableData_ACU();
       if (!base) {
-          $importTableSelector_ACU.html('<div class="notes">尚未加载表格结构。</div>');
+          $importTableSelector_ACU.html('<div class="notes">Cấu trúc bảng chưa được tải.</div>');
           return;
       }
       const availableKeys = getSortedSheetKeys_ACU(base);
       if (availableKeys.length === 0) {
-          $importTableSelector_ACU.html('<div class="notes">暂无表格可选。</div>');
+          $importTableSelector_ACU.html('<div class="notes">Hiện không có bảng nào để chọn.</div>');
           return;
       }
 
@@ -10332,18 +10332,18 @@
   async function handleManualUpdate_ACU() {
       try {
         if (isAutoUpdatingCard_ACU) {
-            showToastr_ACU('warning', '数据库更新正在进行中，请稍候...');
+            showToastr_ACU('warning', 'Đang cập nhật CSDL, vui lòng chờ...');
             return;
         }
 
         if (!coreApisAreReady_ACU) {
-            showToastr_ACU('error', 'API未就绪。');
+            showToastr_ACU('error', 'API chưa sẵn sàng.');
             return;
         }
 
         const apiIsConfigured = (settings_ACU.apiMode === 'custom' && (settings_ACU.apiConfig.useMainApi || (settings_ACU.apiConfig.url && settings_ACU.apiConfig.model))) || (settings_ACU.apiMode === 'tavern' && settings_ACU.tavernProfile);
         if (!apiIsConfigured) {
-            showToastr_ACU('error', 'API未配置，无法更新数据库。');
+            showToastr_ACU('error', 'API chưa cấu hình, không thể cập nhật CSDL.');
             return;
         }
 
@@ -10355,12 +10355,12 @@
         await refreshMergedDataAndNotify_ACU();
         
         if (!currentJsonTableData_ACU) {
-            showToastr_ACU('error', '数据库未加载。');
+            showToastr_ACU('error', 'CSDL chưa được tải.');
             return;
         }
         const liveChat = SillyTavern_API_ACU.chat;
         if (!liveChat || liveChat.length === 0) {
-            showToastr_ACU('warning', '聊天记录为空，无法更新。');
+            showToastr_ACU('warning', 'Lịch sử chat rỗng, không thể cập nhật.');
             return;
         }
 
@@ -10369,13 +10369,13 @@
             .filter(index => index !== -1);
 
         if (allAiMessageIndices.length === 0) {
-            showToastr_ACU('warning', '尚未检测到AI回复，无法执行手动更新。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
+            showToastr_ACU('warning', 'Chưa phát hiện phản hồi AI, không thể thực hiện cập nhật thủ công.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
             return;
         }
 
         const targetKeys = getManualSelectionFromUI_ACU();
         if (!targetKeys.length) {
-            showToastr_ACU('warning', '未选择需要更新的表格。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
+            showToastr_ACU('warning', 'Chưa chọn bảng cần cập nhật.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
             return;
         }
 
@@ -10388,7 +10388,7 @@
         const contextScopeIndices = uiThreshold > 0 ? effectiveAiIndices.slice(-uiThreshold) : effectiveAiIndices;
 
         if (!contextScopeIndices.length) {
-            showToastr_ACU('warning', '未找到可用的上下文进行手动更新，请检查阈值或跳过楼层设置。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
+            showToastr_ACU('warning', 'Không tìm thấy ngữ cảnh khả dụng để cập nhật thủ công, kiểm tra ngưỡng hoặc cài đặt bỏ qua tầng.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
             return;
         }
 
@@ -10412,14 +10412,14 @@
             });
             if (!success) {
                 isAutoUpdatingCard_ACU = false;
-                showToastr_ACU('error', '手动更新失败或被终止。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+                showToastr_ACU('error', 'Cập nhật thủ công thất bại hoặc bị hủy.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
                 return;
             }
             await loadAllChatMessages_ACU();
             await refreshMergedDataAndNotify_ACU();
         }
         isAutoUpdatingCard_ACU = false;
-        showToastr_ACU('success', '手动更新完成！', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.TABLE_OK });
+        showToastr_ACU('success', 'Hoàn thành cập nhật thủ công!', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.TABLE_OK });
         if (typeof updateCardUpdateStatusDisplay_ACU === 'function') {
             updateCardUpdateStatusDisplay_ACU();
         }
@@ -10434,7 +10434,7 @@
           manualExtraHint_ACU = '';
           isAutoUpdatingCard_ACU = false;
           if ($manualUpdateCardButton_ACU) {
-              $manualUpdateCardButton_ACU.prop('disabled', false).text('立即手动更新');
+              $manualUpdateCardButton_ACU.prop('disabled', false).text('Cập nhật thủ công ngay');
           }
       }
   }
@@ -10497,8 +10497,8 @@
     if ($popupInstance_ACU) {
       const $titleElement = $popupInstance_ACU.find('h2#updater-main-title-acu');
       if ($titleElement.length)
-        $titleElement.html(`当前聊天：${escapeHtml_ACU(currentChatFileIdentifier_ACU || '未知')}`);
-      if ($statusMessageSpan_ACU) $statusMessageSpan_ACU.text('准备就绪');
+        $titleElement.html(`Cuộc trò chuyện hiện tại: ${escapeHtml_ACU(currentChatFileIdentifier_ACU || 'Không rõ')}`);
+      if ($statusMessageSpan_ACU) $statusMessageSpan_ACU.text('Sẵn sàng');
     }
     
     if (typeof updateCardUpdateStatusDisplay_ACU === 'function') updateCardUpdateStatusDisplay_ACU();
@@ -10785,7 +10785,7 @@
   function allocOrder_ACU(usedSet, preferred = 1, min = 1, max = 99999) {
       const used = usedSet instanceof Set ? usedSet : new Set();
       const o = findFirstFreeOrder_ACU(used, preferred, min, max);
-      if (o === null) throw new Error('无法分配可用的世界书条目 order（插入深度）');
+      if (o === null) throw new Error('Không thể phân bổ order mục Sổ thế giới khả dụng (độ sâu chèn)');
       used.add(o);
       return o;
   }
@@ -10813,7 +10813,7 @@
 
       let s = tryFrom(start);
       if (s === null) s = tryFrom(min);
-      if (s === null) throw new Error('无法分配连续的世界书条目 order 区间');
+      if (s === null) throw new Error('Không thể phân bổ khoảng order liên tiếp cho mục Sổ thế giới');
 
       for (let i = 0; i < size; i++) used.add(s + i);
       return s;
@@ -11552,7 +11552,7 @@
                 }, globalFixedEntryPlacement);
                 await TavernHelper_API_ACU.createLorebookEntries(primaryLorebookName, [newDb2Entry]);
                 logDebug_ACU('Global readable lorebook entry not found. Created a new one.');
-                showToastr_ACU('success', `已创建全局可读数据库条目。`);
+                showToastr_ACU('success', `Đã tạo mục cơ sở dữ liệu đọc toàn cục.`);
             }
 
             // [新增] 创建 WrapperStart 条目
@@ -12874,12 +12874,12 @@
         logDebug_ACU('Successfully initialized database in memory.');
     } catch (error) {
         logError_ACU('Failed to parse template and initialize database in memory:', error);
-        showToastr_ACU('error', '从模板解析数据库失败，请检查模板格式。');
+        showToastr_ACU('error', 'Phân tích CSDL từ mẫu thất bại, vui lòng kiểm tra định dạng mẫu.');
         currentJsonTableData_ACU = null;
         return false;
     }
     if (!currentJsonTableData_ACU) {
-        showToastr_ACU('error', '从模板解析数据库失败，请检查模板格式。');
+        showToastr_ACU('error', 'Phân tích CSDL từ mẫu thất bại, vui lòng kiểm tra định dạng mẫu.');
         return false;
     }
 
@@ -12944,7 +12944,7 @@
     console.log('ACU_INIT_DEBUG: mainInitialize_ACU called.');
     if (attemptToLoadCoreApis_ACU()) {
       logDebug_ACU('AutoCardUpdater Initialization successful! Core APIs loaded.');
-      showToastr_ACU('success', '数据库自动更新脚本已加载！', '脚本启动');
+      showToastr_ACU('success', 'Script cập nhật CSDL tự động đã tải!', 'Khởi động script');
 
       addAutoCardMenuItem_ACU();
       loadSettings_ACU();
@@ -12968,10 +12968,10 @@
           // [触发门控] 每次切换聊天都尝试安装一次 capture 钩子（防止 DOM 重新渲染导致丢失）
           installSendIntentCaptureHooks_ACU();
 
-          // [剧情推进] 切换聊天时停止循环并加载预设
+          // [剧情推进] 切换聊天时Dừng vòng lặp并加载预设
           if (loopState_ACU.isLooping) {
             stopAutoLoop_ACU();
-            showToastr_ACU('info', '切换聊天，自动化循环已停止。');
+            showToastr_ACU('info', 'Chuyển chat, vòng lặp tự động đã dừng.');
           }
           loadPresetAndCleanCharacterData_ACU();
 
@@ -13396,7 +13396,7 @@
     $menuItemContainer = jQuery_API_ACU(
       `<div class="extension_container interactable" id="${MENU_ITEM_CONTAINER_ID_ACU}" tabindex="0"></div>`,
     );
-    const menuItemHTML = `<div class="list-group-item flex-container flexGap5 interactable" id="${MENU_ITEM_ID_ACU}" title="打开数据库自动更新工具"><div class="fa-fw fa-solid fa-database extensionsMenuExtensionButton"></div><span>魔·数据库V</span></div>`;
+    const menuItemHTML = `<div class="list-group-item flex-container flexGap5 interactable" id="${MENU_ITEM_ID_ACU}" title="Mở công cụ cập nhật cơ sở dữ liệu"><div class="fa-fw fa-solid fa-database extensionsMenuExtensionButton"></div><span>Mythic·Database V</span></div>`;
     const $menuItem = jQuery_API_ACU(menuItemHTML);
     $menuItem.on(`click.${SCRIPT_ID_PREFIX_ACU}`, async function (e) {
       e.stopPropagation();
@@ -13442,8 +13442,8 @@
           await importTempRemove_ACU(STORAGE_KEY_IMPORTED_STATUS_STANDARD_ACU);
           await importTempRemove_ACU(STORAGE_KEY_IMPORTED_STATUS_SUMMARY_ACU);
           await importTempRemove_ACU(STORAGE_KEY_IMPORTED_STATUS_FULL_ACU);
-          if (notify && entriesExist) showToastr_ACU('success', '已成功清除导入暂存缓存（IndexedDB）。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
-          else if (notify && !entriesExist) showToastr_ACU('info', '没有需要清除的导入暂存缓存。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+          if (notify && entriesExist) showToastr_ACU('success', 'Đã xóa bộ nhớ đệm nhập tạm (IndexedDB) thành công.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+          else if (notify && !entriesExist) showToastr_ACU('info', 'Không có bộ nhớ đệm nhập tạm nào cần xóa.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
           logDebug_ACU('[外部导入] Cleared imported txt entries and status from temp storage (IndexedDB preferred).');
           // Update the UI to reflect the change
           if (typeof updateImportStatusUI_ACU === 'function') {
@@ -13452,7 +13452,7 @@
           return true;
       } catch(error) {
           logError_ACU('[外部导入] Failed to clear import temp storage:', error);
-          if (notify) showToastr_ACU('error', '清除导入缓存时出错。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+          if (notify) showToastr_ACU('error', 'Lỗi khi xóa bộ nhớ đệm nhập.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
           return false;
       }
   }
@@ -13460,7 +13460,7 @@
   async function clearImportedEntries_ACU(notify = true) {
     const targetLorebook = await getInjectionTargetLorebook_ACU();
     if (!targetLorebook) {
-        showToastr_ACU('error', '无法清除导入条目：未设置数据注入目标。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+        showToastr_ACU('error', 'Không thể xóa mục nhập: Chưa đặt mục tiêu tiêm dữ liệu.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
         return;
     }
 
@@ -13480,15 +13480,15 @@
         if (uidsToDelete.length > 0) {
             await TavernHelper_API_ACU.deleteLorebookEntries(targetLorebook, uidsToDelete);
             logDebug_ACU(`Successfully deleted ${uidsToDelete.length} imported txt entries.`);
-            if (notify) showToastr_ACU('success', `成功清除了 ${uidsToDelete.length} 个导入条目。`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+            if (notify) showToastr_ACU('success', `Đã xóa thành công ${uidsToDelete.length} mục nhập khẩu.`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
         } else {
-            if (notify) showToastr_ACU('info', '没有找到可清除的已注入世界书条目。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+            if (notify) showToastr_ACU('info', 'Không tìm thấy mục sổ thế giới đã tiêm nào có thể xóa.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
         }
         // [重构] 调用新的函数来只清除本地存储，而不是在这里重复逻辑
         await clearImportLocalStorage_ACU(false); // notify=false 因为我们已经在上面或下面提供了反馈
     } catch(error) {
         logError_ACU('Failed to delete imported lorebook entries:', error);
-        if (notify) showToastr_ACU('error', '清除导入条目时出错。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+        if (notify) showToastr_ACU('error', 'Lỗi khi xóa mục nhập.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
     }
   }
 
@@ -13496,7 +13496,7 @@
   async function deleteImportedEntries_ACU() {
       const targetLorebook = await getImportWorldbookTarget_ACU();
       if (!targetLorebook) {
-          showToastr_ACU('error', '无法删除注入条目：未设置导入数据注入目标世界书。');
+          showToastr_ACU('error', 'Không thể xóa mục tiêm: Chưa đặt sổ thế giới đích tiêm dữ liệu nhập.');
           return;
       }
 
@@ -13526,13 +13526,13 @@
           if (uidsToDelete.length > 0) {
               await TavernHelper_API_ACU.deleteLorebookEntries(targetLorebook, uidsToDelete);
               logDebug_ACU(`Successfully deleted ${uidsToDelete.length} imported entries from ${targetLorebook} (Isolation: ${settings_ACU.dataIsolationEnabled}).`);
-              showToastr_ACU('success', `成功删除了 ${uidsToDelete.length} 个外部导入注入的条目。`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+              showToastr_ACU('success', `Đã xóa thành công ${uidsToDelete.length} mục được tiêm từ nhập ngoài.`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
           } else {
-              showToastr_ACU('info', `在世界书 "${targetLorebook}" 中没有找到符合当前标识的外部导入条目。`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+              showToastr_ACU('info', `Không tìm thấy mục nhập ngoài phù hợp với mã hiện tại trong sổ thế giới "${targetLorebook}".`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
           }
       } catch(error) {
           logError_ACU('Failed to delete imported entries:', error);
-          showToastr_ACU('error', '删除注入条目时出错。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+          showToastr_ACU('error', 'Lỗi khi xóa mục tiêm.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
     }
   }
 
@@ -13557,8 +13557,8 @@
                   const selectionSig = JSON.stringify(currentSelection || []);
 
                   if (settings_ACU.hasImportTableSelection && (!currentSelection || currentSelection.length === 0)) {
-                      $statusDisplay.text('状态：未选择任何表格，无法注入。').css('color', 'salmon');
-                      $injectButton.text('2. 注入（自选表格）').prop('disabled', true);
+                      $statusDisplay.text('Trạng thái: Chưa chọn bảng nào, không thể tiêm.').css('color', 'salmon');
+                      $injectButton.text('2. Tiêm (bảng tùy chọn)').prop('disabled', true);
                       return;
                       }
 
@@ -13576,11 +13576,11 @@
                       (typeof status.selectionSig === 'undefined' || status.selectionSig === selectionSig);
 
                   if (canResume) {
-                      $statusDisplay.text(`状态：已暂停，完成 ${status.currentIndex}/${status.total}。`).css('color', 'orange');
-                      $injectButton.text('继续注入（自选表格）').prop('disabled', false);
+                      $statusDisplay.text(`Trạng thái: Đã tạm dừng, hoàn thành ${status.currentIndex}/${status.total}.`).css('color', 'orange');
+                      $injectButton.text('Tiếp tục tiêm (bảng tùy chọn)').prop('disabled', false);
                       } else {
-                  $statusDisplay.text(`状态：已准备好 ${chunks.length} 个条目可供注入。`).css('color', 'lightgreen');
-                      $injectButton.text('2. 注入（自选表格）').prop('disabled', false);
+                  $statusDisplay.text(`Trạng thái: Đã sẵn sàng ${chunks.length} mục để tiêm.`).css('color', 'lightgreen');
+                      $injectButton.text('2. Tiêm (bảng tùy chọn)').prop('disabled', false);
                   }
                   return;
               }
@@ -13590,8 +13590,8 @@
           }
       }
       
-      $statusDisplay.text('状态：尚未加载文件。').css('color', '');
-      $injectButton.text('2. 注入（自选表格）').prop('disabled', true);
+      $statusDisplay.text('Trạng thái: Chưa tải tệp.').css('color', '');
+      $injectButton.text('2. Tiêm (bảng tùy chọn)').prop('disabled', true);
   }
 
   // [新增] 获取导入专用的世界书目标
@@ -13634,14 +13634,14 @@
       // 先获取导入目标世界书
       const importTargetLorebook = await getImportWorldbookTarget_ACU();
       if (!importTargetLorebook) {
-          showToastr_ACU('error', '无法注入：未设置导入数据注入目标世界书。');
+          showToastr_ACU('error', 'Không thể tiêm: Chưa đặt sổ thế giới đích tiêm dữ liệu nhập.');
           return;
       }
 
       // 读取当前表选择（空且曾选择过 => 不允许执行）
       const selectedSheetKeys = getImportSelectionFromUI_ACU();
       if (settings_ACU.hasImportTableSelection && (!selectedSheetKeys || selectedSheetKeys.length === 0)) {
-          showToastr_ACU('error', '未选择任何表格，无法注入。请先在“注入表选择”中勾选至少一个表。');
+          showToastr_ACU('error', 'Chưa chọn bảng nào nên không thể tiêm. Vui lòng chọn ít nhất một bảng trong "Chọn bảng tiêm".');
           return;
       }
       const selectionSig = JSON.stringify(selectedSheetKeys || []);
@@ -13670,12 +13670,12 @@
               currentJsonTableData_ACU = parseTableTemplateJson_ACU({ stripSeedRows: true });
           } catch(e) {
               logError_ACU("Failed to parse table template for import.", e);
-              showToastr_ACU('error', "无法为导入解析数据库模板。");
+              showToastr_ACU('error', "Không thể phân tích mẫu cơ sở dữ liệu cho thao tác nhập.");
               $injectButton.prop('disabled', false);
               return;
           }
           if (!currentJsonTableData_ACU) {
-              showToastr_ACU('error', "无法为导入解析数据库模板。");
+              showToastr_ACU('error', "Không thể phân tích mẫu cơ sở dữ liệu cho thao tác nhập.");
               $injectButton.prop('disabled', false);
               return;
           }
@@ -13702,7 +13702,7 @@
                   if (attempt >= MAX_RETRIES) {
                       status.currentIndex = i;
                       await importTempSet_ACU(statusStorageKey, JSON.stringify(status));
-                      showToastr_ACU('error', `处理失败次数过多，操作已终止。请稍后点击"继续"重试。`);
+                      showToastr_ACU('error', `Số lần xử lý thất bại quá nhiều, thao tác đã dừng. Vui lòng bấm "Tiếp tục" để thử lại sau.`);
                       void updateImportStatusUI_ACU();
                       $injectButton.prop('disabled', false);
                       return;
@@ -13726,7 +13726,7 @@
       }
 
       // 2. 将筛选后的数据注入到目标世界书（使用与正文更新相同的逻辑）
-      showToastr_ACU('info', `所有文本块已处理完毕，正在生成最终的世界书条目（自选表格注入）...`);
+      showToastr_ACU('info', `Đã xử lý xong toàn bộ đoạn văn bản, đang tạo mục sổ thế giới cuối cùng (tiêm theo bảng đã chọn)...`);
       
       // 临时保存原始数据和目标世界书，使用筛选后的数据更新世界书
       const originalData = currentJsonTableData_ACU;
@@ -13772,10 +13772,10 @@
               await TavernHelper_API_ACU.createLorebookEntries(importTargetLorebook, [newEntryData]);
               logDebug_ACU(`Created new lorebook entry for final imported JSON data (selected tables).`);
           }
-          showToastr_ACU('success', `最终数据库的JSON备份已保存到世界书（自选表格注入）。`);
+          showToastr_ACU('success', `Đã lưu bản sao lưu JSON cuối cùng của cơ sở dữ liệu vào sổ thế giới (tiêm theo bảng đã chọn).`);
       } catch (error) {
           logError_ACU('Failed to save final imported JSON to a lorebook entry:', error);
-          showToastr_ACU('error', '保存最终JSON数据到世界书时出错。');
+          showToastr_ACU('error', 'Lỗi khi lưu dữ liệu JSON cuối vào sổ thế giới.');
       }
 
       // 4. 外部导入完成：删除“本地数据源 JSON 备份条目”，并解除与该世界书的绑定
@@ -13794,7 +13794,7 @@
       }
 
       // 5. 清理本地缓存（entries + status），并清空导入目标设置（解除联系）
-      showToastr_ACU('success', `外部导入已完成：已注入 ${allChunks.length} 个分块并解除与世界书的绑定。`);
+      showToastr_ACU('success', `Nhập ngoài đã hoàn tất: đã tiêm ${allChunks.length} phần và hủy liên kết với sổ thế giới.`);
       await importTempRemove_ACU(statusStorageKey);
       await importTempRemove_ACU(STORAGE_KEY_IMPORTED_ENTRIES_ACU);
       // 同时清理旧断点 key（兼容旧版本残留）
@@ -13823,7 +13823,7 @@
       const encoding = $encodingSelect.val() || 'UTF-8'; // 新增
 
       if (isNaN(splitSize) || splitSize <= 0) {
-          showToastr_ACU('error', '请输入有效的字符分割数。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+          showToastr_ACU('error', 'Vui lòng nhập số ký tự chia đoạn hợp lệ.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
           return;
       }
 
@@ -13832,13 +13832,13 @@
           const file = e.target.files[0];
           if (!file) return;
 
-          $statusDisplay.text('状态：正在读取和拆分文件...').css('color', '#61afef');
+          $statusDisplay.text('Trạng thái: Đang đọc và chia tệp...').css('color', '#61afef');
           const reader = new FileReader();
           
           reader.onload = (readerEvent) => {
               const content = readerEvent.target.result;
               if (!content) {
-                  showToastr_ACU('warning', '文件为空或读取失败。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                  showToastr_ACU('warning', 'Tệp rỗng hoặc đọc thất bại.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                   void updateImportStatusUI_ACU();
                   return;
               }
@@ -13860,7 +13860,7 @@
                   
                   await importTempSet_ACU(STORAGE_KEY_IMPORTED_ENTRIES_ACU, JSON.stringify(chunks));
                   logDebug_ACU(`[外部导入] Saved ${chunks.length} text chunks to temp storage (IndexedDB preferred).`);
-                  showToastr_ACU('success', `文件已成功拆分成 ${chunks.length} 个部分。`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                  showToastr_ACU('success', `Đã tách tệp thành công thành ${chunks.length} phần.`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                   
                   void updateImportStatusUI_ACU();
                   
@@ -13870,7 +13870,7 @@
           };
           
           reader.onerror = () => {
-              showToastr_ACU('error', '读取文件时出错。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+              showToastr_ACU('error', 'Lỗi khi đọc tệp.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
               void updateImportStatusUI_ACU();
           };
 
@@ -13882,7 +13882,7 @@
 
   // [外部导入] 自选表格注入（取代旧的 标准/总结/整体 模式）
   async function handleInjectImportedTxtSelected_ACU() {
-      showToastr_ACU('info', '开始处理导入文件（自选表格注入）...', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+      showToastr_ACU('info', 'Bắt đầu xử lý tệp nhập (tiêm bảng tùy chọn)...', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
       await processImportedTxtAsUpdates_ACU();
   }
 
@@ -13934,12 +13934,12 @@
       if (!$popupInstance_ACU) return;
       const $listContainer = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select`);
       if (!$listContainer.length) return;
-      $listContainer.empty().html('<em>正在加载...</em>');
+      $listContainer.empty().html('<em>Đang tải...</em>');
       try {
           const books = await getWorldBooks_ACU();
           $listContainer.empty();
           if (books.length === 0) {
-              $listContainer.html('<em>未找到世界书</em>');
+              $listContainer.html('<em>Không tìm thấy sổ thế giới</em>');
               return;
           }
           const cfg = getPlotWorldbookConfig_ACU();
@@ -13958,7 +13958,7 @@
           } catch (e) {}
       } catch (error) {
           logError_ACU('[剧情推进] Failed to populate plot worldbook list:', error);
-          $listContainer.html('<em>加载失败</em>');
+          $listContainer.html('<em>Tải thất bại</em>');
       }
   }
 
@@ -13966,7 +13966,7 @@
       if (!$popupInstance_ACU) return;
       const $list = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-list`);
       if (!$list.length) return;
-      $list.empty().html('<em>正在加载条目...</em>');
+      $list.empty().html('<em>Đang tải mục...</em>');
 
       const cfg = getPlotWorldbookConfig_ACU();
       const source = cfg.source;
@@ -13981,7 +13981,7 @@
       }
 
       if (bookNames.length === 0) {
-          $list.html('<em>请先选择世界书或为角色绑定世界书。</em>');
+          $list.html('<em>Vui lòng chọn sổ thế giới hoặc liên kết sổ cho nhân vật trước.</em>');
           return;
       }
 
@@ -14039,7 +14039,7 @@
                       html += `
                           <div class="qrf_worldbook_entry_item">
                               <input type="checkbox" id="plot-wb-entry-${entry.uid}" data-book="${escapeHtml_ACU(bookName)}" data-uid="${entry.uid}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
-                              <label for="plot-wb-entry-${entry.uid}" ${isDisabled ? 'style="opacity:0.6; text-decoration: line-through;"' : ''}>${escapeHtml_ACU(entry.comment || `条目 ${entry.uid}`)}</label>
+                              <label for="plot-wb-entry-${entry.uid}" ${isDisabled ? 'style="opacity:0.6; text-decoration: line-through;"' : ''}>${escapeHtml_ACU(entry.comment || `Mục ${entry.uid}`)}</label>
                           </div>`;
                   });
               }
@@ -14048,7 +14048,7 @@
           if (settingsChanged) {
               saveSettings_ACU();
           }
-          $list.html(html || '<em>所选世界书中无条目。</em>');
+          $list.html(html || '<em>Sổ thế giới đã chọn không có mục nào.</em>');
           // 应用筛选（若存在）
           try {
               const $filter = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-filter`);
@@ -14056,7 +14056,7 @@
           } catch (e) {}
       } catch (error) {
           logError_ACU('[剧情推进] Failed to populate plot worldbook entry list:', error);
-          $list.html('<em>加载条目失败。</em>');
+          $list.html('<em>Tải mục thất bại.</em>');
       }
   }
 
@@ -14068,7 +14068,7 @@
       try {
           const books = await getWorldBooks_ACU();
           // 添加默认选项
-          $select.append(`<option value="character">角色卡绑定世界书</option>`);
+          $select.append(`<option value="character">Sổ thế giới gắn với thẻ nhân vật</option>`);
           books.forEach(book => {
               $select.append(`<option value="${escapeHtml_ACU(book.name)}">${escapeHtml_ACU(book.name)}</option>`);
           });
@@ -14082,7 +14082,7 @@
           } catch (e) {}
       } catch (error) {
           logError_ACU('Failed to populate injection target selector:', error);
-          $select.append('<option value="character">加载列表失败</option>');
+          $select.append('<option value="character">Tải danh sách thất bại</option>');
       }
   }
 
@@ -14185,12 +14185,12 @@
   async function populateWorldbookList_ACU() {
       if (!$popupInstance_ACU) return;
       const $listContainer = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-worldbook-select`);
-      $listContainer.empty().html('<em>正在加载...</em>');
+      $listContainer.empty().html('<em>Đang tải...</em>');
       try {
           const books = await getWorldBooks_ACU();
           $listContainer.empty();
           if (books.length === 0) {
-              $listContainer.html('<em>未找到世界书</em>');
+              $listContainer.html('<em>Không tìm thấy sổ thế giới</em>');
               return;
           }
           const worldbookConfig = getCurrentWorldbookConfig_ACU();
@@ -14209,14 +14209,14 @@
           } catch (e) {}
       } catch (error) {
           logError_ACU('Failed to populate worldbook list:', error);
-          $listContainer.html('<em>加载失败</em>');
+          $listContainer.html('<em>Tải thất bại</em>');
       }
   }
 
   async function populateWorldbookEntryList_ACU() {
       if (!$popupInstance_ACU) return;
       const $list = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-list`);
-      $list.empty().html('<em>正在加载条目...</em>');
+      $list.empty().html('<em>Đang tải mục...</em>');
       
       const worldbookConfig = getCurrentWorldbookConfig_ACU();
       const source = worldbookConfig.source;
@@ -14231,7 +14231,7 @@
       }
 
       if (bookNames.length === 0) {
-          $list.html('<em>请先选择世界书或为角色绑定世界书。</em>');
+          $list.html('<em>Vui lòng chọn sổ thế giới hoặc liên kết sổ cho nhân vật trước.</em>');
           return;
       }
 
@@ -14282,7 +14282,7 @@
                       html += `
                           <div class="qrf_worldbook_entry_item">
                               <input type="checkbox" id="wb-entry-${entry.uid}" data-book="${escapeHtml_ACU(bookName)}" data-uid="${entry.uid}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
-                              <label for="wb-entry-${entry.uid}" ${isDisabled ? 'style="opacity:0.6; text-decoration: line-through;"' : ''}>${escapeHtml_ACU(entry.comment || `条目 ${entry.uid}`)}</label>
+                              <label for="wb-entry-${entry.uid}" ${isDisabled ? 'style="opacity:0.6; text-decoration: line-through;"' : ''}>${escapeHtml_ACU(entry.comment || `Mục ${entry.uid}`)}</label>
                           </div>`;
                   });
               }
@@ -14292,7 +14292,7 @@
               saveSettings_ACU();
           }
 
-          $list.html(html || '<em>所选世界书中无条目。</em>');
+          $list.html(html || '<em>Sổ thế giới đã chọn không có mục nào.</em>');
           // 应用筛选（若存在）
           try {
               const $filter = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-filter`);
@@ -14300,17 +14300,17 @@
           } catch (e) {}
       } catch (error) {
           logError_ACU('Failed to populate worldbook entry list:', error);
-          $list.html('<em>加载条目失败。</em>');
+          $list.html('<em>Tải mục thất bại.</em>');
       }
   }
 
 
   async function openAutoCardPopup_ACU() {
     if (!coreApisAreReady_ACU) {
-      showToastr_ACU('error', '核心API未就绪。');
+      showToastr_ACU('error', 'API cốt lõi chưa sẵn sàng.');
       return;
     }
-    showToastr_ACU('info', '正在准备数据库更新工具...', { timeOut: 1000 });
+    showToastr_ACU('info', 'Đang chuẩn bị công cụ cập nhật CSDL...', { timeOut: 1000 });
     // The state is managed by background event listeners. The popup should only display the current state.
     // Calling reset here could cause race conditions or incorrect state wipes.
     loadSettings_ACU(); // Load latest settings into UI
@@ -15271,25 +15271,25 @@
                 <div class="acu-header">
                     <div>
                         <h2 id="updater-main-title-acu">当前聊天：${escapeHtml_ACU(
-                          currentChatFileIdentifier_ACU || '未知',
+                          currentChatFileIdentifier_ACU || 'Không rõ',
                         )}</h2>
                     </div>
                 </div>
 
                 <div class="acu-layout">
                     <!-- 导航（分组分页） -->
-                    <div class="acu-tabs-nav" aria-label="数据库工具导航">
-                        <div class="acu-nav-section-title">运行</div>
-                    <button class="acu-tab-button active" data-tab="status">状态 & 操作</button>
-                        <div class="acu-nav-section-title">配置</div>
-                    <button class="acu-tab-button" data-tab="prompt">AI指令预设</button>
-                    <button class="acu-tab-button" data-tab="api">API & 连接</button>
-                    <button class="acu-tab-button" data-tab="worldbook">世界书</button>
-                        <div class="acu-nav-section-title">数据</div>
-                    <button class="acu-tab-button" data-tab="data">数据管理</button>
-                    <button class="acu-tab-button" data-tab="import">外部导入</button>
-                        <div class="acu-nav-section-title">增强</div>
-                    <button class="acu-tab-button" data-tab="plot">剧情推进（记忆召回）（必开！）</button>
+                    <div class="acu-tabs-nav" aria-label="Điều hướng công cụ CSDL">
+                        <div class="acu-nav-section-title">Vận hành</div>
+                    <button class="acu-tab-button active" data-tab="status">Trạng thái & Thao tác</button>
+                        <div class="acu-nav-section-title">Cấu hình</div>
+                    <button class="acu-tab-button" data-tab="prompt">Cài đặt lệnh AI</button>
+                    <button class="acu-tab-button" data-tab="api">API & Kết nối</button>
+                    <button class="acu-tab-button" data-tab="worldbook">Sổ thế giới</button>
+                        <div class="acu-nav-section-title">Dữ liệu</div>
+                    <button class="acu-tab-button" data-tab="data">Quản lý dữ liệu</button>
+                    <button class="acu-tab-button" data-tab="import">Nhập từ ngoài</button>
+                        <div class="acu-nav-section-title">Nâng cao</div>
+                    <button class="acu-tab-button" data-tab="plot">Thúc đẩy cốt truyện (Hồi tưởng) (Bắt buộc!)</button>
                 </div>
 
                     <div class="acu-main">
@@ -15297,145 +15297,145 @@
                 <div id="acu-tab-status" class="acu-tab-content active">
                     <div class="acu-grid">
                         <div class="acu-card" style="grid-column: span 2;">
-                            <h3>数据库状态</h3>
+                            <h3>Trạng thái CSDL</h3>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border-normal);">
-                                <span id="${SCRIPT_ID_PREFIX_ACU}-total-messages-display">上下文总层数: N/A (仅计算AI回复楼层)</span>
-                                <span id="${SCRIPT_ID_PREFIX_ACU}-card-update-status-display">正在获取状态...</span>
+                                <span id="${SCRIPT_ID_PREFIX_ACU}-total-messages-display">Tổng lớp ngữ cảnh: N/A (chỉ tính tầng trả lời AI)</span>
+                                <span id="${SCRIPT_ID_PREFIX_ACU}-card-update-status-display">Đang lấy trạng thái...</span>
                             </div>
                             
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
                                 <thead>
                                     <tr style="border-bottom: 1px solid var(--border-normal); color: var(--text-secondary);">
-                                        <th style="text-align: left; padding: 5px;">表格名称</th>
-                                        <th style="text-align: center; padding: 5px;">更新频率</th>
-                                        <th style="text-align: center; padding: 5px;">未记录楼层</th>
-                                        <th style="text-align: center; padding: 5px;">上次更新</th>
-                                        <th style="text-align: center; padding: 5px;">下次触发</th>
+                                        <th style="text-align: left; padding: 5px;">Tên bảng</th>
+                                        <th style="text-align: center; padding: 5px;">Tần suất cập nhật</th>
+                                        <th style="text-align: center; padding: 5px;">Tầng chưa ghi</th>
+                                        <th style="text-align: center; padding: 5px;">Cập nhật cuối</th>
+                                        <th style="text-align: center; padding: 5px;">Kích hoạt tiếp</th>
                                     </tr>
                                 </thead>
                                 <tbody id="${SCRIPT_ID_PREFIX_ACU}-granular-status-table-body">
-                                    <tr><td colspan="5" style="text-align: center; padding: 10px;">正在加载数据...</td></tr>
+                                    <tr><td colspan="5" style="text-align: center; padding: 10px;">Đang tải dữ liệu...</td></tr>
                                 </tbody>
                             </table>
 
-                            <p id="${SCRIPT_ID_PREFIX_ACU}-next-update-display" style="border-top: 1px dashed var(--border-normal); padding-top: 10px; margin-top: 10px; font-size: 0.95em; text-align: right;">下一次更新: 计算中...</p>
+                            <p id="${SCRIPT_ID_PREFIX_ACU}-next-update-display" style="border-top: 1px dashed var(--border-normal); padding-top: 10px; margin-top: 10px; font-size: 0.95em; text-align: right;">Lần cập nhật tiếp: Đang tính...</p>
                         </div>
                         <div class="acu-card" style="grid-column: span 2;">
-                            <h3>核心操作</h3>
+                            <h3>Thao tác cốt lõi</h3>
                             <div class="flex-center" style="flex-direction: column; gap: 15px;">
                                 <div style="width: 100%; display: flex; gap: 10px; align-items: center;">
-                                    <label style="white-space: nowrap; font-size: 0.9em;">填表API预设:</label>
+                                    <label style="white-space: nowrap; font-size: 0.9em;">API điền bảng:</label>
                                     <select id="${SCRIPT_ID_PREFIX_ACU}-table-api-preset-select" style="flex: 1; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--border-normal);">
-                                        <option value="">使用当前API配置</option>
+                                        <option value="">Dùng cấu hình API hiện tại</option>
                                     </select>
                                 </div>
                                 <div style="width: 100%; display: flex; flex-direction: column; gap: 6px;">
-                                    <label style="white-space: nowrap; font-size: 0.9em;">正文标签提取规则:</label>
+                                    <label style="white-space: nowrap; font-size: 0.9em;">Quy tắc trích xuất thẻ nội dung:</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-table-context-extract-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-extract-add-rule" class="button" style="align-self: flex-start;">添加规则</button>
-                                    <small class="notes">每条规则填写开始词和结束词，仅提取最后一组匹配内容（不影响注入词规则）。</small>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-extract-add-rule" class="button" style="align-self: flex-start;">Thêm quy tắc</button>
+                                    <small class="notes">Mỗi quy tắc điền từ bắt đầu và kết thúc, chỉ trích xuất nhóm khớp cuối cùng (không ảnh hưởng quy tắc từ tiêm).</small>
                                 </div>
                                 <div style="width: 100%; display: flex; flex-direction: column; gap: 6px;">
-                                    <label style="white-space: nowrap; font-size: 0.9em;">标签排除规则:</label>
+                                    <label style="white-space: nowrap; font-size: 0.9em;">Quy tắc loại trừ thẻ:</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-add-rule" class="button" style="align-self: flex-start;">添加规则</button>
-                                    <small class="notes">每条规则填写开始词与结束词，仅移除最后一组匹配内容。</small>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-add-rule" class="button" style="align-self: flex-start;">Thêm quy tắc</button>
+                                    <small class="notes">Mỗi quy tắc điền từ bắt đầu và kết thúc, chỉ xóa nhóm khớp cuối cùng.</small>
                                 </div>
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-tableedit-last-pair-only-checkbox">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-tableedit-last-pair-only-checkbox">仅识别最后一对 &lt;tableEdit&gt; 标签（忽略前面的思维链/草稿）</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-tableedit-last-pair-only-checkbox">Chỉ nhận dạng cặp thẻ &lt;tableEdit&gt; cuối cùng (bỏ qua chuỗi tư duy/bản nháp phía trước)</label>
                                 </div>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-manual-update-card" class="primary" style="width:100%;">立即手动更新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-manual-update-card" class="primary" style="width:100%;">Cập nhật thủ công ngay</button>
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-manual-extra-hint-checkbox">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-manual-extra-hint-checkbox">额外提示词（仅手动更新时临时追加）</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-manual-extra-hint-checkbox">Gợi ý bổ sung (chỉ thêm tạm thời khi cập nhật thủ công)</label>
                                 </div>
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-enabled-checkbox">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-enabled-checkbox">启用自动更新</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-enabled-checkbox">Bật cập nhật tự động</label>
                                 </div>
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-standardized-table-fill-enabled-checkbox">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-standardized-table-fill-enabled-checkbox">规范填表功能（总结表与总体大纲必须同步新增）</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-standardized-table-fill-enabled-checkbox">Tính năng điền bảng chuẩn (bảng tóm tắt và đại cương phải đồng bộ)</label>
                                 </div>
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-toast-mute-enabled-checkbox">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-toast-mute-enabled-checkbox">静默提示框（除填表/规划/导入/报错外，其它提示不弹窗）</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-toast-mute-enabled-checkbox">Tắt thông báo (ngoại trừ điền bảng/lập kế hoạch/nhập/lỗi)</label>
                                 </div>
                             </div>
-                            <p class="notes" style="margin-top: 10px;">手动更新会使用当前UI参数，对勾选的表进行更新；未勾选则默认更新全部表。</p>
-                            <p class="notes" style="margin-top: 6px;">勾选“额外提示词”后，点击手动更新会弹出输入框，内容将写入AI指令预设中的 $8 占位符，仅本次操作生效。</p>
+                            <p class="notes" style="margin-top: 10px;">Cập nhật thủ công dùng thông số UI hiện tại để cập nhật bảng được chọn; nếu không chọn thì mặc định cập nhật tất cả.</p>
+                            <p class="notes" style="margin-top: 6px;">Sau khi chọn “Gợi ý bổ sung”, nhấn cập nhật thủ công sẽ hiện hộp nhập, nội dung ghi vào ký hiệu $8 trong cài đặt lệnh AI, chỉ có hiệu lực lần này.</p>
                         </div>
                     </div>
                     <div class="acu-card">
-                        <h3>手动更新表选择</h3>
-                        <div class="notes" style="margin-bottom:6px;">选择需要手动更新的表（可多选，默认全选新表）：</div>
+                        <h3>Chọn bảng cập nhật thủ công</h3>
+                        <div class="notes" style="margin-bottom:6px;">Chọn bảng cần cập nhật thủ công (có thể chọn nhiều, mặc định chọn tất cả bảng mới):</div>
                         <div class="button-group" style="justify-content:flex-start; gap:8px; margin-bottom:6px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-all" class="button">全选</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-none" class="button">全不选</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-all" class="button">Chọn tất cả</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-none" class="button">Bỏ chọn tất cả</button>
                         </div>
-                        <div id="${SCRIPT_ID_PREFIX_ACU}-manual-table-selector" style="min-height:60px;">加载表格列表中...</div>
+                        <div id="${SCRIPT_ID_PREFIX_ACU}-manual-table-selector" style="min-height:60px;">Đang tải danh sách bảng...</div>
                     </div>
                      <div class="acu-card">
-                        <h3>公用设置</h3>
+                        <h3>Cài đặt chung</h3>
                             <div class="acu-grid">
                                 <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-token-threshold">跳过更新最小回复长度:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-token-threshold">Độ dài trả lời tối thiểu để bỏ qua:</label>
                                     <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-token-threshold" min="0" step="100" placeholder="${DEFAULT_AUTO_UPDATE_TOKEN_THRESHOLD_ACU}">
                                     </div>
-                                    <small class="notes" style="font-size: 0.85em; color: #888;">AI回复少于此长度时跳过自动填表</small>
+                                    <small class="notes" style="font-size: 0.85em; color: #888;">Bỏ qua điền tự động khi AI trả lời ngắn hơn độ dài này</small>
                                 </div>
                                 <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-table-max-retries">填表自动重试次数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-table-max-retries">Số lần thử lại tự động điền bảng:</label>
                                     <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-table-max-retries" min="1" max="10" step="1" value="3">
                                     </div>
-                                    <small class="notes" style="font-size: 0.85em; color: #888;">错误或空回时自动重试的次数（默认3次）</small>
+                                    <small class="notes" style="font-size: 0.85em; color: #888;">Số lần tự động thử lại khi lỗi hoặc phản hồi rỗng (mặc định 3)</small>
                                 </div>
                                     </div>
-                        <p class="notes">当自动更新时，若上下文Token（约等于字符数）低于此值，则跳过本次更新。</p>
+                        <p class="notes">Khi cập nhật tự động, nếu Token ngữ cảnh (xấp xỉ số ký tự) thấp hơn giá trị này, bỏ qua lần cập nhật.</p>
                         </div>
 
                     <div class="acu-card">
-                        <h3>更新配置</h3>
+                        <h3>Cấu hình cập nhật</h3>
                         <div class="acu-grid-2x2">
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-threshold">AI读取上下文层数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-threshold">Số lớp ngữ cảnh AI đọc:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-threshold" min="0" step="1" placeholder="${DEFAULT_AUTO_UPDATE_THRESHOLD_ACU}">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-frequency">每N层自动更新一次:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-frequency">Tự động cập nhật mỗi N lớp:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-frequency" min="1" step="1" placeholder="${DEFAULT_AUTO_UPDATE_FREQUENCY_ACU}">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-update-batch-size">每批次更新楼层数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-update-batch-size">Số tầng cập nhật mỗi đợt:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-update-batch-size" min="1" step="1" placeholder="2">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-max-concurrent-groups">最大并发数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-max-concurrent-groups">Số luồng đồng thời tối đa:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-max-concurrent-groups" min="1" step="1" placeholder="1">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-skip-update-floors">保留X层楼不更新:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-skip-update-floors">Giữ X tầng không cập nhật:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-skip-update-floors" min="0" step="1" placeholder="0">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers">保留最近N层数据:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers">Giữ dữ liệu N lớp gần nhất:</label>
                                 <div class="input-group">
-                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers" min="0" step="1" placeholder="空=全部保留">
+                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers" min="0" step="1" placeholder="Trống=giữ tất cả">
                                 </div>
-                                <div class="notes" style="margin-top:4px;font-size:11px;opacity:0.7;">按AI楼层计数，自动更新后清理超出层数的旧数据</div>
+                                <div class="notes" style="margin-top:4px;font-size:11px;opacity:0.7;">Tính theo tầng AI, tự động dọn dữ liệu cũ vượt quá số lớp sau khi cập nhật</div>
                             </div>
                         </div>
                     </div>
@@ -15443,93 +15443,93 @@
 
                 <div id="acu-tab-prompt" class="acu-tab-content">
                     <div class="acu-card">
-                        <h3>数据库更新预设 (任务指令)</h3>
+                        <h3>Cài đặt cập nhật CSDL (Lệnh nhiệm vụ)</h3>
                         <div id="${SCRIPT_ID_PREFIX_ACU}-prompt-constructor-area">
-                            <div class="button-group" style="margin-bottom: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="top" title="在上方添加对话轮次">+</button></div>
+                            <div class="button-group" style="margin-bottom: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="top" title="Thêm lượt hội thoại ở trên">+</button></div>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-prompt-segments-container">
                                 <!-- Segments will be dynamically inserted here -->
                             </div>
-                            <div class="button-group" style="margin-top: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="bottom" title="在下方添加对话轮次">+</button></div>
+                            <div class="button-group" style="margin-top: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="bottom" title="Thêm lượt hội thoại ở dưới">+</button></div>
                         </div>
                         <div class="button-group">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-save-char-card-prompt" class="primary">保存</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-load-char-card-prompt-from-json">读取JSON模板</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-char-card-prompt-to-json">导出JSON模板</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-char-card-prompt">恢复默认</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-save-char-card-prompt" class="primary">Lưu</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-load-char-card-prompt-from-json">Tải mẫu JSON</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-char-card-prompt-to-json">Xuất mẫu JSON</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-char-card-prompt">Khôi phục mặc định</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="acu-tab-api" class="acu-tab-content">
                      <div class="acu-card">
-                        <h3>API设置</h3>
+                        <h3>Cài đặt API</h3>
                         <div class="qrf_settings_block_radio">
-                            <label>API模式:</label>
+                            <label>Chế độ API:</label>
                             <div class="qrf_radio_group">
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-api-mode-custom" name="${SCRIPT_ID_PREFIX_ACU}-api-mode" value="custom" checked>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-custom">自定义API</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-custom">API tùy chỉnh</label>
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-api-mode-tavern" name="${SCRIPT_ID_PREFIX_ACU}-api-mode" value="tavern">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-tavern">使用酒馆连接预设</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-tavern">Dùng cài đặt kết nối SillyTavern</label>
                             </div>
                         </div>
 
                         <div id="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-block" style="display: none; margin-top: 15px;">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select">酒馆连接预设:</label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select">Cài đặt kết nối SillyTavern:</label>
                              <div class="input-group">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select"></select>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-tavern-api-profiles" title="刷新预设列表">刷新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-tavern-api-profiles" title="Làm mới danh sách cài đặt">Làm mới</button>
                             </div>
-                            <small class="notes">选择一个你在酒馆主设置中已经配置好的连接预设。</small>
+                            <small class="notes">Chọn một cài đặt kết nối bạn đã cấu hình trong cài đặt chính SillyTavern.</small>
                         </div>
 
                         <div id="${SCRIPT_ID_PREFIX_ACU}-custom-api-settings-block" style="margin-top: 15px;">
                              <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-use-main-api-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-use-main-api-checkbox">使用主API (直接使用酒馆当前API和模型)</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-use-main-api-checkbox">Dùng API chính (trực tiếp dùng API và model hiện tại của SillyTavern)</label>
                             </div>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-custom-api-fields">
-                                <p class="notes" style="color:var(--warning-color);"><b>安全提示:</b>API密钥将保存在浏览器本地存储中。</p>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-url">API基础URL:</label><input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-url">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-key">API密钥(可选):</label><input type="password" id="${SCRIPT_ID_PREFIX_ACU}-api-key">
+                                <p class="notes" style="color:var(--warning-color);"><b>Cảnh báo bảo mật:</b> Khóa API sẽ được lưu trong bộ nhớ cục bộ trình duyệt.</p>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-url">URL cơ sở API:</label><input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-url">
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-key">Khóa API (tùy chọn):</label><input type="password" id="${SCRIPT_ID_PREFIX_ACU}-api-key">
                                 <div class="acu-grid" style="margin-top: 10px;">
                                     <div>
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-max-tokens">最大Tokens:</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-max-tokens">Tokens tối đa:</label>
                                         <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-max-tokens" min="1" step="1" placeholder="120000">
                                     </div>
                                     <div>
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-temperature">温度:</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-temperature">Nhiệt độ:</label>
                                         <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-temperature" min="0" max="2" step="0.05" placeholder="0.9">
                                     </div>
                                 </div>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-load-models" style="margin-top: 15px; width: 100%;">加载模型列表</button>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-input" style="margin-top: 10px;">模型名称 (手动输入):</label>
-                                <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-model-input" class="text_pole" placeholder="输入模型名称或从下方选择" style="width: 100%;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-select" style="margin-top: 8px;">或从列表选择:</label>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-load-models" style="margin-top: 15px; width: 100%;">Tải danh sách model</button>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-input" style="margin-top: 10px;">Tên model (nhập thủ công):</label>
+                                <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-model-input" class="text_pole" placeholder="Nhập tên model hoặc chọn bên dưới" style="width: 100%;">
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-select" style="margin-top: 8px;">Hoặc chọn từ danh sách:</label>
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-api-model-select" class="text_pole" style="width: 100%;">
-                                    <option value="">-- 请先加载模型列表 --</option>
+                                    <option value="">-- Vui lòng tải danh sách model trước --</option>
                                 </select>
                             </div>
-                            <div id="${SCRIPT_ID_PREFIX_ACU}-api-status" class="notes" style="margin-top:15px;">状态: 未配置</div>
+                            <div id="${SCRIPT_ID_PREFIX_ACU}-api-status" class="notes" style="margin-top:15px;">Trạng thái: Chưa cấu hình</div>
                             <div class="button-group">
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-save-config" class="primary">保存API</button>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-clear-config">清除API</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-save-config" class="primary">Lưu API</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-clear-config">Xóa API</button>
                             </div>
                             
-                            <!-- API预设管理 -->
+                            <!-- Quản lý cài đặt API -->
                             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border-normal);">
-                                <h4 style="margin-bottom: 10px; font-size: 0.95em; color: var(--text-muted);">API预设管理</h4>
+                                <h4 style="margin-bottom: 10px; font-size: 0.95em; color: var(--text-muted);">Quản lý cài đặt API</h4>
                                 <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-preset-name" placeholder="预设名称" style="flex: 1; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--border-normal);">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-save-api-preset" class="primary" style="padding: 6px 12px;">保存为预设</button>
+                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-preset-name" placeholder="Tên cài đặt" style="flex: 1; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--border-normal);">
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-save-api-preset" class="primary" style="padding: 6px 12px;">Lưu thành cài đặt</button>
                         </div>
                                 <div style="display: flex; gap: 8px; align-items: center;">
                                     <select id="${SCRIPT_ID_PREFIX_ACU}-api-preset-select" style="flex: 1; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--border-normal);">
-                                        <option value="">-- 选择预设 --</option>
+                                        <option value="">-- Chọn cài đặt --</option>
                                     </select>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-load-api-preset" style="padding: 6px 12px;">加载</button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-delete-api-preset" style="padding: 6px 12px; background: var(--error-color); color: white;">删除</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-load-api-preset" style="padding: 6px 12px;">Tải</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-delete-api-preset" style="padding: 6px 12px; background: var(--error-color); color: white;">Xóa</button>
                                 </div>
-                                <small class="notes" style="display: block; margin-top: 8px;">保存当前API配置为预设，可在填表和剧情推进中分别选用。</small>
+                                <small class="notes" style="display: block; margin-top: 8px;">Lưu cấu hình API hiện tại thành cài đặt, có thể dùng riêng khi điền bảng và thúc đẩy cốt truyện.</small>
                             </div>
                         </div>
                      </div>
@@ -15537,17 +15537,17 @@
 
                 <div id="acu-tab-worldbook" class="acu-tab-content">
                     <div class="acu-card">
-                        <h3>世界书设置</h3>
+                        <h3>Cài đặt Sổ thế giới</h3>
                         <div>
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target">数据注入目标:</label>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target">Mục tiêu tiêm dữ liệu:</label>
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target-filter" placeholder="Lọc sổ thế giới..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
                             <div class="input-group">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target" style="width: 100%;"></select>
                             </div>
-                            <small class="notes">选择数据库条目（如全局、人物、大纲等）将被创建或更新到哪个世界书里。</small>
+                            <small class="notes">Chọn sổ thế giới để tạo hoặc cập nhật các mục CSDL (như toàn cục, nhân vật, đại cương...).</small>
                         </div>
                         <div class="qrf_settings_block" style="margin-top: 12px; margin-bottom: 6px;">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-outline-entry-enabled"><strong>0TK占用模式</strong></label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-outline-entry-enabled"><strong>Chế độ chiếm 0TK</strong></label>
                             <label class="toggle-switch">
                                 <input id="${SCRIPT_ID_PREFIX_ACU}-worldbook-outline-entry-enabled" type="checkbox" />
                                 <span class="slider"></span>
@@ -15555,31 +15555,31 @@
                         </div>
                         <hr style="border-color: var(--border-normal); margin: 15px 0;">
                          <div class="qrf_settings_block_radio">
-                            <label>世界书来源 (用于AI读取上下文):</label>
+                            <label>Nguồn sổ thế giới (AI đọc ngữ cảnh):</label>
                             <div class="qrf_radio_group">
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-character" name="${SCRIPT_ID_PREFIX_ACU}-worldbook-source" value="character" checked>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-character">角色卡绑定</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-character">Liên kết thẻ nhân vật</label>
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-manual" name="${SCRIPT_ID_PREFIX_ACU}-worldbook-source" value="manual">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-manual">手动选择</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-manual">Chọn thủ công</label>
                             </div>
                         </div>
                         <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-manual-select-block" style="display: none; margin-top: 10px;">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-select">选择世界书 (可多选):</label>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-select">Chọn sổ thế giới (có thể chọn nhiều):</label>
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-filter" placeholder="Lọc sổ thế giới..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
                             <div class="input-group">
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select" class="qrf_worldbook_list"></div>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-worldbooks" title="刷新世界书列表">刷新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-worldbooks" title="Làm mới danh sách sổ thế giới">Làm mới</button>
                             </div>
                         </div>
                         <div style="margin-top: 15px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                <label style="margin-bottom: 0;">启用的世界书条目:</label>
+                                <label style="margin-bottom: 0;">Mục sổ thế giới đã bật:</label>
                                 <div class="button-group" style="margin: 0;">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全选</button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全不选</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Chọn tất cả</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Bỏ chọn tất cả</button>
                                 </div>
                             </div>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-filter" placeholder="筛选条目/世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-filter" placeholder="Lọc mục/sổ thế giới..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
                             <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-list" class="qrf_worldbook_entry_list">
                                 <!-- 条目将动态加载于此 -->
                             </div>
@@ -15589,150 +15589,150 @@
                 
                 <div id="acu-tab-data" class="acu-tab-content">
                     <div class="acu-card">
-                        <h3>数据隔离</h3>
-                        <p class="notes">在此处输入特定的标识代码，插件将只读取和保存带有该标识的数据。若留空则使用默认数据。</p>
+                        <h3>Phân tách dữ liệu</h3>
+                        <p class="notes">Nhập mã nhận dạng cụ thể tại đây, plugin chỉ đọc và lưu dữ liệu có mã này. Để trống sẽ dùng dữ liệu mặc định.</p>
                         <div class="setting-item" style="margin-bottom: 15px; border-bottom: 1px dashed var(--border-normal); padding-bottom: 15px;">
                             <div id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-input-area" style="margin-top: 10px;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code">标识代码:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code">Mã nhận dạng:</label>
                                 <div style="display: flex; gap: 10px; margin-top: 5px; align-items: flex-start;">
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-combo" style="position: relative; flex-grow: 1; display: flex; align-items: center;">
-                                        <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code" placeholder="输入标识代码 (留空则不隔离)" style="flex-grow: 1; padding-right: 36px;">
-                                        <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-history-toggle" title="历史标识代码" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 1px solid var(--border-normal); background: var(--bg-secondary); color: var(--text-main); padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; line-height: 1;">▼</button>
+                                        <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code" placeholder="Nhập mã nhận dạng (để trống = không phân tách)" style="flex-grow: 1; padding-right: 36px;">
+                                        <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-history-toggle" title="Lịch sử mã nhận dạng" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 1px solid var(--border-normal); background: var(--bg-secondary); color: var(--text-main); padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; line-height: 1;">▼</button>
                                         <ul id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-history-list" style="display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-normal); border-radius: 6px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18); list-style: none; margin: 0; padding: 6px 0; max-height: 220px; overflow-y: auto; z-index: 9999;"></ul>
                                     </div>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-save" class="primary" style="white-space: nowrap;">保存并应用</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-save" class="primary" style="white-space: nowrap;">Lưu và áp dụng</button>
                                 </div>
-                                <p class="notes" style="margin-top: 5px;">输入代码并点击保存后，将重新载入对应的本地数据。</p>
+                                <p class="notes" style="margin-top: 5px;">Nhập mã và nhấn lưu, dữ liệu cục bộ tương ứng sẽ được tải lại.</p>
                             </div>
                             <div style="margin-top: 10px; text-align: right;">
-                        <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-delete-entries" class="btn-danger" style="padding: 5px 10px; border-radius: 4px; font-size: 0.9em;">删除当前标识的注入条目</button>
+                        <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-delete-entries" class="btn-danger" style="padding: 5px 10px; border-radius: 4px; font-size: 0.9em;">Xóa mục tiêm của mã hiện tại</button>
                             </div>
                         </div>
 
-                        <h3>数据管理</h3>
-                        <p class="notes">导入/导出当前对话的数据库，或管理全局模板。</p>
+                        <h3>Quản lý dữ liệu</h3>
+                        <p class="notes">Nhập/xuất CSDL cuộc trò chuyện hiện tại, hoặc quản lý mẫu toàn cục.</p>
                         <div class="button-group acu-data-mgmt-buttons acu-cols-2">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-combined-settings" class="primary">合并导入(模板+指令)</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-combined-settings" class="primary">合并导出(模板+指令)</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-combined-settings" class="primary">Nhập hợp nhất (Mẫu+Lệnh)</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-combined-settings" class="primary">Xuất hợp nhất (Mẫu+Lệnh)</button>
                         </div>
                         <hr style="border-color: var(--border-normal); margin: 15px 0;">
                         <div class="button-group acu-data-mgmt-buttons acu-cols-3">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-json-data">导出JSON数据</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-template">恢复默认模板</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-all-defaults" class="btn-warning">恢复默认模板及提示词</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-override-with-template" class="btn-danger">模板覆盖最新层数据</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-json-data">Xuất dữ liệu JSON</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-template">Khôi phục mẫu mặc định</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-all-defaults" class="btn-warning">Khôi phục mẫu và lệnh mặc định</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-override-with-template" class="btn-danger">Ghi đè dữ liệu lớp mới nhất bằng mẫu</button>
                         </div>
                         <hr style="border-color: var(--border-normal); margin: 15px 0;">
                         <div class="acu-template-presets" style="background: var(--background-color-light); padding: 12px; border-radius: 8px;">
-                            <h4 style="margin: 0 0 10px 0; font-size: 0.95em; font-weight: 600;">表格模板预设（多份存储/切换）</h4>
+                            <h4 style="margin: 0 0 10px 0; font-size: 0.95em; font-weight: 600;">Cài đặt mẫu bảng (lưu/chuyển đổi nhiều bản)</h4>
                             <div class="acu-template-preset-toolbar">
                                 <div class="acu-template-preset-left">
                                     <select id="${SCRIPT_ID_PREFIX_ACU}-template-preset-select" class="text_pole" style="min-width: 220px; flex: 1;">
-                                        <option value="">（选择预设以切换）</option>
+                                        <option value="">（Chọn cài đặt để chuyển）</option>
                                     </select>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-import-template" class="acu-mini-btn" title="导入模板（自动按文件名保存为预设，重名覆盖）">
-                                        <i class="fa-solid fa-file-import"></i><span>导入</span>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-import-template" class="acu-mini-btn" title="Nhập mẫu (tự động lưu theo tên tệp, ghi đè trùng tên)">
+                                      <i class="fa-solid fa-file-import"></i><span>Nhập</span>
                                     </button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-export-template" class="acu-mini-btn" title="导出模板（优先导出当前选中的预设）">
-                                        <i class="fa-solid fa-file-export"></i><span>导出</span>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-export-template" class="acu-mini-btn" title="Xuất mẫu (ưu tiên xuất cài đặt đang chọn)">
+                                      <i class="fa-solid fa-file-export"></i><span>Xuất</span>
                                     </button>
                                 </div>
                                 <div class="acu-template-preset-actions">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-save" class="acu-mini-btn primary" title="保存当前模板到指定预设（可覆盖同名）">
-                                        <i class="fa-solid fa-floppy-disk"></i><span>保存</span>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-save" class="acu-mini-btn primary" title="Lưu mẫu hiện tại vào cài đặt chỉ định (có thể ghi đè trùng tên)">
+                                      <i class="fa-solid fa-floppy-disk"></i><span>Lưu</span>
                                     </button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-saveas" class="acu-mini-btn" title="将当前模板另存为新预设（自动避免重名）">
-                                        <i class="fa-solid fa-copy"></i><span>另存为</span>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-saveas" class="acu-mini-btn" title="Lưu mẫu hiện tại thành cài đặt mới (tự động tránh trùng tên)">
+                                        <i class="fa-solid fa-copy"></i><span>Lưu thành</span>
                                     </button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-rename" class="acu-mini-btn" title="重命名当前选中预设">
-                                        <i class="fa-solid fa-i-cursor"></i><span>重命名</span>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-rename" class="acu-mini-btn" title="Đổi tên cài đặt đang chọn">
+                                        <i class="fa-solid fa-i-cursor"></i><span>Đổi tên</span>
                                     </button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-delete" class="acu-mini-btn danger" title="删除当前选中预设">
-                                        <i class="fa-solid fa-trash"></i><span>删除</span>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-delete" class="acu-mini-btn danger" title="Xóa cài đặt đang chọn">
+                                      <i class="fa-solid fa-trash"></i><span>Xóa</span>
                                     </button>
                                 </div>
                             </div>
-                            <p class="notes" style="margin-top: 8px;">切换预设会立即应用为“当前通用模板”，并同步更新本聊天第一层的指导表（含基础数据 seedRows）。</p>
+                                <p class="notes" style="margin-top: 8px;">Chuyển cài đặt sẽ áp dụng ngay làm “Mẫu chung hiện tại” và đồng bộ cập nhật bảng hướng dẫn lớp đầu của chat này (bao gồm dữ liệu nền seedRows).</p>
                         </div>
                         <!-- 楼层范围选择 -->
                         <div style="background: var(--background-color-light); padding: 12px; border-radius: 6px; margin-bottom: 10px;">
-                            <h4 style="margin: 0 0 8px 0; font-size: 0.9em; color: var(--text-color); font-weight: 500;">删除范围设置</h4>
+                            <h4 style="margin: 0 0 8px 0; font-size: 0.9em; color: var(--text-color); font-weight: 500;">Cài đặt phạm vi xóa</h4>
                             <div class="acu-grid">
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-start-floor" style="font-weight: 500; font-size: 0.85em;">起始AI楼层:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-start-floor" style="font-weight: 500; font-size: 0.85em;">Tầng AI bắt đầu:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-delete-start-floor" min="1" value="1" placeholder="1" style="width: 100%; padding: 4px 8px; border: 1px solid var(--border-normal); border-radius: 4px; background: var(--input-background); color: var(--input-text-color);">
                                 </div>
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" style="font-weight: 500; font-size: 0.85em;">终止AI楼层:</label>
-                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" min="1" placeholder="留空删除到最后" style="width: 100%; padding: 4px 8px; border: 1px solid var(--border-normal); border-radius: 4px; background: var(--input-background); color: var(--input-text-color);">
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" style="font-weight: 500; font-size: 0.85em;">Tầng AI kết thúc:</label>
+                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" min="1" placeholder="Để trống = xóa đến cuối" style="width: 100%; padding: 4px 8px; border: 1px solid var(--border-normal); border-radius: 4px; background: var(--input-background); color: var(--input-text-color);">
                                 </div>
                             </div>
                             <div style="margin-top: 6px; font-size: 0.8em; color: var(--text-color-dimmed);">
-                                默认全选所有AI楼层，可设置范围精确删除（只计算AI回复）
+                                Mặc định chọn tất cả tầng AI, có thể đặt phạm vi xóa chính xác (chỉ tính trả lời AI)
                             </div>
                         </div>
 
                         <div class="button-group acu-data-mgmt-buttons acu-cols-2" style="margin-top: 10px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-current-local-data" class="btn-warning">删除当前标识本地数据</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-all-local-data" class="btn-danger">删除所有本地数据 (慎用)</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-current-local-data" class="btn-warning">Xóa dữ liệu cục bộ của mã hiện tại</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-all-local-data" class="btn-danger">Xóa tất cả dữ liệu cục bộ (Cẩn thận!)</button>
                         </div>
                         <div class="button-group" style="margin-top: 20px;">
                             <button id="${SCRIPT_ID_PREFIX_ACU}-open-new-visualizer" class="primary acu-btn-medium" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                                <i class="fa-solid fa-table-columns"></i> 打开可视化表格编辑器
+                                <i class="fa-solid fa-table-columns"></i> Mở trình chỉnh sửa bảng trực quan
                             </button>
                         </div>
-                        <p class="notes" style="text-align: center; margin-top: 10px;">点击上方按钮打开全新的可视化界面，支持直接编辑数据、修改表头及更新参数。</p>
+                        <p class="notes" style="text-align: center; margin-top: 10px;">Nhấn nút trên để mở giao diện trực quan mới, hỗ trợ chỉnh sửa dữ liệu, tiêu đề bảng và thông số trực tiếp.</p>
                     </div>
                     
                     <div class="acu-card">
-                        <h3 style="text-align: center; margin-bottom: 15px;">纪要合并 (Medusa)</h3>
-                        <p class="notes" style="text-align: center; margin-bottom: 20px;">将当前的纪要表进行批量合并与精简。</p>
+                        <h3 style="text-align: center; margin-bottom: 15px;">Hợp nhất biên bản (Medusa)</h3>
+                        <p class="notes" style="text-align: center; margin-bottom: 20px;">Hợp nhất và tinh gọn bảng biên bản hiện tại theo lô.</p>
 
-                        <!-- 手动合并参数 -->
+                        <!-- Tham số hợp nhất thủ công -->
                         <div style="background: var(--background-color-light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <h4 style="margin: 0 0 12px 0; font-size: 1em; color: var(--text-color); border-bottom: 1px solid var(--border-normal); padding-bottom: 8px;">手动合并参数</h4>
+                            <h4 style="margin: 0 0 12px 0; font-size: 1em; color: var(--text-color); border-bottom: 1px solid var(--border-normal); padding-bottom: 8px;">Tham số hợp nhất thủ công</h4>
 
                             <div class="acu-grid" style="margin-bottom: 10px;">
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-target-count" style="font-weight: 500;">合并目标条数:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-target-count" style="font-weight: 500;">Số mục mục tiêu hợp nhất:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-merge-target-count" min="1" value="1" placeholder="1">
                                 </div>
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-batch-size" style="font-weight: 500;">每批处理条数:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-batch-size" style="font-weight: 500;">Số mục xử lý mỗi đợt:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-merge-batch-size" min="1" value="5" placeholder="5">
                                 </div>
                             </div>
 
                             <div class="acu-grid">
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-start-index" style="font-weight: 500;">起始条数:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-start-index" style="font-weight: 500;">Mục bắt đầu:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-merge-start-index" min="1" value="1" placeholder="1">
                                 </div>
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-end-index" style="font-weight: 500;">终止条数:</label>
-                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-merge-end-index" min="1" placeholder="留空处理到最后">
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-merge-end-index" style="font-weight: 500;">Mục kết thúc:</label>
+                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-merge-end-index" min="1" placeholder="Để trống = xử lý đến cuối">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 自动合并设置 -->
+                        <!-- Cài đặt hợp nhất tự động -->
                         <div style="background: var(--background-color-light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <h4 style="margin: 0 0 12px 0; font-size: 1em; color: var(--text-color); border-bottom: 1px solid var(--border-normal); padding-bottom: 8px;">自动合并设置</h4>
+                            <h4 style="margin: 0 0 12px 0; font-size: 1em; color: var(--text-color); border-bottom: 1px solid var(--border-normal); padding-bottom: 8px;">Cài đặt hợp nhất tự động</h4>
 
                             <div style="margin-bottom: 12px;">
                                 <label for="${SCRIPT_ID_PREFIX_ACU}-auto-merge-enabled" style="display: flex; align-items: center; cursor: pointer;">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-auto-merge-enabled" style="width: 14px; height: 14px; margin-right: 8px; cursor: pointer;">
-                                    <span style="font-size: 0.9em; font-weight: 500;">开启自动合并纪要</span>
+                                    <span style="font-size: 0.9em; font-weight: 500;">Bật hợp nhất biên bản tự động</span>
                                 </label>
                             </div>
 
                             <div class="acu-grid">
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-auto-merge-threshold" style="font-weight: 500;">触发楼层数:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-auto-merge-threshold" style="font-weight: 500;">Số tầng kích hoạt:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-merge-threshold" min="1" value="20" placeholder="20">
                                 </div>
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-auto-merge-reserve" style="font-weight: 500;">保留楼层数:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-auto-merge-reserve" style="font-weight: 500;">Số tầng giữ lại:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-merge-reserve" min="0" value="0" placeholder="0">
                                 </div>
                             </div>
@@ -15740,82 +15740,82 @@
 
                         <!-- 提示词设置 -->
                         <div style="background: var(--background-color-light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <h4 style="margin: 0 0 12px 0; font-size: 1em; color: var(--text-color); border-bottom: 1px solid var(--border-normal); padding-bottom: 8px;">提示词模板</h4>
-                            <textarea id="${SCRIPT_ID_PREFIX_ACU}-merge-prompt-template" style="height: 120px; font-size: 0.85em; font-family: monospace; width: 100%; resize: vertical;" placeholder="正在加载提示词模板..."></textarea>
+                            <h4 style="margin: 0 0 12px 0; font-size: 1em; color: var(--text-color); border-bottom: 1px solid var(--border-normal); padding-bottom: 8px;">Mẫu lệnh nhắc</h4>
+                            <textarea id="${SCRIPT_ID_PREFIX_ACU}-merge-prompt-template" style="height: 120px; font-size: 0.85em; font-family: monospace; width: 100%; resize: vertical;" placeholder="Đang tải mẫu lệnh nhắc..."></textarea>
                         </div>
 
                         <!-- 操作按钮 -->
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
                             <button id="${SCRIPT_ID_PREFIX_ACU}-save-merge-settings" style="padding: 10px; background: var(--button-background); border: 1px solid var(--border-normal); border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
-                                <i class="fa-solid fa-save" style="margin-right: 5px;"></i>保存设置
+                                <i class="fa-solid fa-save" style="margin-right: 5px;"></i>Lưu cài đặt
                             </button>
                             <button id="${SCRIPT_ID_PREFIX_ACU}-restore-merge-settings" style="padding: 10px; background: var(--button-secondary-background, #f8f9fa); border: 1px solid var(--border-normal); border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
-                                <i class="fa-solid fa-undo" style="margin-right: 5px;"></i>恢复默认
+                                <i class="fa-solid fa-undo" style="margin-right: 5px;"></i>Khôi phục mặc định
                             </button>
                         </div>
 
                         <button id="${SCRIPT_ID_PREFIX_ACU}-start-merge-summary" class="primary" style="width: 100%; padding: 12px; font-size: 1em;">
-                            <i class="fa-solid fa-play" style="margin-right: 8px;"></i>开始合并纪要
+                            <i class="fa-solid fa-play" style="margin-right: 8px;"></i>Bắt đầu hợp nhất biên bản
                         </button>
                     </div>
                 </div>
 
                 <div id="acu-tab-import" class="acu-tab-content">
                     <div class="acu-card">
-                        <h3>从TXT文件导入</h3>
-                        <p class="notes">从外部TXT文件导入内容，按指定字符数分割，并作为独立条目注入指定的世界书。这些条目独立于聊天记录，不会被自动清除。</p>
+                        <h3>Nhập từ tệp TXT</h3>
+                        <p class="notes">Nhập nội dung từ tệp TXT bên ngoài, chia theo số ký tự chỉ định, tiêm vào sổ thế giới chỉ định. Các mục này độc lập với lịch sử chat, không bị tự động xóa.</p>
                         
                         <hr style="border-color: var(--border-normal); margin: 15px 0;">
                         
                         <div>
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target">导入数据注入目标世界书:</label>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target">Sổ thế giới đích tiêm dữ liệu nhập:</label>
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target-filter" placeholder="Lọc sổ thế giới..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
                             <div class="input-group">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target" style="width: 100%;"></select>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-import-worldbooks" title="刷新世界书列表">刷新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-import-worldbooks" title="Làm mới danh sách sổ thế giới">Làm mới</button>
                             </div>
-                            <small class="notes">选择导入的数据将被注入到哪个世界书里（独立于常规更新的世界书设置）。<strong>注意：不推荐使用角色卡绑定世界书，建议使用新建的其它世界书。</strong></small>
+                            <small class="notes">Chọn sổ thế giới để tiêm dữ liệu nhập (độc lập với cài đặt sổ thế giới cập nhật thông thường). <strong>Lưu ý: Không khuyến nghị dùng sổ thế giới liên kết thẻ nhân vật, nên dùng sổ thế giới mới.</strong></small>
                         </div>
                         
                         <div class="acu-grid" style="grid-template-columns: 1fr 1fr; align-items: end; gap: 20px; margin-bottom: 10px;">
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-import-split-size">每段字符数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-import-split-size">Số ký tự mỗi đoạn:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-import-split-size" min="100" step="100" value="10000">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-save-import-split-size">保存</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-save-import-split-size">Lưu</button>
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-import-encoding">文件编码:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-import-encoding">Mã hóa tệp:</label>
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-import-encoding">
-                                    <option value="UTF-8">UTF-8 (默认)</option>
-                                    <option value="GBK" selected>GBK (简体中文)</option>
-                                    <option value="Big5">Big5 (繁体中文)</option>
+                                    <option value="UTF-8">UTF-8 (Mặc định)</option>
+                                    <option value="GBK" selected>GBK (Tiếng Trung giản thể)</option>
+                                    <option value="Big5">Big5 (Tiếng Trung phồn thể)</option>
                                 </select>
                             </div>
                         </div>
                         
-                        <div id="${SCRIPT_ID_PREFIX_ACU}-import-status" class="notes" style="margin-bottom: 15px; font-weight: bold;">状态：尚未加载文件。</div>
+                        <div id="${SCRIPT_ID_PREFIX_ACU}-import-status" class="notes" style="margin-bottom: 15px; font-weight: bold;">Trạng thái: Chưa tải tệp.</div>
 
                         <div class="button-group">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-txt-button" class="primary">1. 选择并拆分TXT文件</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-txt-button" class="primary">1. Chọn và chia tệp TXT</button>
                         </div>
-                        <div style="margin: 10px 0 8px 0; font-weight: 700;">注入表选择（自选表格）</div>
-                        <div class="notes" style="margin-bottom:6px;">选择需要写入世界书的表（可多选；未曾选择过则默认全选）。</div>
+                        <div style="margin: 10px 0 8px 0; font-weight: 700;">Chọn bảng tiêm (tùy chọn)</div>
+                        <div class="notes" style="margin-bottom:6px;">Chọn bảng cần ghi vào sổ thế giới (có thể chọn nhiều; chưa từng chọn thì mặc định chọn tất cả).</div>
                         <div class="button-group" style="justify-content:flex-start; gap:8px; margin-bottom:6px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-all" class="button">全选</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-none" class="button">全不选</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-all" class="button">Chọn tất cả</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-none" class="button">Bỏ chọn tất cả</button>
                         </div>
-                        <div id="${SCRIPT_ID_PREFIX_ACU}-import-table-selector" style="min-height:60px;">加载表格列表中...</div>
+                        <div id="${SCRIPT_ID_PREFIX_ACU}-import-table-selector" style="min-height:60px;">Đang tải danh sách bảng...</div>
 
                         <div class="button-group" style="margin-top: 10px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-inject-imported-txt-button" disabled>2. 注入（自选表格）</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-inject-imported-txt-button" disabled>2. Tiêm (bảng tùy chọn)</button>
                         </div>
                         <div class="button-group">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-imported-entries" class="btn-danger">删除注入条目</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-imported-entries" class="btn-danger">Xóa mục đã tiêm</button>
                         </div>
                         <div class="button-group">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-clear-imported-cache-button" class="btn-danger" style="font-weight: bold;">清空导入暂存缓存</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-clear-imported-cache-button" class="btn-danger" style="font-weight: bold;">Xóa bộ nhớ đệm nhập tạm</button>
                         </div>
                         <input type="file" id="${SCRIPT_ID_PREFIX_ACU}-hidden-file-input" style="display: none;" accept=".txt">
                     </div>
@@ -15826,11 +15826,11 @@
                         <!-- 顶部标题和开关区域 -->
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border_color);">
                             <div>
-                                <h3 style="margin: 0; color: var(--text_primary);">剧情推进设置</h3>
-                                <p class="notes" style="margin: 5px 0 0 0;">通过AI预处理用户输入，增强故事叙述质量和剧情连贯性</p>
+                                <h3 style="margin: 0; color: var(--text_primary);">Cài đặt thúc đẩy cốt truyện</h3>
+                                <p class="notes" style="margin: 5px 0 0 0;">Tiền xử lý đầu vào người dùng bằng AI, nâng cao chất lượng kể chuyện và tính liên kết cốt truyện</p>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-enabled" style="font-weight: 500; cursor: pointer;">启用功能</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-enabled" style="font-weight: 500; cursor: pointer;">Bật tính năng</label>
                                 <label class="toggle-switch">
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-enabled" type="checkbox" />
                                     <span class="slider"></span>
@@ -15841,106 +15841,106 @@
                         <!-- 预设管理区域 -->
                         <div class="settings-section" style="margin-bottom: 25px; padding: 20px; background: var(--background_light); border-radius: 8px; border: 1px solid var(--border_color_light);">
                             <h4 style="margin: 0 0 15px 0; color: var(--text_primary); display: flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-bookmark"></i> 预设管理
+                              <i class="fa-solid fa-bookmark"></i> Quản lý cài đặt
                             </h4>
                             <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-preset-select" style="font-weight: 500;">选择预设</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-preset-select" style="font-weight: 500;">Chọn cài đặt</label>
                                 <div class="qrf_preset_selector_wrapper acu-plot-preset-wrapper" style="display: flex; gap: 8px; align-items: center; margin-top: 5px;">
                                     <select id="${SCRIPT_ID_PREFIX_ACU}-plot-preset-select" class="text_pole" style="flex: 1;">
-                                        <option value="">-- 选择一个预设 --</option>
+                                        <option value="">-- Chọn một cài đặt --</option>
                                     </select>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-save-preset" class="menu_button" title="覆盖保存当前预设" style="padding: 8px 12px;"><i class="fa-solid fa-save"></i></button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-save-as-new-preset" class="menu_button" title="另存为新预设" style="padding: 8px 12px;"><i class="fa-solid fa-file-export"></i></button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-import-presets" class="menu_button" title="导入预设" style="padding: 8px 12px;"><i class="fa-solid fa-upload"></i></button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-export-presets" class="menu_button" title="导出所有预设" style="padding: 8px 12px;"><i class="fa-solid fa-download"></i></button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-reset-defaults" class="menu_button" title="恢复默认提示词" style="padding: 8px 12px; background-color: var(--orange); color: white;"><i class="fa-solid fa-undo"></i></button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-delete-preset" class="menu_button" title="删除当前选中的预设" style="display: none; padding: 8px 12px; background-color: var(--red);"><i class="fa-solid fa-trash-alt"></i></button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-save-preset" class="menu_button" title="Ghi đè lưu cài đặt hiện tại" style="padding: 8px 12px;"><i class="fa-solid fa-save"></i></button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-save-as-new-preset" class="menu_button" title="Lưu thành cài đặt mới" style="padding: 8px 12px;"><i class="fa-solid fa-file-export"></i></button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-import-presets" class="menu_button" title="Nhập cài đặt" style="padding: 8px 12px;"><i class="fa-solid fa-upload"></i></button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-export-presets" class="menu_button" title="Xuất tất cả cài đặt" style="padding: 8px 12px;"><i class="fa-solid fa-download"></i></button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-reset-defaults" class="menu_button" title="Khôi phục lệnh nhắc mặc định" style="padding: 8px 12px; background-color: var(--orange); color: white;"><i class="fa-solid fa-undo"></i></button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-plot-delete-preset" class="menu_button" title="Xóa cài đặt đang chọn" style="display: none; padding: 8px 12px; background-color: var(--red);"><i class="fa-solid fa-trash-alt"></i></button>
                                     <input type="file" id="${SCRIPT_ID_PREFIX_ACU}-plot-preset-file-input" style="display: none;" accept=".json">
                                 </div>
-                                <small class="notes">选择预设应用设置，或保存当前配置为新预设</small>
+                                <small class="notes">Chọn cài đặt để áp dụng, hoặc lưu cấu hình hiện tại thành cài đặt mới</small>
                             </div>
                             <div class="qrf_settings_block" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border_color_light);">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select" style="font-weight: 500;">剧情推进API预设</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select" style="font-weight: 500;">Cài đặt API thúc đẩy cốt truyện</label>
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select" class="text_pole" style="width: 100%; margin-top: 5px;">
-                                    <option value="">使用当前API配置</option>
+                                    <option value="">Dùng cấu hình API hiện tại</option>
                                 </select>
-                                <small class="notes">选择剧情推进功能使用的API配置（在API设置页面保存预设）</small>
+                                <small class="notes">Chọn cấu hình API cho tính năng thúc đẩy cốt truyện (lưu cài đặt tại trang API)</small>
                             </div>
                         </div>
 
                         <!-- 提示词设置区域（独立提示词组） -->
                         <div class="settings-section" style="margin-bottom: 25px; padding: 20px; background: var(--background_light); border-radius: 8px; border: 1px solid var(--border_color_light);">
                             <h4 style="margin: 0 0 15px 0; color: var(--text_primary); display: flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-edit"></i> 提示词设置
+                              <i class="fa-solid fa-edit"></i> Cài đặt lệnh nhắc
                             </h4>
                             <div style="margin-bottom: 15px; padding: 12px; background: var(--background_default); border-radius: 6px; border-left: 3px solid var(--text_secondary);">
                                 <small class="notes" style="color: var(--text_secondary);">
-                                    <strong>占位符说明：</strong><br>
-                                    <code>$1</code> - 自动替换为世界书内容（默认开启）<br>
-                                    <code>$6</code> - 自动替换为上一轮保存的剧情规划数据<br>
-                                    <code>$5</code> - 自动替换为“总体大纲”表内容（含表头）<br>
-                                    <code>$7</code> - 自动替换为本次实际读取的前文上下文（仅包含历史AI输出，不含任何用户输入）<br>
-                                    <code>$8</code> - 自动替换为本轮用户输入（可自由放置）<br>
-                                    <code>sulv1-4</code> - 剧情推进速率设置<br>
-                                    <code>zhaohui</code> - 记忆召回数量
+                                    <strong>Giải thích ký hiệu đại diện:</strong><br>
+                                    <code>$1</code> - Tự động thay bằng nội dung sổ thế giới (mặc định bật)<br>
+                                    <code>$6</code> - Tự động thay bằng dữ liệu lập kế hoạch cốt truyện đã lưu ở lượt trước<br>
+                                    <code>$5</code> - Tự động thay bằng nội dung bảng “Đại cương tổng thể” (kèm tiêu đề bảng)<br>
+                                    <code>$7</code> - Tự động thay bằng ngữ cảnh trước đó thực tế được đọc (chỉ gồm đầu ra AI lịch sử, không gồm đầu vào người dùng)<br>
+                                    <code>$8</code> - Tự động thay bằng đầu vào người dùng của lượt hiện tại (có thể đặt tự do)<br>
+                                    <code>sulv1-4</code> - Cài đặt tốc độ thúc đẩy cốt truyện<br>
+                                    <code>zhaohui</code> - Số lượng hồi tưởng ký ức
                                 </small>
                             </div>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-plot-prompt-constructor-area">
                                 <div class="button-group" style="margin-bottom: 10px; justify-content: center;">
-                                    <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="top" title="在上方添加对话轮次">+</button>
+                                    <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="top" title="Thêm lượt hội thoại ở trên">+</button>
                                 </div>
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-plot-prompt-segments-container">
                                     <!-- Plot segments will be dynamically inserted here -->
                                 </div>
                                 <div class="button-group" style="margin-top: 10px; justify-content: center;">
-                                    <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="bottom" title="在下方添加对话轮次">+</button>
+                                    <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="bottom" title="Thêm lượt hội thoại ở dưới">+</button>
                                 </div>
                             </div>
                             <div class="button-group">
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-plot-save-prompt-group" class="primary">保存提示词组</button>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-plot-reset-prompt-group">恢复默认提示词组</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-plot-save-prompt-group" class="primary">Lưu nhóm lệnh nhắc</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-plot-reset-prompt-group">Khôi phục nhóm lệnh nhắc mặc định</button>
                             </div>
                             <div class="qrf_settings_block" style="margin-top: 15px; margin-bottom: 0;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-final-directive" style="font-weight: 500;">最终注入指令</label>
-                                <textarea id="${SCRIPT_ID_PREFIX_ACU}-plot-final-directive" class="text_pole" rows="3" placeholder="输入最终注入指令" style="resize: vertical;"></textarea>
-                                <small class="notes">这段内容不会发给“剧情规划API”，只会注入给主AI。你可以用 <code>$8</code> 自行决定是否/放置位置。</small>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-final-directive" style="font-weight: 500;">Lệnh tiêm cuối cùng</label>
+                                <textarea id="${SCRIPT_ID_PREFIX_ACU}-plot-final-directive" class="text_pole" rows="3" placeholder="Nhập lệnh tiêm cuối cùng" style="resize: vertical;"></textarea>
+                                <small class="notes">Nội dung này sẽ không gửi cho API lập kế hoạch cốt truyện, chỉ tiêm cho AI chính. Bạn có thể dùng <code>$8</code> để tự quyết định có dùng và đặt ở đâu.</small>
                             </div>
                         </div>
 
 
-                        <!-- 匹配替换设置区域 -->
+                        <!-- Khớp và thay thế设置区域 -->
                         <div class="settings-section" style="margin-bottom: 25px; padding: 20px; background: var(--background_light); border-radius: 8px; border: 1px solid var(--border_color_light);">
                             <h4 style="margin: 0 0 15px 0; color: var(--text_primary); display: flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-right-left"></i> 匹配替换
+                                <i class="fa-solid fa-right-left"></i> Khớp và thay thế
                             </h4>
                             <small class="notes" style="display: block; margin-bottom: 15px; color: var(--text_secondary);">
-                                在发送前，将下方设置的数值替换掉提示词中的占位符（sulv1-4、zhaohui）
+                                Trước khi gửi, thay thế giá trị bên dưới vào ký hiệu đại diện trong lệnh nhắc (sulv1-4, zhaohui)
                             </small>
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-main" style="font-weight: 500;">主线剧情推进速率</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-main" style="font-weight: 500;">Tốc độ thúc đẩy cốt truyện chính</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-rate-main" type="number" class="text_pole" step="0.05" value="1.0" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">占位符: sulv1</small>
+                                    <small class="notes" style="color: var(--text_secondary);">Ký hiệu: sulv1</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-personal" style="font-weight: 500;">个人线推进速率</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-personal" style="font-weight: 500;">Tốc độ tuyến cá nhân</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-rate-personal" type="number" class="text_pole" step="0.05" value="1.0" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">占位符: sulv2</small>
+                                    <small class="notes" style="color: var(--text_secondary);">Ký hiệu: sulv2</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-erotic" style="font-weight: 500;">色情事件推进速率</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-erotic" style="font-weight: 500;">Tốc độ sự kiện 18+</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-rate-erotic" type="number" class="text_pole" step="0.05" value="0" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">占位符: sulv3</small>
+                                    <small class="notes" style="color: var(--text_secondary);">Ký hiệu: sulv3</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-cuckold" style="font-weight: 500;">绿帽线推进速率</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-rate-cuckold" style="font-weight: 500;">Tốc độ cốt truyện NTR</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-rate-cuckold" type="number" class="text_pole" step="0.05" value="1.0" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">占位符: sulv4</small>
+                                    <small class="notes" style="color: var(--text_secondary);">Ký hiệu: sulv4</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-recall-count" style="font-weight: 500;">记忆召回数量</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-recall-count" style="font-weight: 500;">Số lượng hồi tưởng ký ức</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-recall-count" type="number" class="text_pole" step="1" min="1" value="20" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">占位符: zhaohui</small>
+                                    <small class="notes" style="color: var(--text_secondary);">Ký hiệu: zhaohui</small>
                                 </div>
                             </div>
                         </div>
@@ -15948,113 +15948,113 @@
                         <!-- 自动循环设置区域 -->
                         <div class="settings-section" style="padding: 20px; background: var(--background_light); border-radius: 8px; border: 1px solid var(--border_color_light);">
                             <h4 style="margin: 0 0 15px 0; color: var(--text_primary); display: flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-sync-alt"></i> 自动循环生成
+                                <i class="fa-solid fa-sync-alt"></i> Tự động tạo vòng lặp
                             </h4>
 
                             <div style="display: grid; gap: 15px; margin-bottom: 20px;">
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                        <label style="font-weight: 500; margin: 0;">循环提示词列表</label>
+                                        <label style="font-weight: 500; margin: 0;">Danh sách lệnh nhắc vòng lặp</label>
                                         <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt" class="button" style="padding: 4px 12px; font-size: 0.85em; display: flex; align-items: center; gap: 4px;">
-                                            <i class="fa-solid fa-plus"></i> 添加提示词
+                                            <i class="fa-solid fa-plus"></i> Thêm lệnh nhắc
                                         </button>
                                     </div>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-prompts-container" style="display: grid; gap: 10px;">
                                         <!-- 提示词项将动态添加到这里 -->
                                     </div>
-                                    <small class="notes">可以添加多个提示词，循环时会自动依次使用，增加剧情变化</small>
+                                    <small class="notes">Có thể thêm nhiều lệnh nhắc, vòng lặp sẽ tự động dùng lần lượt, tăng sự biến đổi cốt truyện</small>
                                 </div>
 
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-loop-tags" style="font-weight: 500;">标签验证</label>
-                                    <input id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-tags" type="text" class="text_pole" placeholder="例如: content, thinking" style="width: 100%;">
-                                    <small class="notes">输入必须存在于AI回复中的标签，多个标签用逗号分隔。缺少任意标签将重试</small>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-loop-tags" style="font-weight: 500;">Xác minh thẻ</label>
+                                    <input id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-tags" type="text" class="text_pole" placeholder="Ví dụ: content, thinking" style="width: 100%;">
+                                    <small class="notes">Nhập thẻ phải xuất hiện trong phản hồi AI, nhiều thẻ cách nhau bằng dấu phẩy. Thiếu thẻ sẽ thử lại</small>
                                 </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px;">
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-loop-delay" style="font-weight: 500;">循环延时</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-loop-delay" style="font-weight: 500;">Độ trễ vòng lặp</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-delay" type="number" class="text_pole" min="0" step="1" value="5" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">秒</small>
+                                    <small class="notes" style="color: var(--text_secondary);">giây</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-loop-total-duration" style="font-weight: 500;">总时长</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-loop-total-duration" style="font-weight: 500;">Tổng thời gian</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-total-duration" type="number" class="text_pole" min="0" step="1" value="0" placeholder="60" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">分钟</small>
+                                    <small class="notes" style="color: var(--text_secondary);">phút</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-max-retries" style="font-weight: 500;">最大重试</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-max-retries" style="font-weight: 500;">Thử lại tối đa</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-max-retries" type="number" class="text_pole" min="0" step="1" value="3" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">次数</small>
+                                    <small class="notes" style="color: var(--text_secondary);">lần</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-context-turn-count" style="font-weight: 500;">AI上下文</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-context-turn-count" style="font-weight: 500;">Ngữ cảnh AI</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-context-turn-count" type="number" class="text_pole" min="0" max="20" step="1" value="3" style="width: 100%;">
-                                    <small class="notes" style="color: var(--text_secondary);">AI输出楼层数（仅计算AI回复，不含用户输入）</small>
+                                    <small class="notes" style="color: var(--text_secondary);">Số tầng đầu ra AI (chỉ tính phản hồi AI, không tính đầu vào người dùng)</small>
                                 </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-extract-tags" style="font-weight: 500;">标签摘取</label>
-                                    <input id="${SCRIPT_ID_PREFIX_ACU}-plot-extract-tags" type="text" class="text_pole" placeholder="例如: think,plot" style="width: 100%;">
-                                    <small class="notes">从AI回复中提取并注入酒馆的标签</small>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-extract-tags" style="font-weight: 500;">Trích xuất thẻ</label>
+                                    <input id="${SCRIPT_ID_PREFIX_ACU}-plot-extract-tags" type="text" class="text_pole" placeholder="Ví dụ: think,plot" style="width: 100%;">
+                                    <small class="notes">Trích xuất thẻ từ phản hồi AI và tiêm vào SillyTavern</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label style="font-weight: 500;">正文标签提取规则</label>
+                                    <label style="font-weight: 500;">Quy tắc trích xuất thẻ nội dung</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-add-rule" class="button" style="margin-top: 6px;">添加规则</button>
-                                    <small class="notes">每条规则填写开始词和结束词，仅提取最后一组匹配内容；User回复不受影响</small>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-add-rule" class="button" style="margin-top: 6px;">Thêm quy tắc</button>
+                                    <small class="notes">Mỗi quy tắc điền từ bắt đầu và kết thúc, chỉ trích xuất nhóm khớp cuối cùng; phản hồi User không bị ảnh hưởng</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label style="font-weight: 500;">标签排除规则</label>
+                                    <label style="font-weight: 500;">Quy tắc loại trừ thẻ</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-add-rule" class="button" style="margin-top: 6px;">添加规则</button>
-                                    <small class="notes">每条规则填写开始词和结束词，仅移除最后一组匹配内容（可与“正文标签提取”叠加）</small>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-add-rule" class="button" style="margin-top: 6px;">Thêm quy tắc</button>
+                                    <small class="notes">Mỗi quy tắc điền từ bắt đầu và kết thúc, chỉ xóa nhóm khớp cuối cùng (có thể kết hợp với “Trích xuất thẻ nội dung”).</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-min-length" style="font-weight: 500;">跳过更新最小回复长度</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-min-length" style="font-weight: 500;">Độ dài phản hồi tối thiểu để bỏ qua cập nhật</label>
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-min-length" type="number" class="text_pole" min="0" max="2000" step="10" value="0" style="width: 100%;">
-                                    <small class="notes">规划回复少于此长度时自动重试</small>
+                                    <small class="notes">Tự động thử lại khi phản hồi lập kế hoạch ngắn hơn độ dài này</small>
                                 </div>
                             </div>
 
                             <!-- [新增] 剧情推进世界书选择（与填表世界书选择互不干扰；UI风格与“世界书设置”页一致） -->
                             <div class="qrf_settings_block" style="margin: 10px 0 18px 0; padding-top: 15px; border-top: 1px dashed var(--border_color_light);">
                                 <label style="font-weight: 600; display:flex; align-items:center; gap:8px;">
-                                    <i class="fa-solid fa-book"></i> 剧情推进世界书选择（独立）
+                                    <i class="fa-solid fa-book"></i> Chọn sổ thế giới cho thúc đẩy cốt truyện (độc lập)
                                 </label>
-                                <small class="notes">仅影响“剧情推进”，不会影响“填表/读取世界书”的选择。</small>
+                                <small class="notes">Chỉ ảnh hưởng chức năng thúc đẩy cốt truyện, không ảnh hưởng lựa chọn điền bảng/đọc sổ thế giới.</small>
 
                                 <div class="qrf_settings_block_radio" style="margin-top: 10px;">
-                                    <label>世界书来源 (用于剧情推进读取上下文):</label>
+                                    <label>Nguồn sổ thế giới (đọc ngữ cảnh thúc đẩy cốt truyện):</label>
                                     <div class="qrf_radio_group">
                                         <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-character" name="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source" value="character" checked>
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-character">角色卡绑定</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-character">Liên kết thẻ nhân vật</label>
                                         <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-manual" name="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source" value="manual">
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-manual">手动选择</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-manual">Chọn thủ công</label>
                                     </div>
                                 </div>
 
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-manual-select-block" style="display: none; margin-top: 10px;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select">选择世界书 (可多选):</label>
-                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select">Chọn sổ thế giới (có thể chọn nhiều):</label>
+                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-filter" placeholder="Lọc sổ thế giới..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
                                     <div class="input-group">
                                         <div id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select" class="qrf_worldbook_list"></div>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-refresh-worldbooks" title="刷新世界书列表">刷新</button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-refresh-worldbooks" title="Làm mới danh sách sổ thế giới">Làm mới</button>
                                     </div>
                                 </div>
 
                                 <div style="margin-top: 15px;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                        <label style="margin-bottom: 0;">启用的世界书条目:</label>
+                                        <label style="margin-bottom: 0;">Mục sổ thế giới đã bật:</label>
                                         <div class="button-group" style="margin: 0;">
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全选</button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全不选</button>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Chọn tất cả</button>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Bỏ chọn tất cả</button>
                                         </div>
                                     </div>
-                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-filter" placeholder="筛选条目/世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
+                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-filter" placeholder="Lọc mục/sổ thế giới..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-normal); background: var(--input-background); color: var(--input-text-color);">
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-list" class="qrf_worldbook_entry_list">
                                         <!-- 条目将动态加载于此 -->
                                     </div>
@@ -16064,18 +16064,18 @@
                             <!-- 循环控制区域 -->
                             <div style="border-top: 1px solid var(--border_color_light); padding-top: 20px;">
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-status-indicator" style="text-align: center; margin-bottom: 15px; padding: 10px; background: var(--background_default); border-radius: 6px; border: 1px solid var(--border_color_light);">
-                                    <div style="font-weight: 600; color: var(--text_primary); margin-bottom: 5px;">循环状态</div>
+                                    <div style="font-weight: 600; color: var(--text_primary); margin-bottom: 5px;">Trạng thái vòng lặp</div>
                                     <div style="color: var(--text_secondary);">
-                                        <span id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-status-text">未运行</span>
+                                        <span id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-status-text">Chưa chạy</span>
                                         <span id="${SCRIPT_ID_PREFIX_ACU}-plot-loop-timer-display" style="display:none; margin-left: 10px; color: var(--text_tertiary);"></span>
                                     </div>
                                 </div>
                                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                                     <button id="${SCRIPT_ID_PREFIX_ACU}-plot-start-loop-btn" class="menu_button" style="padding: 12px 25px; background: var(--green); color: white; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; min-width: 140px; display: inline-flex; align-items: center; gap: 8px; justify-content: center;">
-                                        <i class="fas fa-play"></i> 开始循环
+                                        <i class="fas fa-play"></i> Bắt đầu vòng lặp
                                     </button>
                                     <button id="${SCRIPT_ID_PREFIX_ACU}-plot-stop-loop-btn" class="menu_button" style="display: none; padding: 12px 25px; background: var(--red); color: white; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; min-width: 140px; display: inline-flex; align-items: center; gap: 8px; justify-content: center;">
-                                        <i class="fas fa-stop"></i> 停止循环
+                                        <i class="fas fa-stop"></i> Dừng vòng lặp
                                     </button>
                                 </div>
                             </div>
@@ -16083,7 +16083,7 @@
                     </div>
                 </div>
 
-                <p id="${SCRIPT_ID_PREFIX_ACU}-status-message" class="notes">准备就绪</p>
+                <p id="${SCRIPT_ID_PREFIX_ACU}-status-message" class="notes">Sẵn sàng</p>
                     </div>
                 </div>
             </div>`;
@@ -16093,7 +16093,7 @@
     
     createACUWindow({
       id: windowId,
-      title: '魔·数据库 V',
+      title: 'Mythic·Database V',
       content: popupHtml,
       width: 1400,  // 基础宽度
       height: 900,  // 基础高度
@@ -16112,7 +16112,7 @@
         
         if (!curDlgCnt || curDlgCnt.length === 0) {
           logError_ACU('Cannot find ACU popup DOM in window');
-          showToastr_ACU('error', 'UI初始化失败');
+          showToastr_ACU('error', 'Khởi tạo UI thất bại');
           return;
         }
         $popupInstance_ACU = curDlgCnt;
@@ -16230,7 +16230,7 @@
 
               // 1. 从旧目标删除条目
               if (oldLorebookName) {
-                  showToastr_ACU('info', `正在从旧目标 [${oldLorebookName}] 中清除条目...`);
+                  showToastr_ACU('info', `Đang xóa mục từ mục tiêu cũ [${oldLorebookName}]...`);
                   try {
                       await deleteAllGeneratedEntries_ACU(oldLorebookName);
                       // [修复] 增加短暂延迟，确保后端/API完成删除操作
@@ -16249,11 +16249,11 @@
 
               // 3. 向新目标注入条目
               if (currentJsonTableData_ACU) {
-                  showToastr_ACU('info', `正在向新目标注入条目...`);
+                  showToastr_ACU('info', `Đang tiêm mục vào đích mới...`);
                   await updateReadableLorebookEntry_ACU(true); // `true` to ensure entries are created
-                  showToastr_ACU('success', '数据注入目标已成功切换！');
+                  showToastr_ACU('success', 'Đã chuyển đổi mục tiêu tiêm dữ liệu thành công!');
               } else {
-                  showToastr_ACU('warning', '数据注入目标已更新，但当前无数据可注入。');
+                  showToastr_ACU('warning', 'Mục tiêu tiêm dữ liệu đã cập nhật, nhưng hiện không có dữ liệu để tiêm.');
               }
           });
       }
@@ -16323,7 +16323,7 @@
             $dataIsolationHistoryList.empty();
             if (!history.length) {
                 $dataIsolationHistoryList.append(
-                    `<li class="acu-history-empty" style="padding: 6px 10px; color: var(--text-dim); user-select: none;">暂无历史记录</li>`,
+                    `<li class="acu-history-empty" style="padding: 6px 10px; color: var(--text-dim); user-select: none;">Chưa có lịch sử</li>`,
                 );
                 return;
             }
@@ -16332,7 +16332,7 @@
                 $dataIsolationHistoryList.append(
                     `<li class="acu-history-item" data-code="${safeCode}" title="${safeCode}" style="padding: 6px 10px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
                         <span class="acu-history-text" style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${safeCode}</span>
-                        <button type="button" class="acu-remove-code" data-code="${safeCode}" title="删除该标识" style="border: none; background: transparent; color: var(--error-color); cursor: pointer; font-size: 12px; line-height: 1;">×</button>
+                        <button type="button" class="acu-remove-code" data-code="${safeCode}" title="Xóa mã này" style="border: none; background: transparent; color: var(--error-color); cursor: pointer; font-size: 12px; line-height: 1;">×</button>
                     </li>`,
                 );
             });
@@ -16348,9 +16348,9 @@
         // [新增] 删除按钮事件
         if ($dataIsolationDeleteButton.length) {
             $dataIsolationDeleteButton.on('click', async function() {
-                if (confirm('确定要删除当前标识下的所有注入世界书条目吗？\n(这不会删除聊天记录中的数据)')) {
+                if (confirm('Bạn có chắc muốn xóa tất cả mục tiêm sổ thế giới của mã hiện tại?\n(Thao tác này không xóa dữ liệu trong lịch sử chat)')) {
                     await deleteAllGeneratedEntries_ACU(); // 此函数已修改为支持隔离逻辑
-                    showToastr_ACU('success', '已删除相关世界书条目。');
+                    showToastr_ACU('success', 'Đã xóa các mục sổ thế giới liên quan.');
                 }
             });
         }
@@ -16360,8 +16360,8 @@
             $dataIsolationSaveButton.on('click', async function() {
                 const code = $dataIsolationCodeInput.val().trim();
 
-                if (code) showToastr_ACU('info', `正在切换到标识 [${code}] 的整套设置/模板/数据...`);
-                else showToastr_ACU('info', `标识为空：正在切换到默认整套设置/模板/数据...`);
+                if (code) showToastr_ACU('info', `Đang chuyển sang bộ cài đặt/mẫu/dữ liệu của mã [${code}]...`);
+                else showToastr_ACU('info', `Mã định danh trống: đang chuyển sang bộ cài đặt/mẫu/dữ liệu mặc định...`);
 
                 // [Profile] 切换标识 = 切换 profile（设置+模板），标识列表跨 profile 共享
                 await switchIsolationProfile_ACU(code);
@@ -16390,7 +16390,7 @@
                     updateCardUpdateStatusDisplay_ACU();
                 }
                 
-                showToastr_ACU('success', '数据载入完成！');
+                showToastr_ACU('success', 'Tải dữ liệu hoàn thành!');
             });
         }
         
@@ -16626,7 +16626,7 @@
               // 验证提示词
               const newPrompt = $promptInput.val();
               if (!newPrompt || !newPrompt.trim()) {
-                  showToastr_ACU('warning', '提示词不能为空。');
+                  showToastr_ACU('warning', 'Lời nhắc không được để trống.');
                   return;
               }
 
@@ -16641,13 +16641,13 @@
               settings_ACU.autoMergeReserve = parseInt($autoReserve.val()) || 0;
 
               saveSettings_ACU();
-              showToastr_ACU('success', '所有合并设置已保存！');
+              showToastr_ACU('success', 'Đã lưu toàn bộ cài đặt hợp nhất!');
           });
       }
 
       if ($restoreMergeSettingsButton.length) {
           $restoreMergeSettingsButton.on('click', function() {
-              if (confirm('确定要将所有合并设置恢复为默认值吗？')) {
+              if (confirm('Bạn có chắc muốn khôi phục toàn bộ cài đặt hợp nhất về mặc định không?')) {
                   const $promptInput = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-merge-prompt-template`);
                   const $targetCount = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-merge-target-count`);
                   const $batchSize = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-merge-batch-size`);
@@ -16678,7 +16678,7 @@
                   settings_ACU.autoMergeReserve = 0;
 
                   saveSettings_ACU();
-                  showToastr_ACU('success', '所有合并设置已恢复默认值并保存。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
+                  showToastr_ACU('success', 'Đã khôi phục mặc định và lưu toàn bộ cài đặt hợp nhất.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
               }
           });
       }
@@ -16711,7 +16711,7 @@
             settings_ACU.apiConfig.useMainApi = $(this).is(':checked');
             saveSettings_ACU();
             updateCustomApiInputsState_ACU();
-            showToastr_ACU('info', `自定义API已切换为 ${settings_ACU.apiConfig.useMainApi ? '使用主API' : '使用独立配置'}`);
+            showToastr_ACU('info', `API tùy chỉnh đã chuyển sang ${settings_ACU.apiConfig.useMainApi ? 'dùng API chính' : 'dùng cấu hình riêng'}`);
         });
       }
       if ($loadModelsButton_ACU.length) $loadModelsButton_ACU.on('click', fetchModelsAndConnect_ACU);
@@ -16728,7 +16728,7 @@
           });
       }
 
-      // --- [新增] API预设管理事件绑定 ---
+      // --- [新增] Quản lý cài đặt API事件绑定 ---
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-save-api-preset`).on('click', function() {
         const presetName = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-api-preset-name`).val();
         if (saveApiPreset_ACU(presetName)) {
@@ -16741,18 +16741,18 @@
         if (presetName) {
           loadApiPreset_ACU(presetName);
         } else {
-          showToastr_ACU('warning', '请先选择一个预设。');
+          showToastr_ACU('warning', 'Vui lòng chọn một preset trước.');
         }
       });
 
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-delete-api-preset`).on('click', function() {
         const presetName = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-api-preset-select`).val();
         if (presetName) {
-          if (confirm(`确定要删除API预设 "${presetName}" 吗？`)) {
+          if (confirm(`Bạn có chắc muốn xóa preset API "${presetName}" không?`)) {
             deleteApiPreset_ACU(presetName);
           }
         } else {
-          showToastr_ACU('warning', '请先选择一个预设。');
+          showToastr_ACU('warning', 'Vui lòng chọn một preset trước.');
         }
       });
 
@@ -16767,7 +16767,7 @@
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-table-context-extract-add-rule`).on('click', function() {
         appendExcludeRuleRow_ACU(
           `#${SCRIPT_ID_PREFIX_ACU}-table-context-extract-rules`,
-          { startPlaceholder: '开始词（例如：<think）', endPlaceholder: '结束词（例如：</think>）' },
+          { startPlaceholder: 'Từ bắt đầu (ví dụ: <think)', endPlaceholder: 'Từ kết thúc (ví dụ: </think>)' },
         );
       });
       $popupInstance_ACU.on('input', `#${SCRIPT_ID_PREFIX_ACU}-table-context-extract-rules .acu-exclude-rule-start, #${SCRIPT_ID_PREFIX_ACU}-table-context-extract-rules .acu-exclude-rule-end`, function() {
@@ -16785,7 +16785,7 @@
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-add-rule`).on('click', function() {
         appendExcludeRuleRow_ACU(
           `#${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-rules`,
-          { startPlaceholder: '开始词（例如：<thinking）', endPlaceholder: '结束词（例如：</thinking>）' },
+          { startPlaceholder: 'Từ bắt đầu (ví dụ: <thinking)', endPlaceholder: 'Từ kết thúc (ví dụ: </thinking>)' },
         );
       });
       $popupInstance_ACU.on('input', `#${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-rules .acu-exclude-rule-start, #${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-rules .acu-exclude-rule-end`, function() {
@@ -16799,11 +16799,11 @@
         saveSettings_ACU();
       });
 
-      // 剧情推进API预设选择器
+      // Cài đặt API thúc đẩy cốt truyện选择器
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select`).on('change', function() {
         settings_ACU.plotApiPreset = $(this).val();
         saveSettings_ACU();
-        logDebug_ACU(`剧情推进API预设已切换为: ${settings_ACU.plotApiPreset || '当前配置'}`);
+        logDebug_ACU(`Cài đặt API thúc đẩy cốt truyện已切换为: ${settings_ACU.plotApiPreset || '当前配置'}`);
       });
 
       if ($charCardPromptToggle_ACU.length)
@@ -16901,7 +16901,7 @@
           settings_ACU.autoUpdateEnabled = jQuery_API_ACU(this).is(':checked');
           saveSettings_ACU();
           logDebug_ACU('数据库自动更新启用状态已保存:', settings_ACU.autoUpdateEnabled);
-          showToastr_ACU('info', `数据库自动更新已 ${settings_ACU.autoUpdateEnabled ? '启用' : '禁用'}`);
+          showToastr_ACU('info', `Cập nhật tự động cơ sở dữ liệu đã ${settings_ACU.autoUpdateEnabled ? 'bật' : 'tắt'}`);
         });
       }
       if ($standardizedTableFillEnabledCheckbox_ACU && $standardizedTableFillEnabledCheckbox_ACU.length) {
@@ -16909,7 +16909,7 @@
           settings_ACU.standardizedTableFillEnabled = jQuery_API_ACU(this).is(':checked');
           saveSettings_ACU();
           logDebug_ACU('规范填表功能启用状态已保存:', settings_ACU.standardizedTableFillEnabled);
-          showToastr_ACU('info', `规范填表功能已 ${settings_ACU.standardizedTableFillEnabled ? '开启' : '关闭'}`, {
+          showToastr_ACU('info', `Chức năng điền bảng chuẩn hóa đã ${settings_ACU.standardizedTableFillEnabled ? 'bật' : 'tắt'}`, {
             acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE,
           });
         });
@@ -16920,7 +16920,7 @@
           saveSettings_ACU();
           logDebug_ACU('静默提示框启用状态已保存:', settings_ACU.toastMuteEnabled);
           // 该提示属于“导入/手动操作类”允许项，避免用户开启后无反馈
-          showToastr_ACU('info', `静默提示框已 ${settings_ACU.toastMuteEnabled ? '开启' : '关闭'}`, {
+          showToastr_ACU('info', `Thông báo im lặng đã ${settings_ACU.toastMuteEnabled ? 'bật' : 'tắt'}`, {
             acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT,
           });
         });
@@ -16930,7 +16930,7 @@
           settings_ACU.tableEditLastPairOnly = jQuery_API_ACU(this).is(':checked');
           saveSettings_ACU();
           logDebug_ACU('仅识别最后一对 tableEdit 启用状态已保存:', settings_ACU.tableEditLastPairOnly);
-          showToastr_ACU('info', `tableEdit 解析将${settings_ACU.tableEditLastPairOnly ? '仅使用最后一对标签' : '按全部标签优先匹配'}`, {
+          showToastr_ACU('info', `Phân tích tableEdit sẽ ${settings_ACU.tableEditLastPairOnly ? 'chỉ dùng cặp thẻ cuối cùng' : 'ưu tiên khớp theo toàn bộ thẻ'}`, {
             acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE,
           });
         });
@@ -16950,12 +16950,12 @@
             $templatePresetSelect_ACU.off('change.acu_template_preset').on('change.acu_template_preset', async function() {
                 const name = String(jQuery_API_ACU(this).val() || '').trim();
                 if (!name) return;
-                showToastr_ACU('info', `正在切换模板预设：${name}...`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                showToastr_ACU('info', `Đang chuyển preset mẫu: ${name}...`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                 const ok = await applyTemplatePresetToCurrent_ACU(name);
                 if (ok) {
-                    showToastr_ACU('success', `模板预设已切换：${name}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                    showToastr_ACU('success', `Đã chuyển cài đặt mẫu: ${name}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                 } else {
-                    showToastr_ACU('error', `模板预设切换失败：${name}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+                    showToastr_ACU('error', `Chuyển cài đặt mẫu thất bại: ${name}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
                     // 回退：重新渲染并清空选择
                     renderTemplatePresetSelect_ACU($templatePresetSelect_ACU, { keepValue: false });
                 }
@@ -16963,52 +16963,52 @@
         }
         if ($templatePresetSaveBtn_ACU && $templatePresetSaveBtn_ACU.length) {
             $templatePresetSaveBtn_ACU.off('click.acu_template_preset').on('click.acu_template_preset', function() {
-                const name = prompt('请输入要保存的模板预设名称：', (jQuery_API_ACU($templatePresetSelect_ACU).val() || '').toString() || '新模板预设');
+                const name = prompt('Nhập tên preset mẫu muốn lưu:', (jQuery_API_ACU($templatePresetSelect_ACU).val() || '').toString() || 'Preset mẫu mới');
                 if (!name) return;
                 const norm = normalizeTemplateForPresetSave_ACU();
                 if (!norm) {
-                    showToastr_ACU('error', '保存预设失败：无法解析当前模板。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+                    showToastr_ACU('error', 'Lưu preset thất bại: không thể phân tích mẫu hiện tại.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
                     return;
                 }
                 upsertTemplatePreset_ACU(name, norm.templateStr);
                 renderTemplatePresetSelect_ACU($templatePresetSelect_ACU, { keepValue: false });
                 if ($templatePresetSelect_ACU && $templatePresetSelect_ACU.length) $templatePresetSelect_ACU.val(String(name).trim());
-                showToastr_ACU('success', `已保存模板预设：${String(name).trim()}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                showToastr_ACU('success', `Đã lưu preset mẫu: ${String(name).trim()}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
             });
         }
         if ($templatePresetSaveAsBtn_ACU && $templatePresetSaveAsBtn_ACU.length) {
             $templatePresetSaveAsBtn_ACU.off('click.acu_template_preset').on('click.acu_template_preset', function() {
                 const cur = String(jQuery_API_ACU($templatePresetSelect_ACU).val() || '').trim();
-                const defaultName = cur ? `${cur}_副本` : '新模板预设';
-                const raw = prompt('另存为预设名称：', defaultName);
+                const defaultName = cur ? `${cur}_bản_sao` : 'Preset mẫu mới';
+                const raw = prompt('Lưu thành tên preset khác:', defaultName);
                 if (!raw) return;
                 const norm = normalizeTemplateForPresetSave_ACU();
                 if (!norm) {
-                    showToastr_ACU('error', '另存为失败：无法解析当前模板。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+                    showToastr_ACU('error', 'Lưu thành thất bại: không thể phân tích mẫu hiện tại.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
                     return;
                 }
                 const requested = String(raw).trim();
                 if (!requested) return;
                 const finalName = ensureUniqueTemplatePresetName_ACU(requested);
                 if (finalName !== requested) {
-                    if (!confirm(`预设名已存在，将自动另存为 "${finalName}"。是否继续？`)) return;
+                    if (!confirm(`Tên preset đã tồn tại, sẽ tự động lưu thành "${finalName}". Tiếp tục?`)) return;
                 }
                 upsertTemplatePreset_ACU(finalName, norm.templateStr);
                 renderTemplatePresetSelect_ACU($templatePresetSelect_ACU, { keepValue: false });
                 if ($templatePresetSelect_ACU && $templatePresetSelect_ACU.length) $templatePresetSelect_ACU.val(finalName);
-                showToastr_ACU('success', `已另存为模板预设：${finalName}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                showToastr_ACU('success', `Đã lưu thành preset mẫu: ${finalName}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
             });
         }
         if ($templatePresetRenameBtn_ACU && $templatePresetRenameBtn_ACU.length) {
             $templatePresetRenameBtn_ACU.off('click.acu_template_preset').on('click.acu_template_preset', function() {
                 const oldName = String(jQuery_API_ACU($templatePresetSelect_ACU).val() || '').trim();
                 if (!oldName) {
-                    showToastr_ACU('warning', '请先在下拉框选择一个预设。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                    showToastr_ACU('warning', 'Vui lòng chọn một preset trong danh sách trước.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                     return;
                 }
                 const preset = getTemplatePreset_ACU(oldName);
                 if (!preset?.templateStr) return;
-                const newName = prompt(`将预设 "${oldName}" 重命名为：`, oldName);
+                const newName = prompt(`Đổi tên preset "${oldName}" thành:`, oldName);
                 if (!newName) return;
                 const nn = String(newName).trim();
                 if (!nn) return;
@@ -17016,20 +17016,20 @@
                 deleteTemplatePreset_ACU(oldName);
                 renderTemplatePresetSelect_ACU($templatePresetSelect_ACU, { keepValue: false });
                 if ($templatePresetSelect_ACU && $templatePresetSelect_ACU.length) $templatePresetSelect_ACU.val(nn);
-                showToastr_ACU('success', `预设已重命名：${oldName} → ${nn}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                showToastr_ACU('success', `Đã đổi tên preset: ${oldName} → ${nn}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
             });
         }
         if ($templatePresetDeleteBtn_ACU && $templatePresetDeleteBtn_ACU.length) {
             $templatePresetDeleteBtn_ACU.off('click.acu_template_preset').on('click.acu_template_preset', function() {
                 const name = String(jQuery_API_ACU($templatePresetSelect_ACU).val() || '').trim();
                 if (!name) {
-                    showToastr_ACU('warning', '请先在下拉框选择一个预设。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                    showToastr_ACU('warning', 'Vui lòng chọn một preset trong danh sách trước.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                     return;
                 }
-                if (!confirm(`确定要删除模板预设 "${name}" 吗？此操作不可撤销。`)) return;
+                if (!confirm(`Bạn có chắc muốn xóa preset mẫu "${name}" không? Thao tác này không thể hoàn tác.`)) return;
                 const ok = deleteTemplatePreset_ACU(name);
                 renderTemplatePresetSelect_ACU($templatePresetSelect_ACU, { keepValue: false });
-                showToastr_ACU(ok ? 'success' : 'warning', ok ? `已删除预设：${name}` : `删除失败或预设不存在：${name}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                showToastr_ACU(ok ? 'success' : 'warning', ok ? `Đã xóa preset: ${name}` : `Xóa thất bại hoặc preset không tồn tại: ${name}`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
             });
         }
         if ($resetAllDefaultsButton_ACU.length) $resetAllDefaultsButton_ACU.on('click', resetAllToDefaults_ACU);
@@ -17058,12 +17058,12 @@
                 settings_ACU.deleteEndFloor = endFloor;
                 saveSettings_ACU();
 
-                const identityText = settings_ACU.dataIsolationEnabled ? `标识 [${settings_ACU.dataIsolationCode}]` : "所有标识";
-                const rangeText = startFloor && endFloor ? `第${startFloor}到${endFloor}AI楼层` :
-                                startFloor ? `从第${startFloor}AI楼层开始` :
-                                endFloor ? `到第${endFloor}AI楼层结束` : "全部AI楼层";
+                const identityText = settings_ACU.dataIsolationEnabled ? `mã nhận diện [${settings_ACU.dataIsolationCode}]` : "mọi mã nhận diện";
+                const rangeText = startFloor && endFloor ? `từ tầng AI ${startFloor} đến ${endFloor}` :
+                        startFloor ? `bắt đầu từ tầng AI ${startFloor}` :
+                        endFloor ? `đến tầng AI ${endFloor}` : "toàn bộ tầng AI";
 
-                if (confirm(`警告：这将永久删除当前聊天记录中${rangeText}所有属于 ${identityText} 的数据库数据。\n\n此操作不可恢复！\n\n确定要继续吗？`)) {
+                if (confirm(`Cảnh báo: thao tác này sẽ xóa vĩnh viễn mọi dữ liệu cơ sở dữ liệu thuộc ${identityText} trong ${rangeText} của cuộc trò chuyện hiện tại.\n\nThao tác này không thể hoàn tác!\n\nBạn có muốn tiếp tục không?`)) {
                     deleteLocalDataInChat_ACU('current', startFloor, endFloor);
                 }
             });
@@ -17082,13 +17082,13 @@
                 settings_ACU.deleteEndFloor = endFloor;
                 saveSettings_ACU();
 
-                const rangeText = startFloor && endFloor ? `第${startFloor}到${endFloor}AI楼层` :
-                                startFloor ? `从第${startFloor}AI楼层开始` :
-                                endFloor ? `到第${endFloor}AI楼层结束` : "全部AI楼层";
+                const rangeText = startFloor && endFloor ? `từ tầng AI ${startFloor} đến ${endFloor}` :
+                        startFloor ? `bắt đầu từ tầng AI ${startFloor}` :
+                        endFloor ? `đến tầng AI ${endFloor}` : "toàn bộ tầng AI";
 
-                if (confirm(`严重警告：这将永久删除当前聊天记录中${rangeText}【所有】数据库数据，无论其标识是什么。\n\n此操作不可恢复！\n\n确定要继续吗？`)) {
+                if (confirm(`Cảnh báo nghiêm trọng: thao tác này sẽ xóa vĩnh viễn【toàn bộ】dữ liệu cơ sở dữ liệu trong ${rangeText} của cuộc trò chuyện hiện tại, bất kể mã nhận diện là gì.\n\nThao tác này không thể hoàn tác!\n\nBạn có muốn tiếp tục không?`)) {
                     // 二次确认
-                    if (confirm(`再次确认：您真的要清空当前聊天的${rangeText}所有数据库存档吗？`)) {
+                  if (confirm(`Xác nhận lần nữa: bạn thật sự muốn xóa sạch toàn bộ dữ liệu cơ sở dữ liệu của ${rangeText} trong cuộc trò chuyện hiện tại chứ?`)) {
                         deleteLocalDataInChat_ACU('all', startFloor, endFloor);
                     }
                 }
@@ -17112,7 +17112,7 @@
         if ($startMergeSummaryButton.length) {
             $startMergeSummaryButton.on('click', handleManualMergeSummary_ACU);
             
-            // 尝试加载默认的提示词模板
+            // 尝试加载默认的Mẫu lệnh nhắc
             const $promptArea = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-merge-prompt-template`);
             // 这里我们暂时硬编码一个默认值，或者可以通过 ajax 读取文件，但由于这是一个 Tampermonkey 脚本，直接读取文件比较困难
             // 用户提到 "你帮我在旁边新建并设计一个提示词.txt文档供我检查修改"
@@ -17270,7 +17270,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         $resetPlotPromptGroupButton_ACU.on('click', () => resetPlotPromptGroupToDefault_ACU());
       }
 
-      // 匹配替换速率保存
+      // Khớp và thay thế速率保存
       const plotRateInputs = [
         { id: 'plot-rate-main', key: 'rateMain', defaultValue: 1.0 },
         { id: 'plot-rate-personal', key: 'ratePersonal', defaultValue: 1.0 },
@@ -17294,7 +17294,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         { id: 'plot-context-turn-count', key: 'contextTurnCount', type: 'number' },
         { id: 'plot-extract-tags', key: 'extractTags', type: 'string' },
         { id: 'plot-min-length', key: 'minLength', type: 'number' },
-        // 注意：plot-quick-reply-content 已改为数组，不再使用单个输入框，改用循环提示词列表管理
+        // 注意：plot-quick-reply-content 已改为数组，不再使用单个输入框，改用Danh sách lệnh nhắc vòng lặp管理
         { id: 'plot-loop-tags', key: 'loopSettings.loopTags', type: 'string' },
         { id: 'plot-loop-delay', key: 'loopSettings.loopDelay', type: 'number' },
         { id: 'plot-loop-total-duration', key: 'loopSettings.loopTotalDuration', type: 'number' },
@@ -17330,7 +17330,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-add-rule`).on('click', function() {
         appendExcludeRuleRow_ACU(
           `#${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules`,
-          { startPlaceholder: '开始词（例如：<think）', endPlaceholder: '结束词（例如：</think>）' },
+          { startPlaceholder: 'Từ bắt đầu (ví dụ: <think)', endPlaceholder: 'Từ kết thúc (ví dụ: </think>)' },
         );
       });
       $popupInstance_ACU.on('input', `#${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules .acu-exclude-rule-start, #${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules .acu-exclude-rule-end`, function() {
@@ -17348,7 +17348,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-add-rule`).on('click', function() {
         appendExcludeRuleRow_ACU(
           `#${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules`,
-          { startPlaceholder: '开始词（例如：<thinking）', endPlaceholder: '结束词（例如：</thinking>）' },
+          { startPlaceholder: 'Từ bắt đầu (ví dụ: <thinking)', endPlaceholder: 'Từ kết thúc (ví dụ: </thinking>)' },
         );
       });
       $popupInstance_ACU.on('input', `#${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules .acu-exclude-rule-start, #${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules .acu-exclude-rule-end`, function() {
@@ -17362,13 +17362,13 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         saveSettings_ACU();
       });
 
-      // 循环提示词列表管理
+      // Danh sách lệnh nhắc vòng lặp管理
       // 确保兼容性
       ensureLoopPromptsArray_ACU(settings_ACU.plotSettings);
       // 初始渲染
       renderLoopPromptsList_ACU();
 
-      // 添加提示词按钮
+      // Thêm lệnh nhắc按钮
       $popupInstance_ACU.on('click', `#${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt`, function() {
         const plotSettings = settings_ACU.plotSettings;
         ensureLoopPromptsArray_ACU(plotSettings);
@@ -17461,7 +17461,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         $plotExportPresets.on('click', function() {
           const selectedName = $plotPresetSelect.val();
           if (!selectedName) {
-            showToastr_ACU('info', '请先选择要导出的预设。');
+            showToastr_ACU('info', 'Vui lòng chọn preset cần xuất trước.');
             return;
           }
 
@@ -17469,7 +17469,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           const selectedPreset = presets.find(p => p.name === selectedName);
 
           if (!selectedPreset) {
-            showToastr_ACU('error', '找不到选中的预设。');
+            showToastr_ACU('error', 'Không tìm thấy preset đã chọn.');
             return;
           }
 
@@ -17485,7 +17485,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
 
-          showToastr_ACU('success', `预设 "${selectedName}" 已成功导出。`);
+          showToastr_ACU('success', `Đã xuất thành công preset "${selectedName}".`);
         });
       }
 
@@ -17499,7 +17499,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
             return;
           }
 
-          if (!confirm(`确定要用当前设置覆盖预设 "${selectedName}" 吗？`)) {
+          if (!confirm(`Bạn có chắc muốn dùng cài đặt hiện tại để ghi đè preset "${selectedName}" không?`)) {
             return;
           }
 
@@ -17507,7 +17507,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           const existingIndex = presets.findIndex(p => p.name === selectedName);
 
           if (existingIndex === -1) {
-            showToastr_ACU('error', '找不到要覆盖的预设。');
+            showToastr_ACU('error', 'Không tìm thấy preset cần ghi đè.');
             return;
           }
 
@@ -17515,7 +17515,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           presets[existingIndex] = normalizePlotPresetExcludeRules_ACU({ name: selectedName, ...currentSettings });
           settings_ACU.plotSettings.promptPresets = presets;
           saveSettings_ACU();
-          showToastr_ACU('success', `预设 "${selectedName}" 已被成功覆盖。`);
+          showToastr_ACU('success', `Đã ghi đè thành công preset "${selectedName}".`);
         });
       }
 
@@ -17531,11 +17531,11 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         $plotDeletePreset.on('click', function() {
           const selectedName = $plotPresetSelect.val();
           if (!selectedName) {
-            showToastr_ACU('warning', '没有选择任何预设。');
+            showToastr_ACU('warning', 'Chưa chọn preset nào.');
             return;
           }
 
-          if (!confirm(`确定要删除预设 "${selectedName}" 吗？`)) {
+          if (!confirm(`Bạn có chắc muốn xóa preset "${selectedName}" không?`)) {
             return;
           }
 
@@ -17549,9 +17549,9 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
 
             // 刷新预设选择器
             loadPlotPresetSelect_ACU();
-            showToastr_ACU('success', `预设 "${selectedName}" 已被删除。`);
+            showToastr_ACU('success', `Đã xóa cài đặt "${selectedName}".`);
           } else {
-            showToastr_ACU('error', '找不到要删除的预设。');
+            showToastr_ACU('error', 'Không tìm thấy cài đặt cần xóa.');
           }
         });
       }
@@ -17559,7 +17559,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       // 恢复默认提示词
       if ($plotResetDefaults.length) {
         $plotResetDefaults.on('click', function() {
-          if (!confirm('确定要恢复默认的剧情推进提示词吗？这将覆盖当前的提示词设置，并重置"标签摘取"。')) {
+          if (!confirm('Bạn có chắc muốn khôi phục lệnh nhắc thúc đẩy cốt truyện mặc định không? Thao tác này sẽ ghi đè cài đặt hiện tại và đặt lại "Trích xuất thẻ".')) {
             return;
           }
 
@@ -17583,10 +17583,10 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           // 刷新其他UI设置（如果需要）
           loadPlotSettingsToUI_ACU();
 
-          // 保存设置
+          // Lưu cài đặt
           saveSettings_ACU();
 
-          showToastr_ACU('success', '剧情推进提示词与"标签摘取"已恢复为默认值。');
+          showToastr_ACU('success', 'Lời nhắc thúc đẩy cốt truyện và "Trích xuất thẻ" đã được khôi phục mặc định.');
         });
       }
 
@@ -17602,7 +17602,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
               const importedPresets = JSON.parse(e.target.result);
 
               if (!Array.isArray(importedPresets)) {
-                throw new Error('JSON文件格式不正确，根节点必须是一个数组。');
+                throw new Error('Định dạng tệp JSON không đúng, nút gốc phải là một mảng.');
               }
 
               let currentPresets = settings_ACU.plotSettings.promptPresets || [];
@@ -17688,11 +17688,11 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
                   }, 50);
                 }
               } else {
-                showToastr_ACU('warning', '未找到可导入的有效预设。');
+                showToastr_ACU('warning', 'Không tìm thấy preset hợp lệ để nhập.');
               }
             } catch (error) {
               logError_ACU('[剧情推进] 导入预设失败:', error);
-              showToastr_ACU('error', `导入失败: ${error.message}`);
+              showToastr_ACU('error', `Nhập thất bại: ${error.message}`);
             } finally {
               // 清空文件输入框
               $plotPresetFileInput.val('');
@@ -17710,14 +17710,14 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         $startLoopBtn.on('click', function() {
           const duration = parseInt($popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-loop-total-duration`).val(), 10);
           if (!duration || duration <= 0) {
-            showToastr_ACU('warning', '请设置一个大于0的总倒计时 (分钟) 才能启动循环。');
+            showToastr_ACU('warning', 'Vui lòng đặt tổng thời lượng đếm ngược lớn hơn 0 (phút) để bắt đầu vòng lặp.');
             return;
           }
 
           startAutoLoop_ACU();
           $(this).hide();
           $stopLoopBtn.css('display', 'inline-flex').show();
-          showToastr_ACU('success', '自动化循环已启动。');
+          showToastr_ACU('success', 'Đã bắt đầu vòng lặp tự động.');
         });
       }
 
@@ -17726,13 +17726,13 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           stopAutoLoop_ACU();
           $(this).hide();
           $startLoopBtn.css('display', 'inline-flex').show();
-          showToastr_ACU('info', '自动化循环已停止。');
+          showToastr_ACU('info', 'Đã dừng vòng lặp tự động.');
         });
       }
 
       // 中止按钮绑定将在剧情规划开始时动态绑定
 
-      // 加载剧情推进设置到UI
+      // 加载Cài đặt thúc đẩy cốt truyện到UI
       loadPlotSettingsToUI_ACU();
 
       // [新增] 刷新API预设选择器
@@ -17882,14 +17882,14 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         logWarn_ACU('[剧情推进] Plot worldbook UI bind failed:', e);
       }
 
-      showToastr_ACU('success', '数据库更新工具已加载。');
+      showToastr_ACU('success', 'Đã tải công cụ cập nhật cơ sở dữ liệu.');
       }
     });
 
     // --- [剧情推进] 辅助函数 ---
 
     /**
-     * 加载剧情推进设置到UI
+     * 加载Cài đặt thúc đẩy cốt truyện到UI
      */
     function loadPlotSettingsToUI_ACU() {
       if (!$popupInstance_ACU) return;
@@ -17906,7 +17906,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       // 最终注入指令
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-final-directive`).val(getPlotPromptContentById_ACU('finalSystemDirective'));
 
-      // 匹配替换速率
+      // Khớp và thay thế速率
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-rate-main`).val(plotSettings.rateMain);
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-rate-personal`).val(plotSettings.ratePersonal);
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-rate-erotic`).val(plotSettings.rateErotic);
@@ -17928,8 +17928,8 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         `#${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules`,
         normalizeExtractRules_ACU(plotSettings.contextExtractRules, plotSettings.contextExtractTags || ''),
         {
-          startPlaceholder: '开始词（例如：<think）',
-          endPlaceholder: '结束词（例如：</think>）',
+          startPlaceholder: 'Từ bắt đầu (ví dụ: <think)',
+          endPlaceholder: 'Từ kết thúc (ví dụ: </think>)',
           fallbackRules: getDefaultPlotContextExtractRules_ACU(),
         },
       );
@@ -17937,8 +17937,8 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         `#${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules`,
         normalizeExcludeRules_ACU(plotSettings.contextExcludeRules, plotSettings.contextExcludeTags || ''),
         {
-          startPlaceholder: '开始词（例如：<thinking）',
-          endPlaceholder: '结束词（例如：</thinking>）',
+          startPlaceholder: 'Từ bắt đầu (ví dụ: <thinking)',
+          endPlaceholder: 'Từ kết thúc (ví dụ: </thinking>)',
           fallbackRules: getDefaultPlotContextExcludeRules_ACU(),
         },
       );
@@ -17963,12 +17963,12 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       const $stopBtn = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-stop-loop-btn`);
 
       if (loopState_ACU.isLooping) {
-        $statusText.text('运行中').css('color', 'var(--green)');
+        $statusText.text('Đang chạy').css('color', 'var(--green)');
         $startBtn.hide();
         $stopBtn.show();
         $timerDisplay.show();
       } else {
-        $statusText.text('未运行').css('color', 'var(--red)');
+        $statusText.text('Đã dừng').css('color', 'var(--red)');
         $stopBtn.hide();
         $startBtn.show();
         $timerDisplay.hide().text('');
@@ -17984,7 +17984,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       const $select = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-preset-select`);
       const $deleteBtn = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-delete-preset`);
 
-      $select.empty().append('<option value="">-- 选择一个预设 --</option>');
+      $select.empty().append('<option value="">-- Chọn một cài đặt --</option>');
 
       const presets = settings_ACU.plotSettings.promptPresets || [];
       presets.forEach(preset => {
@@ -18056,8 +18056,8 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         `#${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules`,
         normalizeExtractRules_ACU(preset.contextExtractRules, preset.contextExtractTags || ''),
         {
-          startPlaceholder: '开始词（例如：<think）',
-          endPlaceholder: '结束词（例如：</think>）',
+          startPlaceholder: 'Từ bắt đầu (ví dụ: <think)',
+          endPlaceholder: 'Từ kết thúc (ví dụ: </think>)',
           fallbackRules: getDefaultPlotContextExtractRules_ACU(),
         },
       );
@@ -18065,8 +18065,8 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         `#${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules`,
         normalizeExcludeRules_ACU(preset.contextExcludeRules, preset.contextExcludeTags || ''),
         {
-          startPlaceholder: '开始词（例如：<thinking）',
-          endPlaceholder: '结束词（例如：</thinking>）',
+          startPlaceholder: 'Từ bắt đầu (ví dụ: <thinking)',
+          endPlaceholder: 'Từ kết thúc (ví dụ: </thinking>)',
           fallbackRules: getDefaultPlotContextExcludeRules_ACU(),
         },
       );
@@ -18108,7 +18108,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       if (preset.loopSettings) settings_ACU.plotSettings.loopSettings = { ...settings_ACU.plotSettings.loopSettings, ...preset.loopSettings };
 
       saveSettings_ACU();
-      showToastr_ACU('success', `已加载预设 "${preset.name}"。`);
+      showToastr_ACU('success', `Đã tải preset "${preset.name}".`);
     }
 
     /**
@@ -18170,7 +18170,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
      * 另存为新预设
      */
     function savePlotPresetAsNew_ACU() {
-      const presetName = prompt('请输入新预设的名称：');
+      const presetName = prompt('Nhập tên preset mới:');
       if (!presetName) return;
 
       const presets = settings_ACU.plotSettings.promptPresets || [];
@@ -18179,7 +18179,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       const currentSettings = getCurrentPlotSettingsFromUI_ACU();
 
       if (existingIndex !== -1) {
-        if (!confirm(`名为 "${presetName}" 的预设已存在。是否要覆盖它？`)) {
+        if (!confirm(`Preset tên "${presetName}" đã tồn tại. Bạn có muốn ghi đè không?`)) {
           return;
         }
         presets[existingIndex] = normalizePlotPresetExcludeRules_ACU({ name: presetName, ...currentSettings });
@@ -18193,7 +18193,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       loadPlotPresetSelect_ACU();
       $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-preset-select`).val(presetName);
 
-      showToastr_ACU('success', `新预设 "${presetName}" 已保存。`);
+      showToastr_ACU('success', `Đã lưu preset mới "${presetName}".`);
     }
   }
 
@@ -18225,13 +18225,13 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
 
     const chatHistory = SillyTavern_API_ACU.chat || [];
     const totalMessages = chatHistory.filter(msg => !msg.is_user).length;
-    $totalMessagesDisplay.text(`上下文总层数: ${totalMessages} (仅计算AI回复楼层)`);
+    $totalMessagesDisplay.text(`Tổng số tầng ngữ cảnh: ${totalMessages} (chỉ tính các lượt AI trả lời)`);
 
     const totalAiMessages = totalMessages;
 
     if (!currentJsonTableData_ACU) {
-      $cardUpdateStatusDisplay_ACU.text('数据库状态：未加载或初始化失败。');
-      $statusTableBody.html('<tr><td colspan="5" style="text-align: center;">暂无数据</td></tr>');
+      $cardUpdateStatusDisplay_ACU.text('Trạng thái CSDL: Chưa tải hoặc khởi tạo thất bại.');
+      $statusTableBody.html('<tr><td colspan="5" style="text-align: center;">Chưa có dữ liệu</td></tr>');
       return;
     }
 
@@ -18348,7 +18348,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
 
         if (isAutoUpdateDisabledForThisTable) {
             // 频率=0：不参与自动更新，UI显示“无”
-            triggerFloor = '无';
+            triggerFloor = 'Không';
             // 仍可展示“未记录楼层/上次更新”，便于用户观察数据变化
             if (foundInHistory) {
                 unrecorded = totalAiMessages - lastUpdatedAiFloor;
@@ -18376,14 +18376,14 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
         }
 
         // 显示文本处理
-        let lastUpdatedDisplay = foundInHistory ? lastUpdatedAiFloor : '<span style="color: grey;">未初始</span>';
+        let lastUpdatedDisplay = foundInHistory ? lastUpdatedAiFloor : '<span style="color: grey;">Chưa khởi tạo</span>';
         
         // 高亮显示当前层更新的表，并显示变更数量
         const isUpdatedThisFloor = foundInHistory && (lastUpdatedAiFloor === totalAiMessages);
         
         if (isUpdatedThisFloor) {
             const changes = table._lastUpdateStats ? table._lastUpdateStats.changes : 0;
-            const changeText = changes > 0 ? `(+${changes})` : '(无变更)';
+            const changeText = changes > 0 ? `(+${changes})` : '(không thay đổi)';
             lastUpdatedDisplay = `<span style="color: lightgreen; font-weight: bold;">${lastUpdatedAiFloor} ${changeText}</span>`;
         }
 
@@ -18401,7 +18401,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
       $statusTableBody.html(tableStatusRows);
 
       $cardUpdateStatusDisplay_ACU.html(
-        `数据库状态: <b style="color:lightgreen;">已加载</b> (${tableCount}个表格, ${totalRowCount}条记录)`,
+        `Trạng thái CSDL: <b style="color:lightgreen;">Đã tải</b> (${tableCount} bảng, ${totalRowCount} bản ghi)`,
       );
       
       // 更新下次预测显示
@@ -18412,7 +18412,7 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
           
           let statusText = "";
           if (readyList.length > 0) {
-               statusText += `<span style="color: lightgreen;">[就绪] ${readyList.map(u => u.name).join(', ')}</span> `;
+               statusText += `<span style="color: lightgreen;">[Sẵn sàng] ${readyList.map(u => u.name).join(', ')}</span> `;
           }
           
           if (upcomingList.length > 0) {
@@ -18422,20 +18422,20 @@ insertRow(1, ["时间2", "大纲事件2...", "关键词"]);
               if (othersSameFloor.length > 0) names += ", " + othersSameFloor.map(u => u.name).join(", ");
               
               if (statusText) statusText += " | ";
-              statusText += `下一次: <b>${names}</b> (AI楼层 ${next.floor})`;
+                  statusText += `Lần tiếp theo: <b>${names}</b> (tầng AI ${next.floor})`;
           } else if (readyList.length === 0) {
-               statusText = "下一次: <b>无</b>";
+                statusText = "Lần tiếp theo: <b>Không</b>";
           }
           
           $nextUpdateDisplay.html(statusText);
       } else if ($nextUpdateDisplay.length) {
           // 所有表都禁用自动更新 / 没有可参与预测的表
-          $nextUpdateDisplay.html("下一次: <b>无</b>");
+          $nextUpdateDisplay.html("Lần tiếp theo: <b>Không</b>");
       }
 
     } catch (e) {
       logError_ACU('ACU: Failed to parse database for UI status:', e);
-      $cardUpdateStatusDisplay_ACU.text('解析数据库状态时出错。');
+      $cardUpdateStatusDisplay_ACU.text('Lỗi khi phân tích trạng thái cơ sở dữ liệu.');
     }
   }
 
@@ -18904,7 +18904,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         || window.power_user?.persona_description
         || SillyTavern_API_ACU?.powerUserSettings?.persona_description
         || '';
-      logDebug_ACU(`[填表] $U (persona_description) 获取结果: ${userInfoContent_Table ? '成功' : '为空'}`);
+      logDebug_ACU(`[填表] $U (persona_description) 获取结果: ${userInfoContent_Table ? 'Thành công' : '为空'}`);
     } catch (e) {
       logWarn_ACU('[填表] 获取用户设定描述时出错:', e);
       userInfoContent_Table = '';
@@ -18979,7 +18979,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         if (effectiveApiMode === 'tavern') {
         const profileId = effectiveTavernProfile;
         if (!profileId) {
-            throw new Error('未选择酒馆连接预设。');
+            throw new Error('Chưa chọn preset kết nối SillyTavern.');
         }
             if (skipProfileSwitch) {
                 logDebug_ACU('ACU: 并发模式启用，跳过酒馆预设切换。');
@@ -18996,13 +18996,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             const targetProfile = SillyTavern_API_ACU.extensionSettings?.connectionManager?.profiles.find(p => p.id === profileId);
 
             if (!targetProfile) {
-                throw new Error(`无法找到ID为 "${profileId}" 的连接预设。`);
+                throw new Error(`Không tìm thấy preset kết nối có ID "${profileId}".`);
             }
             if (!targetProfile.api) {
-                throw new Error(`预设 "${targetProfile.name || targetProfile.id}" 没有配置API。`);
+                throw new Error(`Preset "${targetProfile.name || targetProfile.id}" chưa cấu hình API.`);
             }
             if (!targetProfile.preset) {
-                throw new Error(`预设 "${targetProfile.name || targetProfile.id}" 没有选择预设。`);
+                throw new Error(`Preset "${targetProfile.name || targetProfile.id}" chưa chọn preset con.`);
             }
 
             const targetProfileName = targetProfile.name || targetProfile.id;
@@ -19041,7 +19041,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             } catch (restoreError) {
                 logError_ACU(`ACU: 恢复原预设时出错:`, restoreError);
             }
-            throw new Error(`API请求失败 (酒馆预设): ${error.message}`);
+            throw new Error(`Yêu cầu API thất bại (preset SillyTavern): ${error.message}`);
         } finally {
             // [修正] 只在成功的情况下恢复预设（错误情况下已在catch中处理）
             if (rawResult !== undefined) {
@@ -19066,7 +19066,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             return rawResult.content.trim();
         } else {
             const errorMsg = rawResult?.error || JSON.stringify(rawResult);
-            throw new Error(`酒馆预设API调用返回无效响应: ${errorMsg}`);
+            throw new Error(`Lệnh gọi API của preset SillyTavern trả về phản hồi không hợp lệ: ${errorMsg}`);
         }
 
     } else { // 'custom' mode
@@ -19075,14 +19075,14 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             // 模式A: 使用主API
             logDebug_ACU('ACU: 通过酒馆主API发送请求...');
             if (typeof TavernHelper_API_ACU.generateRaw !== 'function') {
-                throw new Error('TavernHelper.generateRaw 函数不存在。请检查酒馆版本。');
+                throw new Error('Không tìm thấy hàm TavernHelper.generateRaw. Vui lòng kiểm tra phiên bản SillyTavern.');
             }
             const response = await TavernHelper_API_ACU.generateRaw({
                 ordered_prompts: messages,
                 should_stream: false, // 数据库更新不需要流式输出
             });
             if (typeof response !== 'string') {
-                throw new Error('主API调用未返回预期的文本响应。');
+                throw new Error('Lệnh gọi API chính không trả về phản hồi văn bản như mong đợi.');
             }
             return response.trim();
 
@@ -19094,20 +19094,20 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 } else {
                     logWarn_ACU('ACU: 并发模式要求独立API，但URL或模型未配置，回退主API。');
                     if (typeof TavernHelper_API_ACU.generateRaw !== 'function') {
-                        throw new Error('TavernHelper.generateRaw 函数不存在。请检查酒馆版本。');
+                        throw new Error('Không tìm thấy hàm TavernHelper.generateRaw. Vui lòng kiểm tra phiên bản SillyTavern.');
                     }
                     const response = await TavernHelper_API_ACU.generateRaw({
                         ordered_prompts: messages,
                         should_stream: false,
                     });
                     if (typeof response !== 'string') {
-                        throw new Error('主API调用未返回预期的文本响应。');
+                        throw new Error('Lệnh gọi API chính không trả về phản hồi văn bản như mong đợi.');
                     }
                     return response.trim();
                 }
             }
             if (!effectiveApiConfig.url || !effectiveApiConfig.model) {
-                throw new Error('自定义API的URL或模型未配置。');
+                throw new Error('URL hoặc model của API tùy chỉnh chưa được cấu hình.');
             }
             const generateUrl = `/api/backends/chat-completions/generate`;
             
@@ -19138,7 +19138,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             
             if (!response.ok) {
               const errTxt = await response.text();
-              throw new Error(`API请求失败: ${response.status} ${errTxt}`);
+              throw new Error(`Yêu cầu API thất bại: ${response.status} ${errTxt}`);
             }
             
             const data = await response.json();
@@ -19146,7 +19146,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             if (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
                 return data.choices[0].message.content.trim();
             }
-            throw new Error('API响应格式不正确或内容为空。');
+            throw new Error('Định dạng phản hồi API không đúng hoặc nội dung trống.');
         }
         }
     } finally {
@@ -19672,7 +19672,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         }
     });
     
-    showToastr_ACU('success', `从AI响应中成功应用了 ${appliedEdits} 个数据库更新。`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.TABLE_OK });
+    showToastr_ACU('success', `Đã áp dụng thành công ${appliedEdits} cập nhật cơ sở dữ liệu từ phản hồi AI.`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.TABLE_OK });
     return { success: true, modifiedKeys: modifiedSheetKeys };
 }
 
@@ -19732,12 +19732,12 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               }
           } catch (e) {
               logError_ACU(`[Batch ${batchNumber}] Failed to build merge base from guide/template.`, e);
-              showToastr_ACU('error', "无法构建合并基底，操作已终止。");
+              showToastr_ACU('error', "Không thể tạo dữ liệu nền hợp nhất, thao tác đã dừng.");
               overallSuccess = false;
               break;
           }
           if (!mergedBatchData) {
-              showToastr_ACU('error', "无法构建合并基底，操作已终止。");
+              showToastr_ACU('error', "Không thể tạo dữ liệu nền hợp nhất, thao tác đã dừng.");
               overallSuccess = false;
               break;
           }
@@ -19868,7 +19868,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               logDebug_ACU(`[Auto] Batch ${batchNumber}/${totalBatches} skipped: Last AI reply length (${lastAiMessageLength}) is below threshold (${minReplyLength}).`);
               // [新增] 静默模式下不显示跳过提示
               if (!isSilentMode) {
-                  showToastr_ACU('info', `最新AI回复过短 (${lastAiMessageLength} 字符)，跳过自动更新。`);
+                  showToastr_ACU('info', `Phản hồi AI mới nhất quá ngắn (${lastAiMessageLength} ký tự), bỏ qua cập nhật tự động.`);
               }
               continue; // 跳过此批次，但不算失败
           }
@@ -19905,7 +19905,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           if (!success) {
               // [新增] 静默模式下不显示错误提示
               if (!isSilentMode) {
-                  showToastr_ACU('error', `批处理在第 ${batchNumber} 批时失败或被终止。`);
+                  showToastr_ACU('error', `Lô số ${batchNumber} đã thất bại hoặc bị dừng.`);
               }
               overallSuccess = false;
                           break;
@@ -19976,7 +19976,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       toastr_API_ACU.clear(waitToast);
                   }
 
-                  showToastr_ACU('success', '自动合并纪要完成！', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
+                  showToastr_ACU('success', 'Đã hoàn tất hợp nhất biên bản tự động!', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
               } catch (e) {
                   logError_ACU('自动合并纪要失败:', e);
 
@@ -19985,7 +19985,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       toastr_API_ACU.clear(waitToast);
                   }
 
-                  showToastr_ACU('error', '自动合并纪要失败: ' + e.message, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+                  showToastr_ACU('error', 'Hợp nhất biên bản tự động thất bại: ' + e.message, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
               }
           }
       }
@@ -20002,7 +20002,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           currentJsonTableData_ACU[k].name === 'Bảng tổng kết'
       );
 
-      if (!summaryKey) throw new Error('未找到纪要表');
+      if (!summaryKey) throw new Error('Không tìm thấy bảng biên bản');
 
       // 获取指定范围的数据（排除自动合并生成的条目）
       let allSummaryRows = summaryKey ? (currentJsonTableData_ACU[summaryKey].content || [])
@@ -20151,7 +20151,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                   if (settings_ACU.apiMode === 'tavern') {
                       const result = await SillyTavern_API_ACU.ConnectionManagerRequestService.sendRequest(settings_ACU.tavernProfile, finalMessages, settings_ACU.apiConfig.max_tokens || 4096);
                       if (result && result.ok) aiResponseText = result.result.choices[0].message.content;
-                      else throw new Error('API请求返回不成功状态');
+                      else throw new Error('Yêu cầu API trả về trạng thái không thành công');
                   } else {
                       if (settings_ACU.apiConfig.useMainApi) {
                           aiResponseText = await TavernHelper_API_ACU.generateRaw({ ordered_prompts: finalMessages, should_stream: false });
@@ -20166,16 +20166,16 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                                   "custom_include_headers": settings_ACU.apiConfig.apiKey ? `Authorization: Bearer ${settings_ACU.apiConfig.apiKey}` : ""
                               })
                           });
-                          if (!res.ok) throw new Error(`API请求失败: ${res.status} ${await res.text()}`);
+                          if (!res.ok) throw new Error(`Yêu cầu API thất bại: ${res.status} ${await res.text()}`);
                           const data = await res.json();
                           if (data?.choices?.[0]?.message?.content) aiResponseText = data.choices[0].message.content;
-                          else throw new Error('API返回的数据格式不正确');
+                          else throw new Error('Dữ liệu trả về từ API có định dạng không đúng');
                       }
                   }
 
                   const extractResult = extractTableEditInner_ACU(aiResponseText, { allowNoTableEditTags: true });
                   if (!extractResult || !extractResult.inner) {
-                      throw new Error('AI未返回有效的 <tableEdit> 块（缺少 <tableEdit> 边界或 <!-- --> 注释块不完整）。');
+                      throw new Error('AI không trả về khối <tableEdit> hợp lệ (thiếu ranh giới <tableEdit> hoặc khối chú thích <!-- --> không hoàn chỉnh).');
                   }
 
                   const editsString = extractResult.inner;
@@ -20205,7 +20205,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                   });
 
                   if (newSummaryRows.length === 0) {
-                      throw new Error('AI返回了内容，但未能解析出任何有效的数据行。');
+                      throw new Error('AI đã trả về nội dung, nhưng không thể phân tích được dòng dữ liệu hợp lệ nào.');
                   }
 
                   accumulatedSummary = accumulatedSummary.concat(newSummaryRows);
@@ -20218,7 +20218,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           }
 
           if (accumulatedSummary.length === 0) {
-              throw new Error(`批次 ${i + 1} 在 ${maxRetries} 次尝试后均失败`);
+              throw new Error(`Lô ${i + 1} đã thất bại sau ${maxRetries} lần thử`);
           }
       }
 
@@ -20314,7 +20314,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                     style="border: 1px solid #ffc107; color: #ffc107; background: transparent; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; margin-left: 15px; font-size: 0.9em; transition: all 0.2s ease;"
                     onmouseover="this.style.backgroundColor='#ffc107'; this.style.color='#1a1d24';"
                     onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffc107';">
-                终止
+                Dừng
             </button>`;
         const toastMessage = `<div>${batchToastMessage}${stopButtonHtml}</div>`;
         
@@ -20346,15 +20346,15 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                             // 2. Immediately reset UI state
                             isAutoUpdatingCard_ACU = false;
                             if ($manualUpdateCardButton_ACU) {
-                                $manualUpdateCardButton_ACU.prop('disabled', false).text('立即手动更新');
+                                $manualUpdateCardButton_ACU.prop('disabled', false).text('Cập nhật thủ công ngay');
                             }
                             if ($statusMessageSpan_ACU) {
-                                 $statusMessageSpan_ACU.text('操作已终止。');
+                                 $statusMessageSpan_ACU.text('Đã hủy thao tác.');
                             }
 
                             // 3. Remove toast and show confirmation
                             jQuery_API_ACU(this).closest('.toast').remove();
-                            showToastr_ACU('warning', '填表操作已由用户终止。');
+                            showToastr_ACU('warning', 'Thao tác điền bảng đã bị người dùng dừng.');
 
                             // [修复] 延迟重置标志，确保只跳过因本次终止操作触发的事件
                             // 而不会影响后续正常的自动更新
@@ -20375,7 +20375,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         }
         // [修复] 传递 targetSheetKeys
         const dynamicContent = await prepareAIInput_ACU(messagesToUse, updateMode, targetSheetKeys);
-        if (!dynamicContent) throw new Error('无法准备AI输入，数据库未加载。');
+        if (!dynamicContent) throw new Error('Không thể chuẩn bị đầu vào AI, cơ sở dữ liệu chưa được tải.');
 
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
             // [修复] 检查用户是否已经终止操作，如果是则立即退出重试循环
@@ -20404,12 +20404,12 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 // 2. [新增] 空回检测：检查AI回复长度是否低于阈值
                 const minReplyLength = settings_ACU.autoUpdateTokenThreshold || 0;
                 if (aiResponse && minReplyLength > 0 && aiResponse.length < minReplyLength) {
-                    throw new Error(`AI回复过短 (${aiResponse.length} 字符)，低于阈值 (${minReplyLength} 字符)`);
+                    throw new Error(`Phản hồi AI quá ngắn (${aiResponse.length} ký tự), thấp hơn ngưỡng (${minReplyLength} ký tự)`);
                 }
                 
                 // 3. 检查tableEdit标签
                 if (!aiResponse || !aiResponse.includes('<tableEdit>') || !aiResponse.includes('</tableEdit>')) {
-                    throw new Error('AI响应中未找到完整有效的 <tableEdit> 标签');
+                    throw new Error('Không tìm thấy thẻ <tableEdit> đầy đủ và hợp lệ trong phản hồi AI');
                 }
 
                 if (!isSilentMode) {
@@ -20431,7 +20431,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 }
 
                 if (!parseSuccess) {
-                    throw new Error('解析或应用AI更新时出错');
+                    throw new Error('Đã xảy ra lỗi khi phân tích hoặc áp dụng cập nhật từ AI');
                 }
                 
                 // 成功！退出重试循环
@@ -20452,13 +20452,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                     const waitTime = 5000; // 固定等待5秒
                     logDebug_ACU(`等待 ${waitTime}ms 后重试...`);
                     if (!isSilentMode) {
-                        showToastr_ACU('warning', `第 ${attempt} 次尝试失败，5秒后重试... (${error.message.substring(0, 50)})`, { timeOut: 5000 });
+                        showToastr_ACU('warning', `Lần thử ${attempt} thất bại, sẽ thử lại sau 5 giây... (${error.message.substring(0, 50)})`, { timeOut: 5000 });
                     }
                     await new Promise(resolve => setTimeout(resolve, waitTime));
                     continue;
                 } else {
                     // 最后一次尝试也失败，抛出错误
-                    throw new Error(`填表在 ${maxRetries} 次尝试后仍失败: ${error.message}`);
+                    throw new Error(`Điền bảng vẫn thất bại sau ${maxRetries} lần thử: ${error.message}`);
                 }
             }
         }
@@ -20520,7 +20520,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                         })
                         : updateGroupKeysRaw;
                     const saveSuccess = await saveIndependentTableToChatHistory_ACU(saveTargetIndex, keysToActuallySave, updateGroupKeysToUse);
-                    if (!saveSuccess) throw new Error('无法将更新后的数据库保存到聊天记录。');
+                    if (!saveSuccess) throw new Error('Không thể lưu cơ sở dữ liệu đã cập nhật vào lịch sử trò chuyện.');
                 } else {
                     logDebug_ACU("No tables were modified by AI, skipping save to chat history.");
                 }
@@ -20559,7 +20559,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             logError_ACU(`数据库增量更新流程失败: ${error.message}`);
             // [新增] 静默模式下不显示错误提示
             if (!isSilentMode) {
-            showToastr_ACU('error', `更新失败: ${error.message}`);
+            showToastr_ACU('error', `Cập nhật thất bại: ${error.message}`);
                 if (statusUpdate) {
             statusUpdate('错误：更新失败。');
                 }
@@ -20577,7 +20577,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         // [修改] 不在此处重置 isAutoUpdatingCard_ACU 和按钮状态，交由上层调用函数管理
         // isAutoUpdatingCard_ACU = false; 
         // if ($manualUpdateCardButton_ACU) {
-        //     $manualUpdateCardButton_ACU.prop('disabled', false).text('立即手动更新');
+        //     $manualUpdateCardButton_ACU.prop('disabled', false).text('Cập nhật thủ công ngay');
         // }
     }
   }
@@ -20589,7 +20589,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
   // 3. 明确的批次完成计数与进度文案，避免"首批成功即整体成功"的误判。
   async function handleManualMergeSummary_ACU() {
       if (isAutoUpdatingCard_ACU) {
-          showToastr_ACU('info', '后台已有任务在运行，请稍候。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
+          showToastr_ACU('info', 'Đã có tác vụ chạy nền, vui lòng chờ.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
           return;
       }
       
@@ -20620,18 +20620,18 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       let promptTemplate = settings_ACU.mergeSummaryPrompt || DEFAULT_MERGE_SUMMARY_PROMPT_ACU;
 
       if (!promptTemplate) {
-          showToastr_ACU('error', '提示词模板不能为空。');
+          showToastr_ACU('error', 'Mẫu lời nhắc không được để trống.');
           return;
       }
       
       const apiIsConfigured = (settings_ACU.apiMode === 'custom' && (settings_ACU.apiConfig.useMainApi || (settings_ACU.apiConfig.url && settings_ACU.apiConfig.model))) || (settings_ACU.apiMode === 'tavern' && settings_ACU.tavernProfile);
       if (!apiIsConfigured) {
-          showToastr_ACU('warning', '请先配置API连接。');
+          showToastr_ACU('warning', 'Vui lòng cấu hình kết nối API trước.');
           return;
       }
 
       if (!currentJsonTableData_ACU) {
-          showToastr_ACU('error', '数据库未加载。');
+          showToastr_ACU('error', 'CSDL chưa được tải.');
           return;
       }
 
@@ -20643,14 +20643,14 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       );
 
       if (!summaryKey) {
-          showToastr_ACU('warning', '未找到"纪要表"，无法进行合并。');
+          showToastr_ACU('warning', 'Không tìm thấy "Bảng biên bản", không thể hợp nhất.');
           return;
       }
 
       let fullSummaryRows = summaryKey ? (currentJsonTableData_ACU[summaryKey].content || []).slice(1) : [];
 
       if (fullSummaryRows.length === 0) {
-          showToastr_ACU('info', `当前没有纪要数据需要合并。`);
+          showToastr_ACU('info', `Hiện không có dữ liệu biên bản cần hợp nhất.`);
           return;
       }
 
@@ -20659,13 +20659,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       const maxRows = maxSummaryRows;
 
       if (startIndex >= maxRows) {
-          showToastr_ACU('error', `起始条数超出可用数据范围。可用数据: ${maxRows} 条`);
+          showToastr_ACU('error', `Dòng bắt đầu vượt phạm vi dữ liệu khả dụng. Dữ liệu khả dụng: ${maxRows} dòng`);
           return;
       }
 
       const actualEndIndex = endIndex ? Math.min(endIndex, maxRows) : maxRows;
       if (startIndex >= actualEndIndex) {
-          showToastr_ACU('error', '起始条数不能大于或等于终止条数。');
+          showToastr_ACU('error', 'Dòng bắt đầu không được lớn hơn hoặc bằng dòng kết thúc.');
           return;
       }
 
@@ -20674,19 +20674,19 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       const selectedRange = actualEndIndex - startIndex;
 
       if (allSummaryRows.length === 0) {
-          showToastr_ACU('info', `指定范围内没有纪要数据需要合并。范围: 第${startIndex + 1}条 到 第${actualEndIndex}条`);
+          showToastr_ACU('info', `Không có dữ liệu biên bản để hợp nhất trong phạm vi chỉ định. Phạm vi: dòng ${startIndex + 1} đến dòng ${actualEndIndex}`);
           return;
       }
 
-      if (!confirm(`即将开始合并纪要。\n\n源数据范围: 第${startIndex + 1}条 到 第${actualEndIndex}条 (${selectedRange} 条数据)\n处理数据: ${allSummaryRows.length} 条纪要\n目标: 精简为 ${targetCount} 条\n\n注意：此操作将使用AI重写指定范围内的纪要数据，其他数据不受影响。操作不可逆！\n建议先导出JSON备份。`)) {
+      if (!confirm(`Sắp bắt đầu hợp nhất biên bản.\n\nPhạm vi dữ liệu nguồn: dòng ${startIndex + 1} đến dòng ${actualEndIndex} (${selectedRange} dòng)\nDữ liệu xử lý: ${allSummaryRows.length} bản ghi biên bản\nMục tiêu: tinh gọn còn ${targetCount} dòng\n\nLưu ý: thao tác này sẽ dùng AI để viết lại dữ liệu biên bản trong phạm vi chỉ định, dữ liệu khác không bị ảnh hưởng. Không thể hoàn tác!\nKhuyến nghị xuất JSON sao lưu trước.`)) {
           return;
       }
 
       isAutoUpdatingCard_ACU = true;
-      $btn.prop('disabled', true).text('正在合并 (0%)...');
+      $btn.prop('disabled', true).text('Đang hợp nhất (0%)...');
 
-      const stopButtonHtml = `<button id="acu-merge-stop-btn" style="border: 1px solid #ffc107; color: #ffc107; background: transparent; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; margin-left: 15px; font-size: 0.9em; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#ffc107'; this.style.color='#1a1d24';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffc107';">终止</button>`;
-      let progressToast = showToastr_ACU('info', `<div>正在合并纪要...${stopButtonHtml}</div>`, {
+      const stopButtonHtml = `<button id="acu-merge-stop-btn" style="border: 1px solid #ffc107; color: #ffc107; background: transparent; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; margin-left: 15px; font-size: 0.9em; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#ffc107'; this.style.color='#1a1d24';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#ffc107';">Dừng</button>`;
+      let progressToast = showToastr_ACU('info', `<div>Đang hợp nhất biên bản...${stopButtonHtml}</div>`, {
           timeOut: 0, extendedTimeOut: 0, tapToDismiss: false,
           acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE,
           onShown: function() {
@@ -20697,9 +20697,9 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                   abortAllActiveRequests_ACU();
                   if (SillyTavern_API_ACU && typeof SillyTavern_API_ACU.stopGeneration === 'function') SillyTavern_API_ACU.stopGeneration();
                   jQuery_API_ACU(this).closest('.toast').remove();
-                  showToastr_ACU('warning', '合并操作已由用户终止。');
+                  showToastr_ACU('warning', 'Thao tác hợp nhất đã bị người dùng dừng.');
                   isAutoUpdatingCard_ACU = false;
-                  $btn.prop('disabled', false).text('开始合并总结');
+                  $btn.prop('disabled', false).text('Bắt đầu hợp nhất biên bản');
               });
           }
       });
@@ -20722,7 +20722,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           };
 
           for (let i = 0; i < totalBatches; i++) {
-              if (wasStoppedByUser_ACU) throw new Error('用户终止操作');
+              if (wasStoppedByUser_ACU) throw new Error('Người dùng đã dừng thao tác');
 
               const startIdx = i * batchSize;
               const endIdx = startIdx + batchSize;
@@ -20765,7 +20765,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               const maxRetries = 3;
 
               for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                  if (wasStoppedByUser_ACU) throw new Error('用户终止操作');
+                  if (wasStoppedByUser_ACU) throw new Error('Người dùng đã dừng thao tác');
                   
                   const percent = Math.floor((i / totalBatches) * 100);
                   const progressText = `正在处理批次 ${i + 1}/${totalBatches} (尝试 ${attempt}/${maxRetries})...`;
@@ -20773,7 +20773,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
                   // 更新toast消息显示批次进度
                   if (progressToast) {
-                      const toastMessage = `<div>正在合并纪要... (批次 ${i + 1}/${totalBatches})${stopButtonHtml}</div>`;
+                      const toastMessage = `<div>Đang hợp nhất biên bản... (lô ${i + 1}/${totalBatches})${stopButtonHtml}</div>`;
                       progressToast.find('.toast-message').html(toastMessage);
                       // 重新绑定终止按钮事件
                       jQuery_API_ACU('#acu-merge-stop-btn').off('click.acu_stop').on('click.acu_stop', function(e) {
@@ -20783,9 +20783,9 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                           abortAllActiveRequests_ACU();
                           if (SillyTavern_API_ACU && typeof SillyTavern_API_ACU.stopGeneration === 'function') SillyTavern_API_ACU.stopGeneration();
                           jQuery_API_ACU(this).closest('.toast').remove();
-                          showToastr_ACU('warning', '合并操作已由用户终止。');
+                          showToastr_ACU('warning', 'Thao tác hợp nhất đã bị người dùng dừng.');
                           isAutoUpdatingCard_ACU = false;
-                          $btn.prop('disabled', false).text('开始合并纪要');
+                          $btn.prop('disabled', false).text('Bắt đầu hợp nhất biên bản');
                       });
                   }
                   
@@ -20804,7 +20804,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       if (settings_ACU.apiMode === 'tavern') {
                            const result = await SillyTavern_API_ACU.ConnectionManagerRequestService.sendRequest(settings_ACU.tavernProfile, finalMessages, settings_ACU.apiConfig.max_tokens || 4096);
                           if (result && result.ok) aiResponseText = result.result.choices[0].message.content;
-                          else throw new Error('API请求返回不成功状态');
+                          else throw new Error('Yêu cầu API trả về trạng thái không thành công');
                       } else {
                           if (settings_ACU.apiConfig.useMainApi) {
                               aiResponseText = await TavernHelper_API_ACU.generateRaw({ ordered_prompts: finalMessages, should_stream: false });
@@ -20819,16 +20819,16 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                                        "custom_include_headers": settings_ACU.apiConfig.apiKey ? `Authorization: Bearer ${settings_ACU.apiConfig.apiKey}` : ""
                                    })
                                });
-                               if (!res.ok) throw new Error(`API请求失败: ${res.status} ${await res.text()}`);
+                               if (!res.ok) throw new Error(`Yêu cầu API thất bại: ${res.status} ${await res.text()}`);
                                const data = await res.json();
                                if (data?.choices?.[0]?.message?.content) aiResponseText = data.choices[0].message.content;
-                               else throw new Error('API返回的数据格式不正确');
+                               else throw new Error('Dữ liệu trả về từ API có định dạng không đúng');
                           }
                       }
 
                       const extractResult = extractTableEditInner_ACU(aiResponseText, { allowNoTableEditTags: true });
                       if (!extractResult || !extractResult.inner) {
-                          throw new Error('AI未返回有效的 <tableEdit> 块（缺少 <tableEdit> 边界或 <!-- --> 注释块不完整）。');
+                          throw new Error('AI không trả về khối <tableEdit> hợp lệ (thiếu ranh giới <tableEdit> hoặc khối chú thích <!-- --> không hoàn chỉnh).');
                       }
 
                       const editsString = extractResult.inner;
@@ -20853,7 +20853,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       });
                       
                       if (newSummaryRows.length === 0) {
-                          throw new Error('AI返回了内容，但未能解析出任何有效的数据行。');
+                          throw new Error('AI đã trả về nội dung, nhưng không thể phân tích được dòng dữ liệu hợp lệ nào.');
                       }
                       
                       // [修复] 将新批次的数据追加到累积数据中，而不是替换
@@ -20867,7 +20867,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       if (attempt < maxRetries) await new Promise(resolve => setTimeout(resolve, 5000));
                   }
               }
-              if (lastError) throw new Error(`批次 ${i + 1} 在 ${maxRetries} 次尝试后均失败: ${lastError.message}`);
+              if (lastError) throw new Error(`Lô ${i + 1} đã thất bại sau ${maxRetries} lần thử: ${lastError.message}`);
           }
 
           // FINALIZATION: Only write if all batches succeeded.
@@ -20891,14 +20891,14 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           topLevelWindow_ACU.AutoCardUpdaterAPI._notifyTableUpdate();
           if (typeof updateCardUpdateStatusDisplay_ACU === 'function') updateCardUpdateStatusDisplay_ACU();
           
-          showToastr_ACU('success', '所有批次处理完毕，数据库已更新！', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
+          showToastr_ACU('success', 'Đã xử lý xong tất cả lô, cơ sở dữ liệu đã được cập nhật!', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MERGE_TABLE });
 
       } catch (e) {
           logError_ACU('合并过程出错:', e);
-          showToastr_ACU('error', '合并过程出错: ' + e.message, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
+          showToastr_ACU('error', 'Lỗi trong quá trình hợp nhất: ' + e.message, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.ERROR });
       } finally {
           isAutoUpdatingCard_ACU = false;
-          $btn.prop('disabled', false).text('开始合并总结');
+          $btn.prop('disabled', false).text('Bắt đầu hợp nhất biên bản');
           wasStoppedByUser_ACU = false;
           if (progressToast && toastr_API_ACU) toastr_API_ACU.clear(progressToast);
       }
@@ -20906,14 +20906,14 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
   async function handleManualUpdateCard_ACU() {
     if (isAutoUpdatingCard_ACU) {
-      showToastr_ACU('info', '已有更新任务在后台进行中。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
+      showToastr_ACU('info', 'Đã có tác vụ cập nhật đang chạy nền.', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.MANUAL_TABLE });
       return;
     }
     
     const apiIsConfigured = (settings_ACU.apiMode === 'custom' && (settings_ACU.apiConfig.useMainApi || (settings_ACU.apiConfig.url && settings_ACU.apiConfig.model))) || (settings_ACU.apiMode === 'tavern' && settings_ACU.tavernProfile);
 
     if (!apiIsConfigured) {
-      showToastr_ACU('warning', '请先完成当前API模式的配置。');
+      showToastr_ACU('warning', 'Vui lòng hoàn tất cấu hình cho chế độ API hiện tại trước.');
       if ($popupInstance_ACU && $apiConfigAreaDiv_ACU && $apiConfigAreaDiv_ACU.is(':hidden')) {
         if ($apiConfigSectionToggle_ACU) $apiConfigSectionToggle_ACU.trigger('click');
       }
@@ -20921,7 +20921,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
     }
 
     isAutoUpdatingCard_ACU = true;
-    if ($manualUpdateCardButton_ACU) $manualUpdateCardButton_ACU.prop('disabled', true).text('更新中...');
+    if ($manualUpdateCardButton_ACU) $manualUpdateCardButton_ACU.prop('disabled', true).text('Đang cập nhật...');
     
     await loadAllChatMessages_ACU();
     const liveChat = SillyTavern_API_ACU.chat || [];
@@ -20950,9 +20950,9 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
     // 现在的逻辑：messagesToProcessIndices[0] 是最旧的消息。
     
     if (messagesToProcessIndices.length === 0) {
-        showToastr_ACU('info', '在指定的上下文层数内没有找到AI消息可供处理。');
+        showToastr_ACU('info', 'Không tìm thấy tin nhắn AI để xử lý trong số tầng ngữ cảnh đã chỉ định.');
         isAutoUpdatingCard_ACU = false;
-        if ($manualUpdateCardButton_ACU) $manualUpdateCardButton_ACU.prop('disabled', false).text('立即手动更新');
+        if ($manualUpdateCardButton_ACU) $manualUpdateCardButton_ACU.prop('disabled', false).text('Cập nhật thủ công ngay');
         return;
     }
     
@@ -20967,7 +20967,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
     // processUpdates_ACU 会根据 UI 设置的 batchSize 分成批次，按顺序处理
     // 每一批次处理完后，会将结果保存到该批次的最后一个楼层 (latest floor of the batch)
     // manual_* 模式下，processUpdates_ACU 会忽略 token 阈值，且强制覆盖
-    showToastr_ACU('info', `手动更新已启动 (合并模式)，将处理最近的 ${messagesToProcessIndices.length} 条AI消息。`);
+    showToastr_ACU('info', `Đã bắt đầu cập nhật thủ công (chế độ hợp nhất), sẽ xử lý ${messagesToProcessIndices.length} tin nhắn AI gần nhất.`);
     
     // [修改] 使用 manual_independent 模式，传入所有表的 key
     const success = await processUpdates_ACU(messagesToProcessIndices, 'manual_independent', {
@@ -20976,10 +20976,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
     });
 
     isAutoUpdatingCard_ACU = false;
-    if ($manualUpdateCardButton_ACU) $manualUpdateCardButton_ACU.prop('disabled', false).text('立即手动更新');
+    if ($manualUpdateCardButton_ACU) $manualUpdateCardButton_ACU.prop('disabled', false).text('Cập nhật thủ công ngay');
     
     if (success) {
-        showToastr_ACU('success', '手动更新已成功完成！');
+        showToastr_ACU('success', 'Đã hoàn tất cập nhật thủ công thành công!');
         await loadAllChatMessages_ACU();
         await refreshMergedDataAndNotify_ACU();
 
@@ -20990,14 +20990,14 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             logWarn_ACU('自动合并总结检测失败:', e);
         }
     } else {
-        showToastr_ACU('error', '手动更新失败或被中断。');
+        showToastr_ACU('error', 'Cập nhật thủ công thất bại hoặc bị gián đoạn.');
     }
   }
 
   function exportCombinedSettings_ACU() {
     const promptSegments = getCharCardPromptFromUI_ACU();
     if (!promptSegments || promptSegments.length === 0) {
-      showToastr_ACU('warning', '没有可导出的提示词。');
+      showToastr_ACU('warning', 'Không có lời nhắc để xuất.');
       return;
     }
 
@@ -21005,7 +21005,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         // [修复] 合并导出应导出“当前模板”（localStorage/内存中的模板），并兼容旧模板缺少顺序编号的情况
         const templateObj = parseTableTemplateJson_ACU({ stripSeedRows: false });
         if (!templateObj || typeof templateObj !== 'object') {
-            throw new Error('无法解析当前模板。');
+            throw new Error('Không thể phân tích mẫu hiện tại.');
         }
         const sheetKeys = Object.keys(templateObj).filter(k => k.startsWith('sheet_'));
         ensureSheetOrderNumbers_ACU(templateObj, { baseOrderKeys: sheetKeys, forceRebuild: false });
@@ -21035,10 +21035,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showToastr_ACU('success', '合并配置已成功导出！');
+        showToastr_ACU('success', 'Đã xuất cấu hình hợp nhất thành công!');
     } catch (error) {
         logError_ACU('导出合并配置失败:', error);
-        showToastr_ACU('error', '导出合并配置失败，请检查控制台获取详情。');
+        showToastr_ACU('error', 'Xuất cấu hình hợp nhất thất bại, vui lòng kiểm tra console để biết chi tiết.');
     }
   }
 
@@ -21059,27 +21059,27 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 combinedData = JSON.parse(content);
             } catch (error) {
                 logError_ACU('导入合并配置失败：JSON解析错误。', error);
-                showToastr_ACU('error', '文件不是有效的JSON格式。', { timeOut: 5000 });
+                showToastr_ACU('error', 'Tệp không phải định dạng JSON hợp lệ.', { timeOut: 5000 });
                 return;
             }
             
             try {
                 // Validation
                 if (!combinedData.prompt || !combinedData.template) {
-                    throw new Error('JSON文件缺少 "prompt" 或 "template" 键。');
+                    throw new Error('Tệp JSON thiếu khóa "prompt" hoặc "template".');
                 }
                 if (!Array.isArray(combinedData.prompt)) {
-                    throw new Error('"prompt" 的值必须是一个数组。');
+                    throw new Error('Giá trị của "prompt" phải là một mảng.');
                 }
                 if (typeof combinedData.template !== 'object' || combinedData.template === null) {
-                    throw new Error('"template" 的值必须是一个对象。');
+                    throw new Error('Giá trị của "template" phải là một đối tượng.');
                 }
 
                 // 1. Apply and save prompt
                 settings_ACU.charCardPrompt = combinedData.prompt;
                 saveSettings_ACU();
                 renderPromptSegments_ACU(combinedData.prompt);
-                showToastr_ACU('success', '提示词预设已成功导入并保存！');
+                showToastr_ACU('success', 'Đã nhập và lưu preset lời nhắc thành công!');
 
                 // [新增] 导入合并提示词 (如果存在)
                 if (combinedData.mergeSummaryPrompt) {
@@ -21111,7 +21111,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                     settings_ACU.mergeStartIndex = combinedData.mergeStartIndex || 1;
                     settings_ACU.mergeEndIndex = combinedData.mergeEndIndex || null;
 
-                    // 导入自动合并设置
+                    // 导入Cài đặt hợp nhất tự động
                     settings_ACU.autoMergeEnabled = combinedData.autoMergeEnabled || false;
                     settings_ACU.autoMergeThreshold = combinedData.autoMergeThreshold || 20;
                     settings_ACU.autoMergeReserve = combinedData.autoMergeReserve || 0;
@@ -21162,15 +21162,15 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 // [新增] 同步覆盖：更新当前聊天第一层的“空白指导表”（仅表头+参数）
                 try { await overwriteChatSheetGuideFromTemplate_ACU(sanitizedTemplate, { reason: 'import_combined' }); } catch (e) {}
 
-                showToastr_ACU('success', '表格模板已成功导入！模板已更新，但不会影响当前聊天记录的本地数据。');
+                showToastr_ACU('success', 'Đã nhập mẫu bảng thành công! Mẫu đã được cập nhật, nhưng không ảnh hưởng dữ liệu cục bộ của cuộc trò chuyện hiện tại.');
 
                 // [优化] 不再触发表格数据初始化，仅修改当前插件模板
                 // 只有在新开卡或之前没有用过插件的聊天记录里才会使用新的通用模板作为基底
-                showToastr_ACU('success', '合并配置已成功导入！');
+                showToastr_ACU('success', 'Đã nhập cấu hình hợp nhất thành công!');
 
             } catch (error) {
                 logError_ACU('导入合并配置失败：结构验证失败。', error);
-                showToastr_ACU('error', `导入失败: ${error.message}`, { timeOut: 10000 });
+                showToastr_ACU('error', `Nhập thất bại: ${error.message}`, { timeOut: 10000 });
             }
         };
         reader.readAsText(file, 'UTF-8');
@@ -21187,7 +21187,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // startFloor/endFloor: 楼层范围 (1-based, null表示不限制)
       const chat = SillyTavern_API_ACU.chat;
       if (!chat || chat.length === 0) {
-          showToastr_ACU('warning', '聊天记录为空，无法执行删除操作。');
+          showToastr_ACU('warning', 'Lịch sử trò chuyện trống, không thể thực hiện thao tác xóa.');
           return;
       }
 
@@ -21201,7 +21201,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           .filter(index => index !== -1);
 
       if (aiMessageIndices.length === 0) {
-          showToastr_ACU('warning', '聊天记录中没有AI消息，无法执行删除操作。');
+          showToastr_ACU('warning', 'Không có tin nhắn AI trong lịch sử trò chuyện, không thể thực hiện thao tác xóa.');
           return;
       }
 
@@ -21358,15 +21358,15 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               updateCardUpdateStatusDisplay_ACU();
           }
           
-          showToastr_ACU('success', `已成功删除 ${deletedCount} 条消息中的本地数据 (${mode === 'all' ? '所有数据' : '当前标识'})。`);
+          showToastr_ACU('success', `Đã xóa thành công dữ liệu cục bộ trong ${deletedCount} tin nhắn (${mode === 'all' ? 'toàn bộ dữ liệu' : 'mã hiện tại'}).`);
       } else {
-          showToastr_ACU('info', '没有发现符合删除条件的数据。');
+          showToastr_ACU('info', 'Không tìm thấy dữ liệu phù hợp điều kiện xóa.');
       }
   }
 
   function exportCurrentJsonData_ACU() {
     if (!currentJsonTableData_ACU) {
-        showToastr_ACU('warning', '没有可导出的数据库。请先开始一个对话。');
+        showToastr_ACU('warning', 'Không có cơ sở dữ liệu để xuất. Vui lòng bắt đầu một cuộc trò chuyện trước.');
         return;
     }
     try {
@@ -21384,10 +21384,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showToastr_ACU('success', '数据库JSON文件已成功导出！');
+        showToastr_ACU('success', 'Đã xuất tệp JSON cơ sở dữ liệu thành công!');
     } catch (error) {
         logError_ACU('导出JSON数据失败:', error);
-        showToastr_ACU('error', '导出JSON失败，请检查控制台获取详情。');
+        showToastr_ACU('error', 'Xuất JSON thất bại, vui lòng kiểm tra console để biết chi tiết.');
     }
   }
 
@@ -21413,7 +21413,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             jsonData = parseTableTemplateJson_ACU({ stripSeedRows: false });
         }
         if (!jsonData || typeof jsonData !== 'object') {
-            throw new Error('无法解析当前模板。');
+            throw new Error('Không thể phân tích mẫu hiện tại.');
         }
         const sheetKeys0 = Object.keys(jsonData).filter(k => k.startsWith('sheet_'));
         ensureSheetOrderNumbers_ACU(jsonData, { baseOrderKeys: sheetKeys0, forceRebuild: false });
@@ -21451,15 +21451,15 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showToastr_ACU('success', fromPresetName ? `表格模板预设已成功导出：${fromPresetName}` : '表格模板已成功导出！(已包含最新导出参数)');
+        showToastr_ACU('success', fromPresetName ? `Đã xuất thành công preset mẫu bảng: ${fromPresetName}` : 'Đã xuất mẫu bảng thành công! (đã bao gồm tham số xuất mới nhất)');
     } catch (error) {
         logError_ACU('导出模板失败:', error);
-        showToastr_ACU('error', '导出模板失败，请检查控制台获取详情。');
+        showToastr_ACU('error', 'Xuất mẫu thất bại, vui lòng kiểm tra console để biết chi tiết.');
     }
   }
 
   async function resetAllToDefaults_ACU() {
-      if (!confirm('确定要同时恢复【默认AI指令预设】和【默认表格模板】吗？\n\n这将覆盖您当前的自定义设置。此操作不可撤销。')) {
+        if (!confirm('Bạn có chắc muốn đồng thời khôi phục【preset lệnh AI mặc định】và【mẫu bảng mặc định】không?\n\nThao tác này sẽ ghi đè cài đặt tùy chỉnh hiện tại của bạn. Không thể hoàn tác.')) {
           return;
       }
 
@@ -21487,28 +21487,28 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           loadSettings_ACU(); // This re-renders prompt segments
 
           // [优化] 不再触发表格数据初始化，仅修改当前插件模板
-          showToastr_ACU('success', '已恢复默认预设及模板！模板已更新，但不会影响当前聊天记录的本地数据。');
+          showToastr_ACU('success', 'Đã khôi phục preset và mẫu mặc định! Mẫu đã được cập nhật, nhưng không ảnh hưởng dữ liệu cục bộ của cuộc trò chuyện hiện tại.');
           // 只有在新开卡或之前没有用过插件的聊天记录里才会使用新的通用模板作为基底
       } catch (error) {
           logError_ACU('恢复默认设置失败:', error);
-          showToastr_ACU('error', '恢复默认设置失败，请检查控制台获取详情。');
+          showToastr_ACU('error', 'Khôi phục cài đặt mặc định thất bại, vui lòng kiểm tra console để biết chi tiết.');
       }
   }
 
   // [新增] 使用通用模板覆盖最新层所有表格数据的函数
   async function overrideLatestLayerWithTemplate_ACU() {
-      if (!confirm('⚠️ 警告：此操作将使用当前通用模板覆盖聊天记录中最新一层的所有表格数据！\n\n' +
-                  '• 模板中有的表格会被覆盖（只保留表头，数据清空）\n' +
-                  '• 模板中没有的表格会被忽略（本地数据保持不变）\n' +
-                  '• 此操作仅影响最新的一条AI消息\n' +
-                  '• 删除最新层的聊天数据后即可恢复正常\n\n' +
-                  '确定要继续吗？')) {
+        if (!confirm('⚠️ Cảnh báo: thao tác này sẽ dùng mẫu chung hiện tại để ghi đè toàn bộ dữ liệu bảng ở tầng mới nhất của cuộc trò chuyện!\n\n' +
+              '• Các bảng có trong mẫu sẽ bị ghi đè (chỉ giữ tiêu đề cột, xóa sạch dữ liệu)\n' +
+              '• Các bảng không có trong mẫu sẽ bị bỏ qua (dữ liệu cục bộ giữ nguyên)\n' +
+              '• Thao tác này chỉ ảnh hưởng đến tin nhắn AI mới nhất\n' +
+              '• Xóa dữ liệu trò chuyện ở tầng mới nhất là có thể khôi phục trạng thái bình thường\n\n' +
+              'Bạn có muốn tiếp tục không?')) {
           return;
       }
 
       const chat = SillyTavern_API_ACU.chat;
       if (!chat || chat.length === 0) {
-          showToastr_ACU('error', '聊天记录为空，无法执行覆盖操作。');
+          showToastr_ACU('error', 'Lịch sử trò chuyện trống, không thể thực hiện thao tác ghi đè.');
           return;
       }
 
@@ -21518,7 +21518,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 解析通用模板
       const templateData = parseTableTemplateJson_ACU({ stripSeedRows: true });
       if (!templateData) {
-          showToastr_ACU('error', '无法解析通用模板，请检查模板格式。');
+          showToastr_ACU('error', 'Không thể phân tích mẫu chung, vui lòng kiểm tra định dạng mẫu.');
           return;
       }
 
@@ -21532,7 +21532,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       }
 
       if (latestAiIndex === -1) {
-          showToastr_ACU('error', '聊天记录中没有AI消息，无法执行覆盖操作。');
+          showToastr_ACU('error', 'Không có tin nhắn AI trong lịch sử trò chuyện, không thể thực hiện thao tác ghi đè.');
           return;
       }
 
@@ -21584,9 +21584,9 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           await loadOrCreateJsonTableFromChatHistory_ACU();
           await refreshMergedDataAndNotify_ACU();
 
-          showToastr_ACU('success', `已使用通用模板覆盖最新层的${Object.keys(templateData).filter(k => k.startsWith('sheet_')).length}个表格数据。`);
+          showToastr_ACU('success', `Đã dùng mẫu chung để ghi đè ${Object.keys(templateData).filter(k => k.startsWith('sheet_')).length} bảng dữ liệu ở tầng mới nhất.`);
       } else {
-          showToastr_ACU('warning', '没有找到需要覆盖的表格数据。');
+          showToastr_ACU('warning', 'Không tìm thấy dữ liệu bảng cần ghi đè.');
       }
   }
 
@@ -21617,14 +21617,14 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             }
         } catch (e) {}
 
-        showToastr_ACU('success', '模板已恢复为默认值！模板已更新，但不会影响当前聊天记录的本地数据。');
+        showToastr_ACU('success', 'Mẫu đã được khôi phục về mặc định! Mẫu đã được cập nhật, nhưng không ảnh hưởng dữ liệu cục bộ của cuộc trò chuyện hiện tại.');
         logDebug_ACU('Table template has been reset to default and saved to config storage and memory.');
 
         // [优化] 不再触发表格数据初始化，仅修改当前插件模板
         // 只有在新开卡或之前没有用过插件的聊天记录里才会使用新的通用模板作为基底
     } catch (error) {
         logError_ACU('恢复默认模板失败:', error);
-        showToastr_ACU('error', '恢复默认模板失败，请检查控制台获取详情。');
+        showToastr_ACU('error', 'Khôi phục mẫu mặc định thất bại, vui lòng kiểm tra console để biết chi tiết.');
     }
   }
 
@@ -21645,9 +21645,9 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 jsonData = JSON.parse(content);
             } catch (error) {
                 logError_ACU('导入模板失败：JSON解析错误。', error);
-                let errorMessage = '文件不是有效的JSON格式。请检查是否存在多余的逗号、缺失的括号或不正确的引号。';
+                let errorMessage = 'Tệp không phải định dạng JSON hợp lệ. Vui lòng kiểm tra xem có dấu phẩy thừa, thiếu dấu ngoặc hoặc dấu nháy sai hay không.';
                 if (error.message) {
-                    errorMessage += ` (错误详情: ${error.message})`;
+                    errorMessage += ` (Chi tiết lỗi: ${error.message})`;
                 }
                 showToastr_ACU('error', errorMessage, { timeOut: 10000 });
                 return;
@@ -21656,18 +21656,18 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
             try {
                 // 深入的结构验证
                 if (!jsonData.mate || !jsonData.mate.type || jsonData.mate.type !== 'chatSheets') {
-                    throw new Error('缺少 "mate" 对象或 "type" 属性不正确。模板必须包含 `"mate": {"type": "chatSheets", ...}`。');
+                    throw new Error('Thiếu đối tượng "mate" hoặc thuộc tính "type" không đúng. Mẫu phải chứa `"mate": {"type": "chatSheets", ...}`.');
                 }
 
                 const sheetKeys = Object.keys(jsonData).filter(k => k.startsWith('sheet_'));
                 if (sheetKeys.length === 0) {
-                    throw new Error('模板中未找到任何表格数据 (缺少 "sheet_..." 键)。');
+                    throw new Error('Không tìm thấy dữ liệu bảng nào trong mẫu (thiếu khóa "sheet_...").');
                 }
 
                 for (const key of sheetKeys) {
                     const sheet = jsonData[key];
                     if (!sheet.name || !sheet.content || !sheet.sourceData || !Array.isArray(sheet.content)) {
-                        throw new Error(`表格 "${key}" 结构不完整，缺少 "name"、"content" 或 "sourceData" 关键属性。`);
+                        throw new Error(`Cấu trúc của bảng "${key}" không đầy đủ, thiếu thuộc tính quan trọng "name", "content" hoặc "sourceData".`);
                     }
                 }
 
@@ -21708,12 +21708,12 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                     const ok = upsertTemplatePreset_ACU(presetName, normalized);
                     if (ok) {
                         refreshTemplatePresetSelectInUI_ACU({ selectName: presetName, keepValue: false });
-                        showToastr_ACU('success', `模板已导入，并保存为预设：${presetName}（同名自动覆盖）`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                        showToastr_ACU('success', `Mẫu đã được nhập và lưu thành preset: ${presetName} (tự động ghi đè nếu trùng tên)`, { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                     } else {
-                        showToastr_ACU('success', '模板已成功导入！模板已更新，但保存为预设失败（请检查设置存储权限）。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                        showToastr_ACU('success', 'Đã nhập mẫu thành công! Mẫu đã được cập nhật, nhưng lưu thành preset thất bại (vui lòng kiểm tra quyền lưu cài đặt).', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                     }
                 } catch (e) {
-                    showToastr_ACU('success', '模板已成功导入！模板已更新，但保存为预设时发生异常（详情见控制台）。', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
+                    showToastr_ACU('success', 'Đã nhập mẫu thành công! Mẫu đã được cập nhật, nhưng xảy ra ngoại lệ khi lưu thành preset (xem chi tiết trong console).', { acuToastCategory: ACU_TOAST_CATEGORY_ACU.IMPORT });
                 }
                 logDebug_ACU('New table template loaded and saved to config storage and memory.');
 
@@ -21722,7 +21722,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
             } catch (error) {
                 logError_ACU('导入模板失败：结构验证失败。', error);
-                showToastr_ACU('error', `导入失败: ${error.message}`, { timeOut: 10000 });
+                showToastr_ACU('error', `Nhập thất bại: ${error.message}`, { timeOut: 10000 });
             }
         };
         reader.readAsText(file, 'UTF-8');
@@ -22940,7 +22940,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
     #acu-visualizer-content .acu-col-item { background: rgba(255, 255, 255, 0.03); }
 
-    /* “添加新行”卡片：覆盖内联浅色样式，保证深色一致 */
+    /* “Thêm hàng mới”卡片：覆盖内联浅色样式，保证深色一致 */
     #acu-visualizer-content #acu-vis-add-row {
         background: rgba(123, 183, 255, 0.08) !important;
         border-color: rgba(123, 183, 255, 0.45) !important;
@@ -23005,7 +23005,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
   function openNewVisualizer_ACU() {
       if (!currentJsonTableData_ACU) {
-          showToastr_ACU('warning', '数据未加载，请先进行一次对话或初始化。');
+          showToastr_ACU('warning', 'Dữ liệu chưa được tải, vui lòng thực hiện một cuộc trò chuyện hoặc khởi tạo trước.');
           return;
       }
 
@@ -23019,13 +23019,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               <style>${VISUALIZER_CSS_ACU}</style>
               <div class="acu-vis-toolbar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;">
                   <div class="acu-mode-switch">
-                      <button class="acu-mode-btn active" data-mode="data">数据编辑</button>
-                      <button class="acu-mode-btn" data-mode="config">结构/参数配置</button>
-                      <button class="acu-mode-btn" data-mode="globalConfig">全局注入配置</button>
+                      <button class="acu-mode-btn active" data-mode="data">Chỉnh sửa dữ liệu</button>
+                      <button class="acu-mode-btn" data-mode="config">Cấu hình cấu trúc/tham số</button>
+                      <button class="acu-mode-btn" data-mode="globalConfig">Cấu hình tiêm toàn cục</button>
                   </div>
                   <div class="acu-vis-actions" style="display: flex; gap: 10px;">
-                      <button id="acu-vis-save-btn" class="acu-btn-primary"><i class="fa-solid fa-save"></i> 普通保存</button>
-                      <button id="acu-vis-save-template-btn" class="acu-btn-secondary"><i class="fa-solid fa-save"></i> 保存至通用模板</button>
+                      <button id="acu-vis-save-btn" class="acu-btn-primary"><i class="fa-solid fa-save"></i> Lưu thường</button>
+                      <button id="acu-vis-save-template-btn" class="acu-btn-secondary"><i class="fa-solid fa-save"></i> Lưu vào mẫu chung</button>
                   </div>
               </div>
               <div class="acu-vis-content" style="flex: 1; display: flex; overflow: hidden;">
@@ -23043,7 +23043,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 创建独立窗口
       createACUWindow({
           id: windowId,
-          title: '数据库编辑器',
+          title: 'Trình chỉnh sửa cơ sở dữ liệu',
           content: visualizerContent,
           width: 1400,  // 基础宽度
           height: 900,  // 基础高度
@@ -23052,7 +23052,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           maximizable: true,
           startMaximized: false, // 由 rememberState 自动管理，首次打开时不全屏
           onClose: () => {
-              if (!confirm('确定要关闭吗？未保存的修改将丢失。')) {
+                if (!confirm('Bạn có chắc muốn đóng không? Mọi thay đổi chưa lưu sẽ bị mất.')) {
                   return false; // 阻止关闭（注意：当前实现会立即关闭，后续可优化）
               }
           },
@@ -23172,13 +23172,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       <span class="acu-table-name" title="${escapeHtml_ACU(sheet.name)}">${escapeHtml_ACU(sheet.name)}</span>
                   </div>
                   <div class="acu-table-nav-actions">
-                      <button class="acu-table-order-btn acu-move-up-btn" data-key="${key}" title="上移" ${isFirst ? 'disabled' : ''}>
+                      <button class="acu-table-order-btn acu-move-up-btn" data-key="${key}" title="Di chuyển lên" ${isFirst ? 'disabled' : ''}>
                           <i class="fa-solid fa-chevron-up"></i>
                       </button>
-                      <button class="acu-table-order-btn acu-move-down-btn" data-key="${key}" title="下移" ${isLast ? 'disabled' : ''}>
+                      <button class="acu-table-order-btn acu-move-down-btn" data-key="${key}" title="Di chuyển xuống" ${isLast ? 'disabled' : ''}>
                           <i class="fa-solid fa-chevron-down"></i>
                       </button>
-                      <button class="acu-vis-del-table-btn" data-key="${key}" title="删除表格">
+                      <button class="acu-vis-del-table-btn" data-key="${key}" title="Xóa bảng">
                       <i class="fa-solid fa-trash"></i>
                   </button>
                   </div>
@@ -23209,8 +23209,8 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           $item.find('.acu-vis-del-table-btn').on('click', function(e) {
               e.stopPropagation();
               const keyToDelete = jQuery_API_ACU(this).data('key');
-              const tableName = _acuVisState.tempData[keyToDelete] ? _acuVisState.tempData[keyToDelete].name : '未知';
-              if (confirm(`确定要删除表格 "${tableName}" 吗？此操作不可撤销。\n\n注意：删除后保存，该表格的数据和模板配置都将被移除。`)) {
+              const tableName = _acuVisState.tempData[keyToDelete] ? _acuVisState.tempData[keyToDelete].name : 'Không rõ';
+              if (confirm(`Bạn có chắc muốn xóa bảng "${tableName}" không? Thao tác này không thể hoàn tác.\n\nLưu ý: sau khi lưu, dữ liệu và cấu hình mẫu của bảng này sẽ bị xóa.`)) {
                   // 记录删除队列：保存时会追溯整个聊天记录清除所有本地表格数据
                   if (!_acuVisState.deletedSheetKeys || !Array.isArray(_acuVisState.deletedSheetKeys)) {
                       _acuVisState.deletedSheetKeys = [];
@@ -23236,20 +23236,20 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 新增表格按钮
       const $addBtn = jQuery_API_ACU(`
           <button class="acu-add-table-btn">
-              <i class="fa-solid fa-plus"></i> 新增表格
+              <i class="fa-solid fa-plus"></i> Thêm bảng mới
           </button>
       `);
 
       $addBtn.on('click', function() {
-          const newName = prompt("请输入新表格的名称:", "新建表格");
+          const newName = prompt("Nhập tên bảng mới:", "Bảng mới");
           if (newName) {
               const newKey = 'sheet_' + Math.random().toString(36).substr(2, 9);
               _acuVisState.tempData[newKey] = {
                   uid: newKey,
                   name: newName,
                   domain: "chat", type: "dynamic", enable: true, required: false,
-                  content: [[null, "列1", "列2"]],
-                  sourceData: { note: "新表格说明", initNode: "", insertNode: "", updateNode: "", deleteNode: "" },
+                  content: [[null, "Cột 1", "Cột 2"]],
+                  sourceData: { note: "Mô tả bảng mới", initNode: "", insertNode: "", updateNode: "", deleteNode: "" },
                   // -1 = 沿用UI全局（新版默认）；updateFrequency=0 可用于“禁用该表自动更新”
                   updateConfig: { uiSentinel: -1, contextDepth: -1, updateFrequency: -1, batchSize: -1, skipFloors: -1 },
                   exportConfig: buildDefaultExportConfig_ACU(newName),
@@ -23276,7 +23276,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       }
       
       if (!_acuVisState.currentSheetKey) {
-          $main.html('<div style="text-align:center; padding:50px; color:#888;">请选择一个表格</div>');
+          $main.html('<div style="text-align:center; padding:50px; color:#888;">Vui lòng chọn một bảng</div>');
           return;
       }
       
@@ -23298,39 +23298,39 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       const html = `
           <div class="acu-config-panel">
               <div class="acu-config-section">
-                  <h4>全局条目注入配置（跨表）</h4>
-                  <div class="acu-hint" style="margin-bottom:10px;">该配置独立于单表，跟随当前模板预设保存。</div>
+                  <h4>Cấu hình tiêm mục toàn cục (liên bảng)</h4>
+                  <div class="acu-hint" style="margin-bottom:10px;">Cấu hình này độc lập với từng bảng và sẽ được lưu cùng preset mẫu hiện tại.</div>
                   <div class="acu-form-group">
-                      <label>全局可读条目位置:</label>
+                      <label>Vị trí mục đọc được toàn cục:</label>
                       <select class="acu-form-input" id="cfg-global-readable-position">
-                          <option value="at_depth_as_system" ${readablePlacement.position === 'at_depth_as_system' ? 'selected' : ''}>系统</option>
-                          <option value="before_char" ${readablePlacement.position === 'before_char' ? 'selected' : ''}>角色定义前</option>
-                          <option value="after_char" ${readablePlacement.position === 'after_char' ? 'selected' : ''}>角色定义后</option>
+                          <option value="at_depth_as_system" ${readablePlacement.position === 'at_depth_as_system' ? 'selected' : ''}>Hệ thống</option>
+                          <option value="before_char" ${readablePlacement.position === 'before_char' ? 'selected' : ''}>Trước định nghĩa nhân vật</option>
+                          <option value="after_char" ${readablePlacement.position === 'after_char' ? 'selected' : ''}>Sau định nghĩa nhân vật</option>
                       </select>
                   </div>
                   <div class="acu-form-group">
-                      <label>全局可读条目插入深度 (Depth):</label>
+                      <label>Độ sâu chèn mục đọc được toàn cục (Depth):</label>
                       <input type="number" class="acu-form-input" id="cfg-global-readable-depth" step="1" value="${readablePlacement.depth}">
                   </div>
                   <div class="acu-form-group">
-                      <label>全局可读条目插入顺序 (Order):</label>
+                      <label>Thứ tự chèn mục đọc được toàn cục (Order):</label>
                       <input type="number" class="acu-form-input" id="cfg-global-readable-order" min="1" step="1" value="${readablePlacement.order}">
                   </div>
 
                   <div class="acu-form-group" style="margin-top:12px; padding-top:10px; border-top:1px dashed #ddd;">
-                      <label>全局包裹条目位置:</label>
+                      <label>Vị trí mục bọc toàn cục:</label>
                       <select class="acu-form-input" id="cfg-global-wrapper-position">
-                          <option value="at_depth_as_system" ${wrapperPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>系统</option>
-                          <option value="before_char" ${wrapperPlacement.position === 'before_char' ? 'selected' : ''}>角色定义前</option>
-                          <option value="after_char" ${wrapperPlacement.position === 'after_char' ? 'selected' : ''}>角色定义后</option>
+                          <option value="at_depth_as_system" ${wrapperPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>Hệ thống</option>
+                          <option value="before_char" ${wrapperPlacement.position === 'before_char' ? 'selected' : ''}>Trước định nghĩa nhân vật</option>
+                          <option value="after_char" ${wrapperPlacement.position === 'after_char' ? 'selected' : ''}>Sau định nghĩa nhân vật</option>
                       </select>
                   </div>
                   <div class="acu-form-group">
-                      <label>全局包裹条目插入深度 (Depth):</label>
+                      <label>Độ sâu chèn mục bọc toàn cục (Depth):</label>
                       <input type="number" class="acu-form-input" id="cfg-global-wrapper-depth" step="1" value="${wrapperPlacement.depth}">
                   </div>
                   <div class="acu-form-group">
-                      <label>全局包裹条目插入顺序 (Order):</label>
+                      <label>Thứ tự chèn mục bọc toàn cục (Order):</label>
                       <input type="number" class="acu-form-input" id="cfg-global-wrapper-order" min="1" step="1" value="${wrapperPlacement.order}">
                   </div>
               </div>
@@ -23381,7 +23381,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       html += `
           <div class="acu-data-card" style="justify-content:center; align-items:center; cursor:pointer; background:#f0f6ff; border:2px dashed #4a90e2;" id="acu-vis-add-row">
               <i class="fa-solid fa-plus" style="font-size:30px; color:#4a90e2;"></i>
-              <div style="margin-top:10px; color:#4a90e2; font-weight:bold;">添加新行</div>
+              <div style="margin-top:10px; color:#4a90e2; font-weight:bold;">Thêm hàng mới</div>
           </div>
       `;
 
@@ -23391,7 +23391,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       <div class="acu-card-header">
                           <span>#${rIdx + 1}</span>
                           <div style="display:flex; align-items:center; gap:8px;">
-                              <button class="acu-lock-btn acu-vis-lock-row ${rowLocked ? 'active' : ''}" data-idx="${rIdx}" title="锁定行（仅update）">
+                              <button class="acu-lock-btn acu-vis-lock-row ${rowLocked ? 'active' : ''}" data-idx="${rIdx}" title="Khóa hàng (chỉ update)">
                                   <i class="fa-solid ${rowLocked ? 'fa-lock' : 'fa-unlock'}"></i>
                               </button>
                               <button class="acu-vis-del-row" data-idx="${rIdx}" style="background:none; border:none; color:#e95e5e; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
@@ -23407,16 +23407,16 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
               const isSpecialIndex = (isSummaryTable && colIdx === specialIndexCol);
               const lockedClass = (rowLocked || colLocked || cellLocked || (isSpecialIndex && specialIndexLocked)) ? 'acu-locked-field' : '';
               const colLockButton = isSpecialIndex
-                  ? `<button class="acu-lock-btn special acu-vis-lock-special ${specialIndexLocked ? 'active' : ''}" data-col="${colIdx}" title="编码索引列特殊锁定">
+                  ? `<button class="acu-lock-btn special acu-vis-lock-special ${specialIndexLocked ? 'active' : ''}" data-col="${colIdx}" title="Khóa đặc biệt cột chỉ mục mã hóa">
                          <i class="fa-solid ${specialIndexLocked ? 'fa-lock' : 'fa-unlock'}"></i>
-                         <span>特锁</span>
+                         <span>Khóa đặc biệt</span>
                      </button>`
-                  : `<button class="acu-lock-btn acu-vis-lock-col ${colLocked ? 'active' : ''}" data-col="${colIdx}" title="锁定列（仅update）">
+                  : `<button class="acu-lock-btn acu-vis-lock-col ${colLocked ? 'active' : ''}" data-col="${colIdx}" title="Khóa cột (chỉ update)">
                          <i class="fa-solid ${colLocked ? 'fa-lock' : 'fa-unlock'}"></i>
                      </button>`;
               const cellLockButton = isSpecialIndex
                   ? ''
-                  : `<button class="acu-lock-btn acu-vis-lock-cell ${cellLocked ? 'active' : ''}" data-row="${rIdx}" data-col="${colIdx}" title="锁定单元格（仅update）">
+                  : `<button class="acu-lock-btn acu-vis-lock-cell ${cellLocked ? 'active' : ''}" data-row="${rIdx}" data-col="${colIdx}" title="Khóa ô (chỉ update)">
                          <i class="fa-solid ${cellLocked ? 'fa-lock' : 'fa-unlock'}"></i>
                      </button>`;
               html += `
@@ -23463,7 +23463,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       
       $container.find('.acu-vis-del-row').on('click', function() {
           const rIdx = parseInt(jQuery_API_ACU(this).data('idx'));
-          if (confirm('确定删除此行吗？')) {
+          if (confirm('Bạn có chắc muốn xóa hàng này không?')) {
               sheet.content.splice(rIdx + 1, 1);
               if (isSummaryTable && sheetKey && isSpecialIndexLockEnabled_ACU(sheetKey)) {
                   applySpecialIndexSequenceToSummaryTables_ACU(_acuVisState.tempData);
@@ -23545,13 +23545,13 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                             <span>${escapeHtml_ACU(header)}</span>
                         </label>
                         <select class="acu-form-input cfg-extra-index-col-mode" data-col-idx="${colIdx}" style="max-width: 260px;" ${checked ? '' : 'disabled'}>
-                            <option value="both" ${modeVal === 'both' ? 'selected' : ''}>该列在原条目和索引条目都保留</option>
-                            <option value="index_only" ${modeVal === 'index_only' ? 'selected' : ''}>该列仅放到索引条目</option>
+                            <option value="both" ${modeVal === 'both' ? 'selected' : ''}>Giữ cột này ở cả mục gốc và mục chỉ mục</option>
+                            <option value="index_only" ${modeVal === 'index_only' ? 'selected' : ''}>Chỉ đặt cột này vào mục chỉ mục</option>
                         </select>
                     </div>
                 `;
             }).join('')
-          : '<div class="acu-hint">当前表格没有可选列。</div>';
+          : '<div class="acu-hint">Bảng hiện tại không có cột nào để chọn.</div>';
       const isSummaryTable = isSummaryOrOutlineTable_ACU(sheet.name);
       const sheetKey = _acuVisState.currentSheetKey;
       const specialIndexCol = isSummaryTable ? getSummaryIndexColumnIndex_ACU(sheet) : -1;
@@ -23565,53 +23565,53 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           isImportantPersonsTableName_ACU(sheet.name);
       const specialLockHtml = isSummaryTable ? `
               <div class="acu-config-section">
-                  <h4>编码索引列锁定</h4>
+                  <h4>Khóa cột chỉ mục mã hóa</h4>
                   <div class="acu-form-group">
                       <label>
                           <input type="checkbox" id="cfg-special-index-lock" ${specialIndexLocked ? 'checked' : ''}>
-                          启用编码索引列特殊锁定
+                          Bật khóa đặc biệt cột chỉ mục mã hóa
                       </label>
-                      <div class="acu-hint">锁定时该列由系统按 AM0001、AM0002... 自动生成，仅对AI更新生效。</div>
+                      <div class="acu-hint">Khi khóa, cột này sẽ được hệ thống tự tạo theo AM0001, AM0002..., chỉ có hiệu lực khi AI cập nhật.</div>
                       ${specialIndexCol >= 0
-                          ? `<div class="acu-hint">当前识别列: [${specialIndexCol}] ${escapeHtml_ACU(String(specialIndexHeader || ''))}</div>`
-                          : `<div class="acu-hint" style="color:#f6c177;">未识别到编码索引列，将默认使用最后一列。</div>`}
+                          ? `<div class="acu-hint">Cột nhận dạng hiện tại: [${specialIndexCol}] ${escapeHtml_ACU(String(specialIndexHeader || ''))}</div>`
+                          : `<div class="acu-hint" style="color:#f6c177;">Không nhận dạng được cột chỉ mục mã hóa, sẽ dùng cột cuối cùng mặc định.</div>`}
                   </div>
               </div>
       ` : '';
       const fixedPlacementHtml = isFixedConfigTable ? `
               <div class="acu-config-section">
-                  <h4>固定条目注入配置（本表专用）</h4>
+                  <h4>Cấu hình tiêm mục cố định (chỉ dành cho bảng này)</h4>
                   <div class="acu-form-group">
-                      <label>主条目位置:</label>
+                      <label>Vị trí mục chính:</label>
                       <select class="acu-form-input" id="cfg-fixed-entry-position">
-                          <option value="at_depth_as_system" ${fixedEntryPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>系统</option>
-                          <option value="before_char" ${fixedEntryPlacement.position === 'before_char' ? 'selected' : ''}>角色定义前</option>
-                          <option value="after_char" ${fixedEntryPlacement.position === 'after_char' ? 'selected' : ''}>角色定义后</option>
+                          <option value="at_depth_as_system" ${fixedEntryPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>Hệ thống</option>
+                          <option value="before_char" ${fixedEntryPlacement.position === 'before_char' ? 'selected' : ''}>Trước định nghĩa nhân vật</option>
+                          <option value="after_char" ${fixedEntryPlacement.position === 'after_char' ? 'selected' : ''}>Sau định nghĩa nhân vật</option>
                       </select>
                   </div>
                   <div class="acu-form-group">
-                      <label>主条目插入深度 (Depth):</label>
+                      <label>Độ sâu chèn mục chính (Depth):</label>
                       <input type="number" class="acu-form-input" id="cfg-fixed-entry-depth" step="1" value="${fixedEntryPlacement.depth}">
                   </div>
                   <div class="acu-form-group">
-                      <label>主条目插入顺序 (Order):</label>
+                      <label>Thứ tự chèn mục chính (Order):</label>
                       <input type="number" class="acu-form-input" id="cfg-fixed-entry-order" min="1" step="1" value="${fixedEntryPlacement.order}">
                   </div>
                   ${isImportantPersonsTableName_ACU(sheet.name) ? `
                   <div class="acu-form-group" style="margin-top:10px; padding-top:10px; border-top: 1px dashed #ddd;">
-                      <label>索引条目位置:</label>
+                      <label>Vị trí mục chỉ mục:</label>
                       <select class="acu-form-input" id="cfg-fixed-index-position">
-                          <option value="at_depth_as_system" ${fixedIndexPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>系统</option>
-                          <option value="before_char" ${fixedIndexPlacement.position === 'before_char' ? 'selected' : ''}>角色定义前</option>
-                          <option value="after_char" ${fixedIndexPlacement.position === 'after_char' ? 'selected' : ''}>角色定义后</option>
+                          <option value="at_depth_as_system" ${fixedIndexPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>Hệ thống</option>
+                          <option value="before_char" ${fixedIndexPlacement.position === 'before_char' ? 'selected' : ''}>Trước định nghĩa nhân vật</option>
+                          <option value="after_char" ${fixedIndexPlacement.position === 'after_char' ? 'selected' : ''}>Sau định nghĩa nhân vật</option>
                       </select>
                   </div>
                   <div class="acu-form-group">
-                      <label>索引条目插入深度 (Depth):</label>
+                      <label>Độ sâu chèn mục chỉ mục (Depth):</label>
                       <input type="number" class="acu-form-input" id="cfg-fixed-index-depth" step="1" value="${fixedIndexPlacement.depth}">
                   </div>
                   <div class="acu-form-group">
-                      <label>索引条目插入顺序 (Order):</label>
+                      <label>Thứ tự chèn mục chỉ mục (Order):</label>
                       <input type="number" class="acu-form-input" id="cfg-fixed-index-order" min="1" step="1" value="${fixedIndexPlacement.order}">
                   </div>` : ''}
               </div>
@@ -23620,184 +23620,184 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       const html = `
           <div class="acu-config-panel">
               <div class="acu-config-section">
-                  <h4>基本信息</h4>
+                  <h4>Thông tin cơ bản</h4>
                   <div class="acu-form-group">
-                      <label>表格名称:</label>
+                      <label>Tên bảng:</label>
                       <input type="text" class="acu-form-input" id="cfg-name" value="${escapeHtml_ACU(sheet.name)}">
                   </div>
               </div>
 
               <div class="acu-config-section">
-                  <h4>表头/列定义</h4>
+                  <h4>Tiêu đề/Định nghĩa cột</h4>
                   <div class="acu-col-list" id="cfg-col-list"></div>
-                  <button id="cfg-add-col" class="acu-btn-secondary" style="margin-top:10px; width:100%;"><i class="fa-solid fa-plus"></i> 添加列</button>
+                  <button id="cfg-add-col" class="acu-btn-secondary" style="margin-top:10px; width:100%;"><i class="fa-solid fa-plus"></i> Thêm cột</button>
               </div>
               ${specialLockHtml}
 
               <div class="acu-config-section">
-                  <h4>自动化更新参数</h4>
+                  <h4>Tham số cập nhật tự động</h4>
                   <div class="acu-form-group">
-                      <label>AI读取上下文层数 (Context Depth): <span class="acu-hint">(-1 = 沿用UI全局, 1+ = 生效；0 会被视为沿用UI)</span></label>
+                      <label>Số tầng ngữ cảnh AI đọc (Context Depth): <span class="acu-hint">(-1 = dùng toàn cục UI, 1+ = có hiệu lực; 0 coi như dùng UI)</span></label>
                       <input type="number" class="acu-form-input" id="cfg-depth" min="-1" step="1" value="${ucVal(updateConfig.contextDepth)}">
                   </div>
                   <div class="acu-form-group">
-                      <label>更新频率 (Update Frequency): <span class="acu-hint">(-1 = 沿用UI全局, 0 = 禁用该表自动更新)</span></label>
+                      <label>Tần suất cập nhật (Update Frequency): <span class="acu-hint">(-1 = dùng toàn cục UI, 0 = tắt cập nhật tự động bảng này)</span></label>
                       <input type="number" class="acu-form-input" id="cfg-freq" min="-1" step="1" value="${ucVal(updateConfig.updateFrequency)}">
                   </div>
                   <div class="acu-form-group">
-                      <label>批处理大小 (Batch Size): <span class="acu-hint">(-1 = 沿用UI全局, 1+ = 生效；0 会被视为沿用UI)</span></label>
+                      <label>Kích thước lô (Batch Size): <span class="acu-hint">(-1 = dùng toàn cục UI, 1+ = có hiệu lực; 0 coi như dùng UI)</span></label>
                       <input type="number" class="acu-form-input" id="cfg-batch" min="-1" step="1" value="${ucVal(updateConfig.batchSize)}">
                   </div>
                   <div class="acu-form-group">
-                      <label>跳过更新楼层 (Skip Floors): <span class="acu-hint">(-1 = 沿用UI全局, 0+ = 生效)</span></label>
+                      <label>Số tầng bỏ qua khi cập nhật (Skip Floors): <span class="acu-hint">(-1 = dùng toàn cục UI, 0+ = có hiệu lực)</span></label>
                       <input type="number" class="acu-form-input" id="cfg-skip" min="-1" step="1" value="${ucVal(updateConfig.skipFloors)}">
                   </div>
               </div>
 
               <div class="acu-config-section">
-                  <h4>AI提示词指令 (Source Data)</h4>
+                  <h4>Lệnh nhắc AI (Source Data)</h4>
                   <div class="acu-form-group">
-                      <label>表格说明 (Note):</label>
+                      <label>Mô tả bảng (Note):</label>
                       <textarea class="acu-form-textarea" id="cfg-note">${escapeHtml_ACU(sourceData.note || '')}</textarea>
                   </div>
                   <div class="acu-form-group">
-                      <label>初始化触发 (Init):</label>
+                      <label>Kích hoạt khởi tạo (Init):</label>
                       <textarea class="acu-form-textarea" id="cfg-init">${escapeHtml_ACU(sourceData.initNode || '')}</textarea>
                   </div>
                   <div class="acu-form-group">
-                      <label>新增触发 (Insert):</label>
+                      <label>Kích hoạt thêm mới (Insert):</label>
                       <textarea class="acu-form-textarea" id="cfg-insert">${escapeHtml_ACU(sourceData.insertNode || '')}</textarea>
                   </div>
                   <div class="acu-form-group">
-                      <label>更新触发 (Update):</label>
+                      <label>Kích hoạt cập nhật (Update):</label>
                       <textarea class="acu-form-textarea" id="cfg-update">${escapeHtml_ACU(sourceData.updateNode || '')}</textarea>
                   </div>
                   <div class="acu-form-group">
-                      <label>删除触发 (Delete):</label>
+                      <label>Kích hoạt xóa (Delete):</label>
                       <textarea class="acu-form-textarea" id="cfg-delete">${escapeHtml_ACU(sourceData.deleteNode || '')}</textarea>
                   </div>
               </div>
               
               <div class="acu-config-section">
-                  <h4>世界书注入配置</h4>
+                  <h4>Cấu hình tiêm Sổ thế giới</h4>
                   <div class="acu-form-group">
                       <label>
                           <input type="checkbox" id="cfg-inject" ${config.injectIntoWorldbook !== false ? 'checked' : ''}>
-                          注入到主数据库条目 (Readable Entry)
+                          Tiêm vào mục CSDL chính (Readable Entry)
                       </label>
-                      <div class="acu-hint">勾选后，该表格将包含在全局可读的“最新数据与记录”条目中。</div>
+                      <div class="acu-hint">Khi chọn, bảng này sẽ được đưa vào mục “dữ liệu và ghi chép mới nhất” có thể đọc toàn cục.</div>
                   </div>
                   
                   <div style="border-top: 1px dashed #ddd; margin: 10px 0; padding-top: 10px;">
                       <div class="acu-form-group">
                           <label>
                               <input type="checkbox" id="cfg-export-enabled" ${config.enabled ? 'checked' : ''}>
-                              启用独立导出 (Custom Export)
+                              Bật xuất độc lập (Custom Export)
                           </label>
-                          <div class="acu-hint">勾选后，该表格将额外导出为独立的世界书条目。</div>
+                          <div class="acu-hint">Khi chọn, bảng này sẽ được xuất thêm thành mục sổ thế giới độc lập.</div>
                       </div>
 
                       <div id="cfg-export-options" style="display: ${config.enabled ? 'block' : 'none'}; padding-left: 20px; border-left: 2px solid #eee;">
                           <div class="acu-form-group">
                               <label>
                                   <input type="checkbox" id="cfg-split" ${config.splitByRow ? 'checked' : ''}>
-                                  按行拆分 (Split by Row)
+                                  Tách theo hàng (Split by Row)
                               </label>
-                              <div class="acu-hint">勾选后，每一行数据将生成一个单独的条目。</div>
+                              <div class="acu-hint">Khi chọn, mỗi hàng dữ liệu sẽ tạo một mục riêng.</div>
                           </div>
                           
                           <div class="acu-form-group">
-                              <label>条目名称 (Entry Name):</label>
-                              <input type="text" class="acu-form-input" id="cfg-entry-name" value="${escapeHtml_ACU(config.entryName || sheet.name || '')}" placeholder="例如: ${escapeHtml_ACU(sheet.name)}">
-                              <div class="acu-hint">如果不拆分，此为条目名；如果拆分，自动命名为 "名称-1", "名称-2" 等。</div>
+                              <label>Tên mục (Entry Name):</label>
+                              <input type="text" class="acu-form-input" id="cfg-entry-name" value="${escapeHtml_ACU(config.entryName || sheet.name || '')}" placeholder="Ví dụ: ${escapeHtml_ACU(sheet.name)}">
+                              <div class="acu-hint">Nếu không tách, đây là tên mục; nếu tách, tự động đặt tên "Tên-1", "Tên-2", v.v.</div>
                           </div>
 
                           <div class="acu-form-group">
-                              <label>条目类型 (Entry Type):</label>
+                              <label>Loại mục (Entry Type):</label>
                               <select class="acu-form-input" id="cfg-entry-type">
-                                  <option value="constant" ${(!config.entryType || config.entryType === 'constant') ? 'selected' : ''}>常量条目 (Constant/Blue)</option>
-                                  <option value="keyword" ${config.entryType === 'keyword' ? 'selected' : ''}>关键词条目 (Keyword/Green)</option>
+                                  <option value="constant" ${(!config.entryType || config.entryType === 'constant') ? 'selected' : ''}>Mục hằng số (Constant/Blue)</option>
+                                  <option value="keyword" ${config.entryType === 'keyword' ? 'selected' : ''}>Mục từ khóa (Keyword/Green)</option>
                               </select>
                           </div>
 
                           <div class="acu-form-group">
-                              <label>关键词 (Keywords):</label>
-                              <input type="text" class="acu-form-input" id="cfg-keywords" value="${escapeHtml_ACU(config.keywords || '')}" placeholder="关键词1, 关键词2">
+                              <label>Từ khóa (Keywords):</label>
+                              <input type="text" class="acu-form-input" id="cfg-keywords" value="${escapeHtml_ACU(config.keywords || '')}" placeholder="Từ khóa 1, Từ khóa 2">
                               <div class="acu-hint">
-                                  如果未拆分，填写的词就是关键词。<br>
-                                  如果拆分且关键词与列名相同，则使用该行对应列的内容作为关键词。
+                                  Nếu không tách, từ được điền chính là từ khóa.<br>
+                                  Nếu tách và từ khóa trùng với tên cột, sẽ dùng nội dung cột tương ứng của hàng đó làm từ khóa.
                               </div>
                           </div>
                           
                           <div class="acu-form-group">
                               <label>
                                   <input type="checkbox" id="cfg-recursion" ${config.preventRecursion !== false ? 'checked' : ''}>
-                                  防止递归 (Prevent Recursion)
+                                  Ngăn đệ quy (Prevent Recursion)
                               </label>
                           </div>
 
                           <div class="acu-form-group">
-                              <label>自定义注入模板 (可选):</label>
-                              <textarea class="acu-form-textarea" id="cfg-template" placeholder="使用 $1 代表本表导出的蓝灯/绿灯条目列表，$1 上下的内容会分别生成独立的常量条目，插入到该表注入区块的最前与最后。">${escapeHtml_ACU(config.injectionTemplate || '')}</textarea>
-                              <div class="acu-hint">注入词现在以独立的常量条目进行包裹。填写模板后，$1 保留为条目本身，$1 之前和之后的内容会各自成为前/后包裹条目。</div>
+                              <label>Mẫu tiêm tùy chỉnh (tùy chọn):</label>
+                              <textarea class="acu-form-textarea" id="cfg-template" placeholder="Dùng $1 để đại diện cho danh sách mục đèn xanh dương/xanh lá được xuất từ bảng này; nội dung trước và sau $1 sẽ tạo thành các mục hằng độc lập và được chèn vào đầu/cuối khối tiêm của bảng.">${escapeHtml_ACU(config.injectionTemplate || '')}</textarea>
+                              <div class="acu-hint">Từ tiêm giờ được bọc bằng mục hằng số độc lập. Sau khi điền mẫu, $1 giữ nguyên là mục, nội dung trước/sau $1 sẽ thành mục bọc trước/sau.</div>
                           </div>
                           <div class="acu-form-group" style="margin-top:10px; padding-top:10px; border-top: 1px dashed #ddd;">
-                              <label>主条目位置:</label>
+                              <label>Vị trí mục chính:</label>
                               <select class="acu-form-input" id="cfg-entry-position">
-                                  <option value="at_depth_as_system" ${entryPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>系统</option>
-                                  <option value="before_char" ${entryPlacement.position === 'before_char' ? 'selected' : ''}>角色定义前</option>
-                                  <option value="after_char" ${entryPlacement.position === 'after_char' ? 'selected' : ''}>角色定义后</option>
+                                  <option value="at_depth_as_system" ${entryPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>Hệ thống</option>
+                                  <option value="before_char" ${entryPlacement.position === 'before_char' ? 'selected' : ''}>Trước định nghĩa nhân vật</option>
+                                  <option value="after_char" ${entryPlacement.position === 'after_char' ? 'selected' : ''}>Sau định nghĩa nhân vật</option>
                               </select>
                           </div>
                           <div class="acu-form-group">
-                              <label>主条目插入深度 (Depth):</label>
+                              <label>Độ sâu chèn mục chính (Depth):</label>
                               <input type="number" class="acu-form-input" id="cfg-entry-depth" step="1" value="${entryPlacement.depth}">
                           </div>
                           <div class="acu-form-group">
-                              <label>主条目插入顺序 (Order):</label>
+                              <label>Thứ tự chèn mục chính (Order):</label>
                               <input type="number" class="acu-form-input" id="cfg-entry-order" min="1" step="1" value="${entryPlacement.order}">
-                              <div class="acu-hint">只需设置主条目的顺序；若存在上/下包裹条目，会自动占用前后顺序位。</div>
+                              <div class="acu-hint">Chỉ cần đặt thứ tự mục chính; nếu có mục bọc trên/dưới, sẽ tự động chiếm vị trí thứ tự trước/sau.</div>
                           </div>
 
                           <div class="acu-form-group" style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #ddd;">
                               <label>
                                   <input type="checkbox" id="cfg-extra-index-enabled" ${config.extraIndexEnabled ? 'checked' : ''}>
-                                  额外增加索引条目
+                                  Thêm mục chỉ mục bổ sung
                               </label>
-                              <div class="acu-hint">启用后会在该表导出区块额外注入 1 条“索引条目”（常量条目）。</div>
+                              <div class="acu-hint">Khi bật, sẽ tiêm thêm 1 “mục chỉ mục” (mục hằng) vào khối xuất của bảng này.</div>
                           </div>
                           <div id="cfg-extra-index-options" style="display: ${config.extraIndexEnabled ? 'block' : 'none'}; padding-left: 12px; border-left: 2px solid #eee;">
                               <div class="acu-form-group">
-                                  <label>索引条目名称:</label>
-                                  <input type="text" class="acu-form-input" id="cfg-extra-index-entry-name" value="${escapeHtml_ACU(config.extraIndexEntryName || `${config.entryName || sheet.name || ''}-索引`)}" placeholder="例如: ${escapeHtml_ACU((config.entryName || sheet.name || '表格') + '-索引')}">
-                                  <div class="acu-hint">将作为额外注入世界书条目的名称。</div>
+                                  <label>Tên mục chỉ mục:</label>
+                                  <input type="text" class="acu-form-input" id="cfg-extra-index-entry-name" value="${escapeHtml_ACU(config.extraIndexEntryName || `${config.entryName || sheet.name || ''}-Chỉ mục`)}" placeholder="Ví dụ: ${escapeHtml_ACU((config.entryName || sheet.name || 'Bảng') + '-Chỉ mục')}">
+                                  <div class="acu-hint">Sẽ là tên của mục sổ thế giới được tiêm thêm.</div>
                               </div>
                               <div class="acu-form-group">
-                                  <label>索引条目列选择（可多选）:</label>
+                                  <label>Chọn cột mục chỉ mục (có thể chọn nhiều):</label>
                                   <div id="cfg-extra-index-columns-list">
                                       ${extraIndexColumnsHtml}
                                   </div>
-                                  <div class="acu-hint">每列可独立设置：仅放索引条目，或原条目与索引条目都保留。</div>
+                                  <div class="acu-hint">Mỗi cột có thể đặt độc lập: chỉ đặt vào mục chỉ mục, hoặc giữ cả mục gốc và mục chỉ mục.</div>
                               </div>
                               <div class="acu-form-group">
-                                  <label>索引条目自定义注入模板 (可选):</label>
-                                  <textarea class="acu-form-textarea" id="cfg-extra-index-template" placeholder="使用 $1 代表索引条目内容；$1 上下内容会分别生成独立常量条目并放在索引条目之前/之后。">${escapeHtml_ACU(config.extraIndexInjectionTemplate || '')}</textarea>
-                                  <div class="acu-hint">逻辑与独立导出条目的自定义注入模板一致。</div>
+                                  <label>Mẫu tiêm tùy chỉnh mục chỉ mục (tùy chọn):</label>
+                                  <textarea class="acu-form-textarea" id="cfg-extra-index-template" placeholder="Dùng $1 để đại diện cho nội dung mục chỉ mục; nội dung trước và sau $1 sẽ tạo thành các mục hằng độc lập và được đặt trước/sau mục chỉ mục.">${escapeHtml_ACU(config.extraIndexInjectionTemplate || '')}</textarea>
+                                  <div class="acu-hint">Logic giống với mẫu tiêm tùy chỉnh cho mục xuất độc lập.</div>
                               </div>
                               <div class="acu-form-group" style="margin-top:10px; padding-top:10px; border-top: 1px dashed #ddd;">
-                                  <label>索引条目位置:</label>
+                                  <label>Vị trí mục chỉ mục:</label>
                                   <select class="acu-form-input" id="cfg-extra-index-position">
-                                      <option value="at_depth_as_system" ${extraIndexPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>系统</option>
-                                      <option value="before_char" ${extraIndexPlacement.position === 'before_char' ? 'selected' : ''}>角色定义前</option>
-                                      <option value="after_char" ${extraIndexPlacement.position === 'after_char' ? 'selected' : ''}>角色定义后</option>
+                                      <option value="at_depth_as_system" ${extraIndexPlacement.position === 'at_depth_as_system' ? 'selected' : ''}>Hệ thống</option>
+                                      <option value="before_char" ${extraIndexPlacement.position === 'before_char' ? 'selected' : ''}>Trước định nghĩa nhân vật</option>
+                                      <option value="after_char" ${extraIndexPlacement.position === 'after_char' ? 'selected' : ''}>Sau định nghĩa nhân vật</option>
                                   </select>
                               </div>
                               <div class="acu-form-group">
-                                  <label>索引条目插入深度 (Depth):</label>
+                                  <label>Độ sâu chèn mục chỉ mục (Depth):</label>
                                   <input type="number" class="acu-form-input" id="cfg-extra-index-depth" step="1" value="${extraIndexPlacement.depth}">
                               </div>
                               <div class="acu-form-group">
-                                  <label>索引条目插入顺序 (Order):</label>
+                                  <label>Thứ tự chèn mục chỉ mục (Order):</label>
                                   <input type="number" class="acu-form-input" id="cfg-extra-index-order" min="1" step="1" value="${extraIndexPlacement.order}">
                               </div>
                           </div>
@@ -23838,7 +23838,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       
       $colList.on('click', '.acu-col-btn', function() {
           const idx = parseInt(jQuery_API_ACU(this).data('idx'));
-          if (confirm('删除列将同时删除该列的所有数据，确定吗？')) {
+          if (confirm('Xóa cột sẽ đồng thời xóa tất cả dữ liệu của cột đó, bạn có chắc không?')) {
               // [修复] headers 是 sheet.content[0] 的引用，只需对数据行执行splice，避免双重删除
               headers.splice(idx, 1);
               sheet.content.slice(1).forEach(row => row.splice(idx, 1));
@@ -23847,7 +23847,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       });
       
       jQuery_API_ACU('#cfg-add-col').on('click', () => {
-          const newName = prompt('输入新列名:');
+          const newName = prompt('Nhập tên cột mới:');
           if (newName) {
               headers.push(newName);
               // Update all rows
@@ -24188,9 +24188,9 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                   // [Profile] 可视化编辑器同步到当前标识(profile)的通用模板
                   saveCurrentProfileTemplate_ACU(TABLE_TEMPLATE_ACU);
                   logDebug_ACU('Template fully synchronized via Visualizer.');
-                  showToastr_ACU('success', '更改已保存至当前标识的通用模板！');
+                  showToastr_ACU('success', 'Đã lưu thay đổi vào mẫu chung của mã hiện tại!');
               } else {
-                  showToastr_ACU('info', '模板无变化，无需保存。');
+                  showToastr_ACU('info', 'Mẫu không thay đổi, không cần lưu.');
               }
           } catch (e) {
               logError_ACU('Error updating template from visualizer:', e);
@@ -24200,7 +24200,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
       // 2. Save to Chat History (per table, back to its original floor)
       const chat = SillyTavern_API_ACU.chat || [];
       if (!chat.length) {
-          showToastr_ACU('warning', '聊天记录为空，更改仅保存在内存，未持久化。');
+          showToastr_ACU('warning', 'Lịch sử chat rỗng, thay đổi chỉ lưu trong bộ nhớ, chưa được duy trì.');
       } else {
           // 2.1 预先获取当前隔离标签与所有表
           const isolationKey = getCurrentIsolationKey_ACU();
@@ -24288,7 +24288,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
           }
           
           if (Object.keys(bucketByIndex).length === 0) {
-              showToastr_ACU('warning', '找不到AI消息，更改仅保存到内存，未持久化到聊天记录。');
+              showToastr_ACU('warning', 'Không tìm thấy tin nhắn AI, thay đổi chỉ lưu vào bộ nhớ, chưa được duy trì vào lịch sử chat.');
           } else {
               // 2.4 分楼层保存，每层只保存属于该层的表
               for (const [indexStr, keys] of Object.entries(bucketByIndex)) {
@@ -24314,7 +24314,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
 
               // 2.5 所有保存完成后再统一刷新，确保读取最新数据再进行后续操作
               await refreshMergedDataAndNotify_ACU();
-              showToastr_ACU('success', '更改已按原楼层保存到聊天记录！');
+              showToastr_ACU('success', 'Đã lưu thay đổi vào lịch sử chat theo tầng gốc!');
           }
       }
 
