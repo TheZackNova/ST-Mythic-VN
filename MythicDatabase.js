@@ -19462,10 +19462,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
   function normalizeAiResponseForTableEditParsing_ACU(text) {
     if (typeof text !== 'string') return '';
     let cleaned = text.trim();
-    // 移除JS风格的字符串拼接：'...' + '...'
-    cleaned = cleaned.replace(/'\s*\+\s*'/g, '');
-    // 移除可能包裹整个响应的单引号
-    if (cleaned.startsWith("'") && cleaned.endsWith("'")) cleaned = cleaned.slice(1, -1);
+    // 移除JS风格的字符串拼接：'...' + '...' 以及混合反引号的情况：'...' + `...` / `...` + '...' / `...` + `...`
+    cleaned = cleaned.replace(/(['`])\s*\+\s*(['`])/g, '');
+    // 移除可能包裹整个响应的单引号或反引号
+    if ((cleaned.startsWith("'") || cleaned.startsWith('`')) &&
+        (cleaned.endsWith("'") || cleaned.endsWith('`'))) cleaned = cleaned.slice(1, -1);
     // 将 "\\n" 转换为真实换行
     cleaned = cleaned.replace(/\\n/g, '\n');
     // 修复由JS字符串转义符（\\）导致的解析失败
