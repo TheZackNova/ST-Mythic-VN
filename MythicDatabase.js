@@ -19478,7 +19478,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
   function extractTableEditInner_ACU(text, options = {}) {
     const { allowNoTableEditTags = true, useLastPairOnly = (settings_ACU?.tableEditLastPairOnly !== false) } = options;
     const cleaned = normalizeAiResponseForTableEditParsing_ACU(text);
-    if (!cleaned) return null;
+    if (!cleaned || !cleaned.trim()) return null;
 
     // 1) 标准格式：<tableEdit>...</tableEdit>
     if (useLastPairOnly) {
@@ -20710,6 +20710,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 }
                 
                 // 3. 检查tableEdit标签
+                const normalizedForCheck_main = normalizeAiResponseForTableEditParsing_ACU(aiResponse);
+                if (!normalizedForCheck_main || !normalizedForCheck_main.trim()) {
+                    throw new Error('AI trả về phản hồi rỗng hoặc chỉ chứa khoảng trắng, không thể phân tích dữ liệu. Vui lòng thử lại.');
+                }
                 if (!aiResponse || !aiResponse.includes('<tableEdit>') || !aiResponse.includes('</tableEdit>')) {
                     throw new Error('Không tìm thấy thẻ <tableEdit> đầy đủ và hợp lệ trong phản hồi AI');
                 }
