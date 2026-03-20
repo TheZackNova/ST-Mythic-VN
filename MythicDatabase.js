@@ -20482,14 +20482,19 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                   }
 
                   const editsString = extractResult.inner;
+                  const normalizedEditsString = normalizeAiResponseForTableEditParsing_ACU(editsString);
+                  if (!normalizedEditsString || !normalizedEditsString.trim() || !/(insertRow|updateRow|deleteRow)\s*\(/.test(normalizedEditsString)) {
+                      throw new Error('AI trả về khối <tableEdit> rỗng hoặc không chứa lệnh dữ liệu hợp lệ (insertRow). Vui lòng thử lại.');
+                  }
                   const newSummaryRows = [];
 
-                  editsString.split('\n').forEach(line => {
-                      const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{.*?\}|\[.*?\])\s*\)/);
+                  normalizedEditsString.split('\n').forEach(line => {
+                      const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{[\s\S]*\}|\[[\s\S]*\])\s*\)/);
                       if (match) {
                           try {
                               const tableIdx = parseInt(match[1], 10);
-                              let rowData = JSON.parse(match[2].replace(/'/g, '"'));
+                              let rowData;
+                              try { rowData = JSON.parse(match[2]); } catch { rowData = JSON.parse(match[2].replace(/'/g, '"')); }
                               if (typeof rowData === 'object' && !Array.isArray(rowData)) {
                                   const sortedKeys = Object.keys(rowData).sort((a,b) => parseInt(a) - parseInt(b));
                                   const dataColumns = sortedKeys.map(k => rowData[k]);
@@ -21161,15 +21166,20 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       }
 
                       const editsString = extractResult.inner;
+                      const normalizedEditsString = normalizeAiResponseForTableEditParsing_ACU(editsString);
+                      if (!normalizedEditsString || !normalizedEditsString.trim() || !/(insertRow|updateRow|deleteRow)\s*\(/.test(normalizedEditsString)) {
+                          throw new Error('AI trả về khối <tableEdit> rỗng hoặc không chứa lệnh dữ liệu hợp lệ (insertRow). Vui lòng thử lại.');
+                      }
                       const newSummaryRows = [];
                       const newOutlineRows = [];
                       
-                      editsString.split('\n').forEach(line => {
-                          const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{.*?\}|\[.*?\])\s*\)/);
+                      normalizedEditsString.split('\n').forEach(line => {
+                          const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{[\s\S]*\}|\[[\s\S]*\])\s*\)/);
                           if (match) {
                               try {
                                   const tableIdx = parseInt(match[1], 10);
-                                  let rowData = JSON.parse(match[2].replace(/'/g, '"'));
+                                  let rowData;
+                                  try { rowData = JSON.parse(match[2]); } catch { rowData = JSON.parse(match[2].replace(/'/g, '"')); }
                                   if (typeof rowData === 'object' && !Array.isArray(rowData)) {
                                       // 将对象格式转换为数组格式，添加null作为ID列
                                       const sortedKeys = Object.keys(rowData).sort((a,b) => parseInt(a) - parseInt(b));
