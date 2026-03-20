@@ -20482,6 +20482,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                   }
 
                   const editsString = extractResult.inner;
+                  const normalizedEditsString = normalizeAiResponseForTableEditParsing_ACU(editsString);
+                  if (!normalizedEditsString || !normalizedEditsString.trim() || !/(insertRow|updateRow|deleteRow)\s*\(/.test(normalizedEditsString)) {
+                      throw new Error('AI trả về khối <tableEdit> rỗng hoặc không chứa lệnh dữ liệu hợp lệ (insertRow). Vui lòng thử lại.');
+                  }
                   const newSummaryRows = [];
 
                   editsString.split('\n').forEach(line => {
@@ -21161,6 +21165,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       }
 
                       const editsString = extractResult.inner;
+                      const normalizedEditsString = normalizeAiResponseForTableEditParsing_ACU(editsString);
+                      if (!normalizedEditsString || !normalizedEditsString.trim() || !/(insertRow|updateRow|deleteRow)\s*\(/.test(normalizedEditsString)) {
+                          throw new Error('AI trả về khối <tableEdit> rỗng hoặc không chứa lệnh dữ liệu hợp lệ (insertRow). Vui lòng thử lại.');
+                      }
                       const newSummaryRows = [];
                       const newOutlineRows = [];
                       
