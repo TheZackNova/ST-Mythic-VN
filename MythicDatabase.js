@@ -19462,10 +19462,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
   function normalizeAiResponseForTableEditParsing_ACU(text) {
     if (typeof text !== 'string') return '';
     let cleaned = text.trim();
-    // 移除JS风格的字符串拼接：'...' + '...'
-    cleaned = cleaned.replace(/'\s*\+\s*'/g, '');
-    // 移除可能包裹整个响应的单引号
-    if (cleaned.startsWith("'") && cleaned.endsWith("'")) cleaned = cleaned.slice(1, -1);
+    // 移除JS风格的字符串拼接：'...' + '...' 以及混合反引号的情况：'...' + `...` / `...` + '...' / `...` + `...`
+    cleaned = cleaned.replace(/(['`])\s*\+\s*(['`])/g, '');
+    // 移除可能包裹整个响应的单引号或反引号
+    if ((cleaned.startsWith("'") || cleaned.startsWith('`')) &&
+        (cleaned.endsWith("'") || cleaned.endsWith('`'))) cleaned = cleaned.slice(1, -1);
     // 将 "\\n" 转换为真实换行
     cleaned = cleaned.replace(/\\n/g, '\n');
     // 修复由JS字符串转义符（\\）导致的解析失败
@@ -19478,7 +19479,7 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
   function extractTableEditInner_ACU(text, options = {}) {
     const { allowNoTableEditTags = true, useLastPairOnly = (settings_ACU?.tableEditLastPairOnly !== false) } = options;
     const cleaned = normalizeAiResponseForTableEditParsing_ACU(text);
-    if (!cleaned) return null;
+    if (!cleaned || !cleaned.trim()) return null;
 
     // 1) 标准格式：<tableEdit>...</tableEdit>
     if (useLastPairOnly) {
@@ -20470,6 +20471,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       }
                   }
 
+                  const normalizedForCheck = normalizeAiResponseForTableEditParsing_ACU(aiResponseText);
+                  if (!normalizedForCheck || !normalizedForCheck.trim()) {
+                      throw new Error('AI trả về phản hồi rỗng hoặc chỉ chứa khoảng trắng, không thể phân tích dữ liệu. Vui lòng thử lại.');
+                  }
+
                   const extractResult = extractTableEditInner_ACU(aiResponseText, { allowNoTableEditTags: true });
                   if (!extractResult || !extractResult.inner) {
                       throw new Error('AI không trả về khối <tableEdit> hợp lệ (thiếu ranh giới <tableEdit> hoặc khối chú thích <!-- --> không hoàn chỉnh).');
@@ -20705,6 +20711,10 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                 }
                 
                 // 3. 检查tableEdit标签
+                const normalizedForCheck_main = normalizeAiResponseForTableEditParsing_ACU(aiResponse);
+                if (!normalizedForCheck_main || !normalizedForCheck_main.trim()) {
+                    throw new Error('AI trả về phản hồi rỗng hoặc chỉ chứa khoảng trắng, không thể phân tích dữ liệu. Vui lòng thử lại.');
+                }
                 if (!aiResponse || !aiResponse.includes('<tableEdit>') || !aiResponse.includes('</tableEdit>')) {
                     throw new Error('Không tìm thấy thẻ <tableEdit> đầy đủ và hợp lệ trong phản hồi AI');
                 }
@@ -21138,6 +21148,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                                if (data?.choices?.[0]?.message?.content) aiResponseText = data.choices[0].message.content;
                                else throw new Error('Dữ liệu trả về từ API có định dạng không đúng');
                           }
+                      }
+
+                      const normalizedForCheck = normalizeAiResponseForTableEditParsing_ACU(aiResponseText);
+                      if (!normalizedForCheck || !normalizedForCheck.trim()) {
+                          throw new Error('AI trả về phản hồi rỗng hoặc chỉ chứa khoảng trắng, không thể phân tích dữ liệu. Vui lòng thử lại.');
                       }
 
                       const extractResult = extractTableEditInner_ACU(aiResponseText, { allowNoTableEditTags: true });
