@@ -20470,6 +20470,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       }
                   }
 
+                  const normalizedForCheck = normalizeAiResponseForTableEditParsing_ACU(aiResponseText);
+                  if (!normalizedForCheck || !normalizedForCheck.trim()) {
+                      throw new Error('AI trả về phản hồi rỗng hoặc chỉ chứa khoảng trắng, không thể phân tích dữ liệu. Vui lòng thử lại.');
+                  }
+
                   const extractResult = extractTableEditInner_ACU(aiResponseText, { allowNoTableEditTags: true });
                   if (!extractResult || !extractResult.inner) {
                       throw new Error('AI không trả về khối <tableEdit> hợp lệ (thiếu ranh giới <tableEdit> hoặc khối chú thích <!-- --> không hoàn chỉnh).');
@@ -21138,6 +21143,11 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                                if (data?.choices?.[0]?.message?.content) aiResponseText = data.choices[0].message.content;
                                else throw new Error('Dữ liệu trả về từ API có định dạng không đúng');
                           }
+                      }
+
+                      const normalizedForCheck = normalizeAiResponseForTableEditParsing_ACU(aiResponseText);
+                      if (!normalizedForCheck || !normalizedForCheck.trim()) {
+                          throw new Error('AI trả về phản hồi rỗng hoặc chỉ chứa khoảng trắng, không thể phân tích dữ liệu. Vui lòng thử lại.');
                       }
 
                       const extractResult = extractTableEditInner_ACU(aiResponseText, { allowNoTableEditTags: true });
