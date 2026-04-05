@@ -1,0 +1,538 @@
+{
+  "sheet_dCudvUnH": {
+    "uid": "sheet_dCudvUnH",
+    "name": "Bảng Dữ Liệu Toàn Cục",
+    "sourceData": {
+      "note": "Ghi lại địa điểm và thông số thời gian hiện tại của nhân vật chính. Bảng này chỉ có duy nhất một hàng.\n- Cột 0: Địa điểm hiện tại - Tên cụ thể của cảnh đang diễn ra.\n- Cột 1: Thời gian hiện tại - Thời gian hiện tại trong thế giới game. Định dạng: \"YYYY-MM-DD HH:MM\". Khi khởi tạo, nếu cốt truyện không nêu rõ ngày giờ cụ thể, phải tự đặt một ngày giờ cụ thể dựa trên thế giới quan và bối cảnh.\n- Cột 2: Thời gian lượt trước - Thời điểm kết thúc lượt tương tác trước.\n- Cột 3: Thời gian đã trôi qua - Mô tả bằng văn bản tính từ thời gian hiện tại và lượt trước (ví dụ: \"vài phút\").",
+      "initNode": "Chèn một bản ghi về trạng thái thế giới hiện tại.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cập nhật địa điểm khi nhân vật chính rời khỏi khu vực hiện tại. Phải cập nhật thời gian mỗi lượt.",
+      "insertNode": "Cấm thao tác."
+    },
+    "content": [
+      [
+        null,
+        "Địa điểm hiện tại",
+        "Thời gian hiện tại",
+        "Thời gian lượt trước",
+        "Thời gian đã trôi qua"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng Dữ Liệu Toàn Cục",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng Dữ Liệu Toàn Cục-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "before_character_definition",
+        "depth": 2,
+        "order": 99981
+      },
+      "fixedIndexPlacement": {
+        "position": "before_character_definition",
+        "depth": 2,
+        "order": 99980
+      }
+    },
+    "orderNo": 0
+  },
+  "sheet_DpKcVGqg": {
+    "uid": "sheet_DpKcVGqg",
+    "name": "Thông Tin Nhân Vật Chính",
+    "sourceData": {
+      "note": "Ghi lại thông tin nhận dạng cốt lõi của nhân vật chính. Bảng này chỉ có duy nhất một hàng.\n- Cột 0: Tên nhân vật - Tên của nhân vật chính.\n- Cột 1: Giới tính/Tuổi - Giới tính sinh học và tuổi của nhân vật chính.\n- Cột 2: Đặc điểm ngoại hình - Mô tả khách quan về ngoại hình của nhân vật chính.\n- Cột 3: Nghề nghiệp/Danh phận - Vai trò chính của nhân vật chính trong xã hội.\n- Cột 4: Kinh lịch quá khứ - Ghi lại cốt truyện nền và những trải nghiệm quan trọng của nhân vật chính, cập nhật tăng dần theo cốt truyện, không quá 300 từ, cần nén lại khi vượt quá.\n- Cột 5: Tính cách - Tóm tắt tính cách cốt lõi của nhân vật chính.",
+      "initNode": "Khi khởi tạo game, chèn mục duy nhất của nhân vật chính.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cột 'Kinh lịch quá khứ' sẽ được cập nhật tăng dần liên tục theo sự phát triển của cốt truyện, cập nhật khi các trạng thái của nhân vật chính thay đổi.",
+      "insertNode": "Cấm thao tác."
+    },
+    "content": [
+      [
+        null,
+        "Tên nhân vật",
+        "Giới tính/Tuổi",
+        "Đặc điểm ngoại hình",
+        "Nghề nghiệp/Danh phận",
+        "Kinh lịch quá khứ",
+        "Tính cách"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Thông Tin Nhân Vật Chính",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Thông Tin Nhân Vật Chính-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 1
+  },
+  "sheet_NcBlYRH5": {
+    "uid": "sheet_NcBlYRH5",
+    "name": "Bảng Nhân Vật Quan Trọng",
+    "sourceData": {
+      "note": "Ghi lại thông tin chi tiết và trạng thái động của tất cả NPC quan trọng.\n- Cột 0: Tên - Tên của NPC.\n- Cột 1: Giới tính/Tuổi - Giới tính sinh học và tuổi của NPC.\n- Cột 2: Giới thiệu ngắn - Tóm tắt bối cảnh danh phận nhân vật không quá 15 chữ, không chứa đánh giá chủ quan.\n- Cột 3: Đặc điểm ngoại hình - Mô tả chi tiết ngoại hình và trang phục hiện tại của NPC, có thể bao gồm mô tả vóc dáng với nhân vật nữ; không cần mô tả với nhân vật nam.\n- Cột 4: Vật phẩm quan trọng đang giữ - Danh sách vật phẩm quan trọng mà NPC sở hữu, phân cách bằng dấu chấm phẩy.\n- Cột 5: Đã rời đi - Xác định nhân vật có thể tương tác trực tiếp với nhân vật chính không, điền \"Có\" hoặc \"Không\".\n- Cột 6: Kinh lịch quá khứ - Ghi lại nền nhân vật và các sự kiện quan trọng, cập nhật tăng dần theo cốt truyện, không quá 300 từ, cần nén lại khi vượt quá.",
+      "initNode": "Khi khởi tạo game, chèn một mục cho từng nhân vật quan trọng đang hiện diện.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cập nhật khi trạng thái, mối quan hệ, suy nghĩ hoặc trải nghiệm của nhân vật hiện có thay đổi; nếu nhân vật chết cần ghi chú (Đã chết) cạnh tên.",
+      "insertNode": "Thêm khi có nhân vật quan trọng chưa được ghi chép xuất hiện trong cốt truyện."
+    },
+    "content": [
+      [
+        null,
+        "Tên",
+        "Giới tính/Tuổi",
+        "Giới thiệu ngắn",
+        "Đặc điểm ngoại hình",
+        "Vật phẩm quan trọng",
+        "Đã rời đi",
+        "Kinh lịch quá khứ"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": true,
+      "splitByRow": true,
+      "entryName": "Bảng Nhân Vật Quan Trọng",
+      "entryType": "keyword",
+      "keywords": "Tên",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": true,
+      "extraIndexEntryName": "Bảng Nhân Vật Quan Trọng-Chỉ mục",
+      "extraIndexColumns": [
+        "Tên",
+        "Giới thiệu ngắn"
+      ],
+      "extraIndexColumnModes": {
+        "Tên": "both",
+        "Giới thiệu ngắn": "index_only"
+      },
+      "extraIndexInjectionTemplate": "Sau đây là các nhân vật đã xuất hiện:\n<Nhân vật đã xuất hiện>\n$1\n</Nhân vật đã xuất hiện>",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 10000,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 10000,
+        "order": 8000
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 10000,
+        "order": 99983
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 10000,
+        "order": 99984
+      }
+    },
+    "orderNo": 2
+  },
+  "sheet_lEARaBa8": {
+    "uid": "sheet_lEARaBa8",
+    "name": "Bảng Kỹ Năng Nhân Vật Chính",
+    "sourceData": {
+      "note": "Ghi lại tất cả các kỹ năng mà nhân vật chính đã có được.\n- Cột 0: Tên kỹ năng - Tên của kỹ năng.\n- Cột 1: Loại kỹ năng - Phân loại kỹ năng (ví dụ: \"Bị động\", \"Chủ động\").\n- Cột 2: Cấp độ/Giai đoạn - Cấp độ hoặc giai đoạn hiện tại của kỹ năng.\n- Cột 3: Mô tả hiệu ứng - Hiệu ứng cụ thể của kỹ năng ở cấp độ hiện tại.",
+      "initNode": "Khi khởi tạo game, thêm kỹ năng ban đầu cho nhân vật chính theo bối cảnh.",
+      "deleteNode": "Xóa khi kỹ năng bị tước bỏ hoặc thay thế do cốt truyện.",
+      "updateNode": "Cập nhật cấp độ/giai đoạn và mô tả hiệu ứng khi kỹ năng hiện có được nâng cấp.",
+      "insertNode": "Thêm khi nhân vật chính nhận được kỹ năng mới."
+    },
+    "content": [
+      [
+        null,
+        "Tên kỹ năng",
+        "Loại kỹ năng",
+        "Cấp độ/Giai đoạn",
+        "Mô tả hiệu ứng"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng Kỹ Năng Nhân Vật Chính",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng Kỹ Năng Nhân Vật Chính-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 3
+  },
+  "sheet_in05z9vz": {
+    "uid": "sheet_in05z9vz",
+    "name": "Bảng Vật Phẩm Túi Đồ",
+    "sourceData": {
+      "note": "Ghi lại tất cả vật phẩm và trang bị mà nhân vật chính sở hữu.\n- Cột 0: Tên vật phẩm - Tên của vật phẩm.\n- Cột 1: Số lượng - Số lượng đang sở hữu.\n- Cột 2: Mô tả/Hiệu ứng - Mô tả chức năng hoặc bối cảnh của vật phẩm.\n- Cột 3: Loại - Phân loại vật phẩm (ví dụ: \"Vũ khí\", \"Tiêu hao\", \"Linh tinh\").",
+      "initNode": "Khi khởi tạo game, thêm vật phẩm mang theo ban đầu của nhân vật chính theo cốt truyện và bối cảnh.",
+      "deleteNode": "Xóa khi vật phẩm bị tiêu hao hoàn toàn, bị ném bỏ hoặc bị phá hủy.",
+      "updateNode": "Cập nhật khi thu được vật phẩm đã có để tăng số lượng, cập nhật khi trạng thái vật phẩm hiện có thay đổi.",
+      "insertNode": "Thêm khi nhân vật chính nhận được vật phẩm hoàn toàn mới chưa có trong túi đồ."
+    },
+    "content": [
+      [
+        null,
+        "Tên vật phẩm",
+        "Số lượng",
+        "Mô tả/Hiệu ứng",
+        "Loại"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng Vật Phẩm Túi Đồ",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng Vật Phẩm Túi Đồ-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 4
+  },
+  "sheet_etak47Ve": {
+    "uid": "sheet_etak47Ve",
+    "name": "Bảng Nhiệm Vụ và Sự Kiện",
+    "sourceData": {
+      "note": "Ghi lại tất cả các nhiệm vụ đang tiến hành.\n- Cột 0: Tên nhiệm vụ - Tiêu đề của nhiệm vụ.\n- Cột 1: Loại nhiệm vụ - \"Nhiệm vụ chính\" hoặc \"Nhiệm vụ phụ\".\n- Cột 2: Người giao nhiệm vụ - Nhân vật hoặc thế lực giao nhiệm vụ.\n- Cột 3: Mô tả chi tiết - Mục tiêu và yêu cầu của nhiệm vụ.\n- Cột 4: Tiến độ hiện tại - Mô tả ngắn gọn về mức độ hoàn thành nhiệm vụ.\n- Cột 5: Thời hạn nhiệm vụ - Thời gian còn lại để hoàn thành nhiệm vụ.\n- Cột 6: Phần thưởng - Phần thưởng có thể nhận được khi hoàn thành nhiệm vụ.\n- Cột 7: Hình phạt - Hậu quả khi thất bại nhiệm vụ.",
+      "initNode": "Khi khởi tạo game, thêm một nhiệm vụ cốt truyện chính theo cốt truyện và bối cảnh.",
+      "deleteNode": "Xóa khi nhiệm vụ hoàn thành, thất bại hoặc hết hạn.",
+      "updateNode": "Cập nhật khi nhiệm vụ đạt được tiến triển quan trọng.",
+      "insertNode": "Thêm khi nhân vật chính nhận hoặc kích hoạt nhiệm vụ chính hoặc phụ mới."
+    },
+    "content": [
+      [
+        null,
+        "Tên nhiệm vụ",
+        "Loại nhiệm vụ",
+        "Người giao",
+        "Mô tả chi tiết",
+        "Tiến độ hiện tại",
+        "Thời hạn",
+        "Phần thưởng",
+        "Hình phạt"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng Nhiệm Vụ và Sự Kiện",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng Nhiệm Vụ và Sự Kiện-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      }
+    },
+    "orderNo": 5
+  },
+  "sheet_3NoMc1wI": {
+    "uid": "sheet_3NoMc1wI",
+    "name": "Bảng Nhật Ký",
+    "sourceData": {
+      "note": "Nhật ký lượt, phải chèn một bản ghi mới ngay sau mỗi lượt tương tác.\n- Cột 0: Khoảng thời gian - Phạm vi thời gian chính xác của các sự kiện trong lượt này.\n- Cột 1: Địa điểm - Địa điểm xảy ra sự kiện trong lượt này, mô tả từ lớn đến nhỏ.\n- Cột 2: Nhật ký - Ghi chép khách quan các sự kiện lượt này từ góc nhìn bên thứ ba, không được thêm suy đoán, ngôn ngữ cảm xúc, diễn giải tiêu cực hay phán xét chủ quan. Nội dung phải dựa trên những sự thật rõ ràng đã xảy ra trong văn bản chính, không được bổ sung tình tiết chưa xuất hiện, không ít hơn 300 từ, phần kết không được tóm tắt hay thăng hoa.\n- Cột 3: Tóm lược - Trong vòng 30 từ, một câu tóm tắt nội dung nhật ký.\n- Cột 4: Mã chỉ mục - Định dạng AMXX, XX tăng dần từ 01.\n",
+      "initNode": "Khi khởi tạo câu chuyện, chèn một bản ghi mới để ghi lại cốt truyện khởi tạo.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Cấm thao tác.",
+      "insertNode": "Chèn một bản ghi mới sau khi kết thúc mỗi lượt tương tác."
+    },
+    "content": [
+      [
+        null,
+        "Khoảng thời gian",
+        "Địa điểm",
+        "Nhật ký",
+        "Tóm lược",
+        "Mã chỉ mục"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": true,
+      "splitByRow": true,
+      "entryName": "Nhật ký",
+      "entryType": "keyword",
+      "keywords": "Mã chỉ mục",
+      "preventRecursion": true,
+      "injectionTemplate": "<Hồi ký>\n$1\n</Hồi ký>",
+      "extraIndexEnabled": true,
+      "extraIndexEntryName": "Chỉ mục nhật ký",
+      "extraIndexColumns": [
+        "Tóm lược",
+        "Mã chỉ mục"
+      ],
+      "extraIndexColumnModes": {
+        "Tóm lược": "index_only",
+        "Mã chỉ mục": "both"
+      },
+      "extraIndexInjectionTemplate": "<Tổng quan sự kiện đã xảy ra>\n$1\n</Tổng quan sự kiện đã xảy ra>",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 999,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 1000,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 9999,
+        "order": 99987
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 9999,
+        "order": 99988
+      }
+    },
+    "orderNo": 6
+  },
+  "sheet_OptionsNew": {
+    "uid": "sheet_OptionsNew",
+    "name": "Bảng Lựa Chọn",
+    "sourceData": {
+      "note": "Ghi lại các lựa chọn hành động mà nhân vật chính có thể thực hiện trong mỗi lượt. Bảng này chỉ có duy nhất một hàng.\n- Cột 0: Lựa chọn một - Mô tả hành động hợp lý mà nhân vật chính có thể thực hiện bằng ngôi thứ ba, thiên về chiến lược hoặc đẩy nhanh cốt truyện.\n- Cột 1: Lựa chọn hai - Mô tả hành động trung lập mà nhân vật chính có thể thực hiện bằng ngôi thứ ba, không nghiêng về phía nào.\n- Cột 2: Lựa chọn ba - Mô tả hành động thiện chí mà nhân vật chính có thể thực hiện bằng ngôi thứ ba, thể hiện sự giúp đỡ, bảo vệ hoặc an ủi.\n- Cột 3: Lựa chọn bốn - Mô tả hành động liên quan NSFW mà nhân vật chính có thể thực hiện bằng ngôi thứ ba, nhưng phải phù hợp với logic cốt truyện, không được nói thay nhân vật chính.\nTất cả lựa chọn phải dùng ngôi thứ ba (ví dụ: \"Nhân vật chính thử...\" , \"Nhân vật chính quyết định...\"), không được nói thay nhân vật chính; phải bám sát cốt truyện hiện tại; bốn lựa chọn cần phong cách rõ ràng và không trùng lặp nhau.",
+      "initNode": "Khi khởi tạo game, tạo bốn lựa chọn ban đầu.",
+      "deleteNode": "Cấm xóa.",
+      "updateNode": "Phải cập nhật bảng này sau mỗi lượt tương tác, tạo bốn lựa chọn mới dựa trên cốt truyện hiện tại để ghi đè nội dung cũ.",
+      "insertNode": "Cấm thao tác."
+    },
+    "content": [
+      [
+        null,
+        "Lựa chọn một",
+        "Lựa chọn hai",
+        "Lựa chọn ba",
+        "Lựa chọn bốn"
+      ]
+    ],
+    "updateConfig": {
+      "uiSentinel": -1,
+      "contextDepth": -1,
+      "updateFrequency": -1,
+      "batchSize": -1,
+      "skipFloors": -1
+    },
+    "exportConfig": {
+      "enabled": false,
+      "splitByRow": false,
+      "entryName": "Bảng Lựa Chọn",
+      "entryType": "constant",
+      "keywords": "",
+      "preventRecursion": true,
+      "injectionTemplate": "",
+      "extraIndexEnabled": false,
+      "extraIndexEntryName": "Bảng Lựa Chọn-Chỉ mục",
+      "extraIndexColumns": [],
+      "extraIndexColumnModes": {},
+      "extraIndexInjectionTemplate": "",
+      "entryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10000
+      },
+      "extraIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 10010
+      },
+      "fixedEntryPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99990
+      },
+      "fixedIndexPlacement": {
+        "position": "at_depth_as_system",
+        "depth": 2,
+        "order": 99991
+      },
+      "injectIntoWorldbook": false
+    },
+    "orderNo": 7
+  },
+  "mate": {
+    "type": "chatSheets",
+    "version": 1,
+    "updateConfigUiSentinel": -1,
+    "globalInjectionConfig": {
+      "readableEntryPlacement": {
+        "position": "before_char",
+        "depth": 2,
+        "order": 99981
+      },
+      "wrapperPlacement": {
+        "position": "before_char",
+        "depth": 2,
+        "order": 99980
+      }
+    }
+  }
+}
