@@ -25727,6 +25727,204 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
     return { inner: chosen.raw, cleaned, mode: 'comment_fallback', hasOpen, hasClose };
   }
 
+  // ===========================
+  // 共享解析工具（module scope）——供 parseAndApplyTableEdits_ACU 及合并纪要函数复用
+  // ===========================
+
+  /**
+   * 从 <tableEdit> 块原始内容中重建一组已完整的指令行（自动合并跨行JSON）。
+   * 同时处理：HTML注释标记移除、// 行尾注释移除、分号分隔的多条指令。
+   */
+  function reconstructCommandLines_ACU(rawBlockContent) {
+    const editsString = (rawBlockContent || '').replace(/<!--|-->/g, '').trim();
+    if (!editsString) return [];
+
+    const originalLines = editsString.split('\n');
+    const commandLines  = [];
+    let commandReconstructor = '';
+    let isInJsonBlock = false;
+
+    originalLines.forEach(line => {
+      const trimmedLine = line.trim();
+      if (!trimmedLine) return;
+
+      let lineContent = trimmedLine;
+      // 移除行尾 // 注释（仅在非JSON块时，且避免误删 "://" 形式的URL）
+      if (!isInJsonBlock && lineContent.includes('//') &&
+          !lineContent.includes('"//') && !lineContent.includes("'//")) {
+        lineContent = lineContent.split('//')[0].trim();
+      }
+      if (!lineContent) return;
+
+      if ((lineContent.startsWith('insertRow') ||
+           lineContent.startsWith('deleteRow') ||
+           lineContent.startsWith('updateRow')) && !isInJsonBlock) {
+        if (commandReconstructor) commandLines.push(commandReconstructor);
+        commandReconstructor = lineContent;
+      } else {
+        commandReconstructor += ' ' + lineContent;
+      }
+
+      if (commandReconstructor) {
+        const totalOpen  = (commandReconstructor.match(/{/g) || []).length;
+        const totalClose = (commandReconstructor.match(/}/g) || []).length;
+        isInJsonBlock = totalOpen > totalClose;
+      }
+    });
+
+    if (commandReconstructor) commandLines.push(commandReconstructor);
+
+    // 二次处理：分割同行多条指令（如 insertRow(...); insertRow(...)）
+    const finalCommandLines = [];
+    commandLines.forEach(rawLine => {
+      let processed = rawLine.replace(/;\s*(?=(insertRow|deleteRow|updateRow))/g, '\x00SPLIT\x00');
+      if (processed.match(/\[\d+:.*?\]-\s*(Update|Insert|Delete):/)) {
+        logWarn_ACU(`[reconstructCommandLines] 检测到非标准AI响应格式，已跳过: "${rawLine}"`);
+        return;
+      }
+      processed.split('\x00SPLIT\x00').forEach(l => { if (l.trim()) finalCommandLines.push(l.trim()); });
+    });
+
+    return finalCommandLines;
+  }
+
+  /**
+   * 启发式修复：转义JSON字符串值内部未转义的双引号。
+   * 返回修复后的字符串，失败时返回 null。
+   */
+  function fixUnescapedJsonQuotes_ACU(jsonStr) {
+    if (typeof jsonStr !== 'string') return null;
+    try {
+      let result = '';
+      let inString = false;
+      let escapeNext = false;
+      for (let i = 0; i < jsonStr.length; i++) {
+        const ch = jsonStr[i];
+        if (escapeNext) { result += ch; escapeNext = false; continue; }
+        if (ch === '\\') { result += ch; if (inString) escapeNext = true; continue; }
+        if (ch === '"') {
+          if (!inString) { result += ch; inString = true; continue; }
+          // 向后查看非空白字符，判断此引号是否闭合字符串
+          let j = i + 1;
+          while (j < jsonStr.length && /\s/.test(jsonStr[j])) j++;
+          const next = jsonStr[j] !== undefined ? jsonStr[j] : '';
+          const closes = next === ':' || next === ',' || next === '}' || next === ']' || next === '';
+          if (closes) { result += ch; inString = false; }
+          else { result += '\\"'; }
+          continue;
+        }
+        if (inString && ch === '\n') { result += '\\n'; continue; }
+        if (inString && ch === '\r') { result += '\\r'; continue; }
+        if (inString && ch === '\t') { result += '\\t'; continue; }
+        result += ch;
+      }
+      return result;
+    } catch (_) { return null; }
+  }
+
+  /**
+   * 多层容错 JSON 解析器，专为 AI 输出的各类格式问题设计。
+   * 处理：括号/撇号（在值内合法）、智能引号、全角符号、
+   *       单引号外层分隔符、未转义双引号、尾随逗号、裸数字键、控制字符等。
+   * 返回解析后的对象/数组，全部层失败时返回 null。
+   */
+  function parseRowDataWithFallback_ACU(jsonStr) {
+    if (typeof jsonStr !== 'string' || !jsonStr.trim()) return null;
+
+    // 第1层：直接解析（已正确格式化的双引号JSON，括号/撇号等均为合法内容）
+    try { return JSON.parse(jsonStr); } catch (_) {}
+
+    // 第2层：规范化智能引号/全角符号后再解析
+    const normalized = jsonStr
+      .replace(/[\u201c\u201d\u300c\u300d\u300e\u300f\uff02"]/g, '"')
+      .replace(/[\u2018\u2019']/g, "'")
+      .replace(/\uff1a/g, ':');
+    try { return JSON.parse(normalized); } catch (_) {}
+
+    // 第3层：修复尾随逗号和裸数字键
+    const fixedBasic = normalized
+      .replace(/,(\s*[}\]])/g, '$1')
+      .replace(/([{,]\s*)(-?\d+)(\s*:)/g, '$1"$2"$3');
+    try { return JSON.parse(fixedBasic); } catch (_) {}
+
+    // 第4层：将单引号外层分隔符转为双引号（仅替换 'content' 模式，不破坏内部撇号）
+    const singleToDouble = fixedBasic.replace(
+      /'([^'\\]*(?:\\.[^'\\]*)*)'/g,
+      (_, inner) => '"' + inner.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"'
+    );
+    try { return JSON.parse(singleToDouble); } catch (_) {}
+
+    // 第5层：启发式修复字符串内部未转义的双引号
+    const quotesFixed = fixUnescapedJsonQuotes_ACU(singleToDouble);
+    if (quotesFixed !== null) try { return JSON.parse(quotesFixed); } catch (_) {}
+
+    // 第6层：将裸换行替换为空格（JSON不允许字符串内含原始换行符）
+    const noRawNewlines = singleToDouble.replace(/\r?\n/g, ' ');
+    try { return JSON.parse(noRawNewlines); } catch (_) {}
+
+    // 第6b层：同时应用换行修复和引号修复
+    const combined = fixUnescapedJsonQuotes_ACU(noRawNewlines);
+    if (combined !== null) try { return JSON.parse(combined); } catch (_) {}
+
+    return null;
+  }
+
+  /**
+   * 健壮的单行指令解析器（支持 insertRow / updateRow / deleteRow）。
+   * 正确处理值内部的括号、单引号撇号、智能引号、全角符号等特殊字符。
+   * 返回 { command, args } 或 null（解析失败时）。
+   */
+  function parseMergeCommandLine_ACU(rawLine) {
+    try {
+      let line = rawLine.trim();
+      // 去除行尾 // 注释
+      if (line.match(/\)\s*;?\s*\/\/.*$/)) {
+        line = line.replace(/\/\/.*$/, '').trim();
+      }
+      if (!line) return null;
+
+      // 贪婪匹配：确保值内部的括号不会提前结束参数捕获
+      const cmdMatch = line.match(/^(insertRow|updateRow|deleteRow)\s*\(([\s\S]*)\);?$/);
+      if (!cmdMatch) return null;
+
+      const command    = cmdMatch[1];
+      const argsString = cmdMatch[2];
+
+      // 定位 JSON 对象/数组参数的起始位置
+      const firstBrace   = argsString.indexOf('{');
+      const firstBracket = argsString.indexOf('[');
+      let jsonStart = -1;
+      if (firstBrace !== -1 && firstBracket !== -1) jsonStart = Math.min(firstBrace, firstBracket);
+      else if (firstBrace   !== -1) jsonStart = firstBrace;
+      else if (firstBracket !== -1) jsonStart = firstBracket;
+
+      if (jsonStart === -1) {
+        // deleteRow(tableIdx, rowIdx) — 无 JSON 参数
+        const args = JSON.parse('[' + argsString + ']');
+        return { command, args };
+      }
+
+      const paramsPart = argsString.substring(0, jsonStart).replace(/,\s*$/, '').trim();
+      const jsonPart   = argsString.substring(jsonStart).trim();
+
+      let scalarArgs;
+      try {
+        scalarArgs = paramsPart ? JSON.parse('[' + paramsPart + ']') : [];
+      } catch (_) { return null; }
+
+      const rowData = parseRowDataWithFallback_ACU(jsonPart);
+      if (rowData === null) {
+        logWarn_ACU('[parseMergeCommandLine] JSON 解析全部层均失败:', jsonPart.slice(0, 200));
+        return null;
+      }
+
+      return { command, args: [...scalarArgs, rowData] };
+    } catch (e) {
+      logWarn_ACU('[parseMergeCommandLine] 解析指令行失败:', rawLine, e);
+      return null;
+    }
+  }
+
   function parseAndApplyTableEdits_ACU(aiResponse, updateMode = 'standard', isImportMode = false) {
     // updateMode: 'standard' 表示更新标准表，'summary' 表示更新总结表和总体大纲
     if (!currentJsonTableData_ACU) {
@@ -27156,30 +27354,26 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                       throw new Error('AI không trả về khối <tableEdit> hợp lệ (thiếu biên <tableEdit> hoặc khối comment <!-- --> không hoàn chỉnh).');
                   }
 
-                  const editsString = extractResult.inner;
+                  // [修复] 使用健壮的多层解析器：正确处理值内括号、单引号撇号、智能引号、
+                  // 未转义双引号、尾随逗号、裸数字键、跨行JSON等各类特殊字符问题。
                   const newSummaryRows = [];
-
-                  editsString.split('\n').forEach(line => {
-                      const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{.*?\}|\[.*?\])\s*\)/);
-                      if (match) {
-                          try {
-                              const tableIdx = parseInt(match[1], 10);
-                              let rowData = JSON.parse(match[2].replace(/'/g, '"'));
-                              if (typeof rowData === 'object' && !Array.isArray(rowData)) {
-                                  const sortedKeys = Object.keys(rowData).sort((a,b) => parseInt(a) - parseInt(b));
-                                  const dataColumns = sortedKeys.map(k => rowData[k]);
-                                  rowData = [null, ...dataColumns];
-                              }
-
-                              // [新增] 为自动合并纪要生成的条目添加标记，防止重复参与合并
-                              if (isAutoMode) {
-                                  rowData.push('auto_merged');
-                              }
-
-                              // 只处理纪要表（tableIdx === 0）
-                              if (tableIdx === 0 && summaryKey) newSummaryRows.push(rowData);
-                          } catch (e) { logWarn_ACU('解析行失败:', line, e); }
-                      }
+                  reconstructCommandLines_ACU(extractResult.inner).forEach(line => {
+                      const parsed = parseMergeCommandLine_ACU(line);
+                      if (!parsed || parsed.command !== 'insertRow') return;
+                      try {
+                          const [tableIdx, rowData] = parsed.args;
+                          let processedData = rowData;
+                          if (typeof processedData === 'object' && !Array.isArray(processedData)) {
+                              const sortedKeys = Object.keys(processedData).sort((a, b) => parseInt(a) - parseInt(b));
+                              processedData = [null, ...sortedKeys.map(k => processedData[k])];
+                          }
+                          // [新增] 为自动合并纪要生成的条目添加标记，防止重复参与合并
+                          if (isAutoMode) {
+                              processedData.push('auto_merged');
+                          }
+                          // 只处理纪要表（tableIdx === 0）
+                          if (tableIdx === 0 && summaryKey) newSummaryRows.push(processedData);
+                      } catch (e) { logWarn_ACU('解析行失败:', line, e); }
                   });
 
                   if (newSummaryRows.length === 0) {
@@ -27812,25 +28006,23 @@ async function callCustomOpenAI_ACU(dynamicContent, abortController = null, opti
                           throw new Error('AI không trả về khối <tableEdit> hợp lệ (thiếu biên <tableEdit> hoặc khối comment <!-- --> không hoàn chỉnh).');
                       }
 
-                      const editsString = extractResult.inner;
+                      // [修复] 使用健壮的多层解析器：正确处理值内括号、单引号撇号、智能引号、
+                      // 未转义双引号、尾随逗号、裸数字键、跨行JSON等各类特殊字符问题。
                       const newSummaryRows = [];
-                      
-                      editsString.split('\n').forEach(line => {
-                          const match = line.trim().match(/insertRow\s*\(\s*(\d+)\s*,\s*(\{.*?\}|\[.*?\])\s*\)/);
-                          if (match) {
-                              try {
-                                  const tableIdx = parseInt(match[1], 10);
-                                  let rowData = JSON.parse(match[2].replace(/'/g, '"'));
-                                  if (typeof rowData === 'object' && !Array.isArray(rowData)) {
-                                      // 将对象格式转换为数组格式，添加null作为ID列
-                                      const sortedKeys = Object.keys(rowData).sort((a,b) => parseInt(a) - parseInt(b));
-                                      const dataColumns = sortedKeys.map(k => rowData[k]);
-                                      rowData = [null, ...dataColumns]; // ID列(null) + 数据列
-                                  }
-                                  // 只处理纪要表（tableIdx === 0）
-                                  if (tableIdx === 0 && summaryKey) newSummaryRows.push(rowData);
-                              } catch (e) { logWarn_ACU('解析行失败:', line, e); }
-                          }
+                      reconstructCommandLines_ACU(extractResult.inner).forEach(line => {
+                          const parsed = parseMergeCommandLine_ACU(line);
+                          if (!parsed || parsed.command !== 'insertRow') return;
+                          try {
+                              const [tableIdx, rowData] = parsed.args;
+                              let processedData = rowData;
+                              if (typeof processedData === 'object' && !Array.isArray(processedData)) {
+                                  // 将对象格式转换为数组格式，添加null作为ID列
+                                  const sortedKeys = Object.keys(processedData).sort((a, b) => parseInt(a) - parseInt(b));
+                                  processedData = [null, ...sortedKeys.map(k => processedData[k])]; // ID列(null) + 数据列
+                              }
+                              // 只处理纪要表（tableIdx === 0）
+                              if (tableIdx === 0 && summaryKey) newSummaryRows.push(processedData);
+                          } catch (e) { logWarn_ACU('解析行失败:', line, e); }
                       });
                       
                       if (newSummaryRows.length === 0) {
