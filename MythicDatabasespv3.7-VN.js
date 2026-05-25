@@ -27314,7 +27314,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         // 刷新API配置页面的预设选择器
         const $apiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-api-preset-select`);
         if ($apiPresetSelect.length) {
-            $apiPresetSelect.empty().append('<option value="">-- 选择预设 --</option>');
+            $apiPresetSelect.empty().append('<option value="">-- Chọn cài đặt trước --</option>');
             presets.forEach((p) => {
                 $apiPresetSelect.append(renderOption_ACU(p.name, p.name));
             });
@@ -27322,7 +27322,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         // 刷新填表的API预设选择器
         const $tableApiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-table-api-preset-select`);
         if ($tableApiPresetSelect.length) {
-            $tableApiPresetSelect.empty().append('<option value="">使用当前API配置</option>');
+            $tableApiPresetSelect.empty().append('<option value="">Dùng cấu hình API hiện tại</option>');
             presets.forEach((p) => {
                 $tableApiPresetSelect.append(renderOption_ACU(p.name, p.name));
             });
@@ -27331,7 +27331,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         // 刷新剧情推进的API预设选择器
         const $plotApiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select`);
         if ($plotApiPresetSelect.length) {
-            $plotApiPresetSelect.empty().append('<option value="">使用当前API配置</option>');
+            $plotApiPresetSelect.empty().append('<option value="">Dùng cấu hình API hiện tại</option>');
             presets.forEach((p) => {
                 $plotApiPresetSelect.append(renderOption_ACU(p.name, p.name));
             });
@@ -27351,7 +27351,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         // 刷新正文替换的API预设选择器
         const $optimizationApiPresetSelect = $popupInstance_ACU.find(`#${SCRIPT_ID_PREFIX_ACU}-optimization-api-preset`);
         if ($optimizationApiPresetSelect.length) {
-            $optimizationApiPresetSelect.empty().append('<option value="">使用当前API配置</option>');
+            $optimizationApiPresetSelect.empty().append('<option value="">Dùng cấu hình API hiện tại</option>');
             presets.forEach((p) => {
                 $optimizationApiPresetSelect.append(renderOption_ACU(p.name, p.name));
             });
@@ -27362,7 +27362,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         if ($keywordApiPresetSelect.length) {
             const vectorMemoryConfig = getCurrentVectorMemoryConfig_ACU();
             const currentKeywordPreset = String(vectorMemoryConfig.keywordApiPreset || $keywordApiPresetSelect.val() || '');
-            $keywordApiPresetSelect.empty().append('<option value="">使用当前API配置</option>');
+            $keywordApiPresetSelect.empty().append('<option value="">Dùng cấu hình API hiện tại</option>');
             presets.forEach((p) => {
                 $keywordApiPresetSelect.append(renderOption_ACU(p.name, p.name));
             });
@@ -27760,11 +27760,11 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         }
         const chatHistory = getChatArray_ACU();
         const totalMessages = chatHistory.filter(msg => !msg.is_user).length;
-        $totalMessagesDisplay.text(`上下文总层数: ${totalMessages} (仅计算AI回复楼层)`);
+        $totalMessagesDisplay.text(`Tổng số lớp ngữ cảnh: ${totalMessages} (chỉ tính lượt trả lời AI)`);
         const totalAiMessages = totalMessages;
         if (!currentJsonTableData_ACU) {
-            $cardUpdateStatusDisplay_ACU.text('数据库状态：未加载或初始化失败。');
-            $statusTableBody.html('<tr><td colspan="5" style="text-align: center;">暂无数据</td></tr>');
+            $cardUpdateStatusDisplay_ACU.text('Trạng thái CSDL: Chưa tải hoặc khởi tạo thất bại.');
+            $statusTableBody.html('<tr><td colspan="5" style="text-align: center;">Chưa có dữ liệu</td></tr>');
             return;
         }
         try {
@@ -27888,7 +27888,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         }
         catch (e) {
             logError_ACU('ACU: Failed to parse database for UI status:', e);
-            $cardUpdateStatusDisplay_ACU.text('解析数据库状态时出错。');
+            $cardUpdateStatusDisplay_ACU.text('Lỗi khi phân tích trạng thái CSDL.');
         }
     }
 
@@ -28213,7 +28213,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
             return;
         const normalizedExtraPresetName = normalizePlotPresetSelectionValue_ACU(extraPresetName);
         const normalizedPresetNames = new Set();
-        $select.empty().append(`<option value="${DEFAULT_PRESET_OPTION_VALUE_ACU}">默认预设</option>`);
+        $select.empty().append(`<option value="${DEFAULT_PRESET_OPTION_VALUE_ACU}">Cài đặt trước mặc định</option>`);
         presets.forEach((preset) => {
             const presetName = normalizePlotPresetSelectionValue_ACU(preset?.name);
             if (!presetName || normalizedPresetNames.has(presetName))
@@ -28259,20 +28259,20 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
             $chatSelect.val(hasChatPreset ? chatSelectedPresetName : DEFAULT_PRESET_OPTION_VALUE_ACU);
         }
         if ($globalStatus.length) {
-            $globalStatus.text(`当前全局预设：${getPlotPresetDisplayName_ACU(globalPresetName)}；新聊天会默认继承这里的剧情推进配置。`);
+            $globalStatus.text(`当前全局预设：${getPlotPresetDisplayName_ACU(globalPresetName)}；Chat mới sẽ mặc định kế thừa cấu hình tiến triển cốt truyện ở đây。`);
         }
         if ($chatStatus.length) {
             if (chatScopeState?.snapshot) {
-                $chatStatus.text(`当前聊天：历史聊天快照；当前实际预设为 ${getPlotPresetDisplayName_ACU(effectiveChatPresetName)}。`);
+                $chatStatus.text(`Cuộc chat hiện tại: 历史聊天快照；当前实际预设为 ${getPlotPresetDisplayName_ACU(effectiveChatPresetName)}。`);
             }
             else if (hasValidExplicitChatPreset) {
-                $chatStatus.text(`当前聊天：独立预设；当前实际预设为 ${getPlotPresetDisplayName_ACU(explicitChatPresetName)}。`);
+                $chatStatus.text(`Cuộc chat hiện tại: 独立预设；当前实际预设为 ${getPlotPresetDisplayName_ACU(explicitChatPresetName)}。`);
             }
             else if (chatSelectedPresetName) {
-                $chatStatus.text(`当前聊天：原绑定预设不存在；当前已回退为 ${getPlotPresetDisplayName_ACU(effectiveChatPresetName)}。`);
+                $chatStatus.text(`Cuộc chat hiện tại: 原绑定预设不存在；当前已回退为 ${getPlotPresetDisplayName_ACU(effectiveChatPresetName)}。`);
             }
             else {
-                $chatStatus.text(`当前聊天：跟随全局；当前实际预设为 ${getPlotPresetDisplayName_ACU(effectiveChatPresetName)}。`);
+                $chatStatus.text(`Cuộc chat hiện tại: 跟随全局；当前实际预设为 ${getPlotPresetDisplayName_ACU(effectiveChatPresetName)}。`);
             }
         }
         if ($chatOriginStatus.length) {
@@ -28548,7 +28548,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 $globalStatus.text(`当前全局模板：${globalPresetName}（预设库已不存在，但当前 profile 仍保留这份模板快照）。`);
             }
             else {
-                $globalStatus.text(`当前全局模板：${getTemplatePresetDisplayName_ACU(globalPresetName)}；新聊天会默认继承这里的表格模板。`);
+                $globalStatus.text(`当前全局模板：${getTemplatePresetDisplayName_ACU(globalPresetName)}；Chat mới sẽ mặc định kế thừa mẫu bảng ở đây。`);
             }
         }
         if ($chatStatus && $chatStatus.length) {
@@ -28563,13 +28563,13 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 else if (chatScopeState.source === 'legacy_header_frozen') {
                     scopeLabel = '旧版表头冻结模板（已迁移）';
                 }
-                $chatStatus.text(`当前聊天：${scopeLabel}；当前实际模板预设为 ${getTemplatePresetDisplayName_ACU(chatSelectedPresetName)}。`);
+                $chatStatus.text(`Cuộc chat hiện tại: ${scopeLabel}；当前实际模板预设为 ${getTemplatePresetDisplayName_ACU(chatSelectedPresetName)}。`);
             }
             else if (normalizedChatMode === 'preset_link') {
-                $chatStatus.text(`当前聊天：引用全局预设 ${getTemplatePresetDisplayName_ACU(chatSelectedPresetName)}；打开聊天时会继续沿用这个预设。`);
+                $chatStatus.text(`Cuộc chat hiện tại: 引用全局预设 ${getTemplatePresetDisplayName_ACU(chatSelectedPresetName)}；打开聊天时会继续沿用这个预设。`);
             }
             else {
-                $chatStatus.text(`当前聊天：跟随当前全局；当前实际模板预设为 ${getTemplatePresetDisplayName_ACU(effectiveChatPresetName)}。`);
+                $chatStatus.text(`Cuộc chat hiện tại: 跟随当前全局；当前实际模板预设为 ${getTemplatePresetDisplayName_ACU(effectiveChatPresetName)}。`);
             }
         }
         if ($chatOriginStatus && $chatOriginStatus.length) {
@@ -30172,7 +30172,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         <div class="acu-exclude-rule-row" style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
           <input type="text" class="text_pole acu-exclude-rule-start" placeholder="${escapeHtml_ACU$1(startPlaceholder)}" style="flex:1;" value="${escapeHtml_ACU$1(rule.start || '')}">
           <input type="text" class="text_pole acu-exclude-rule-end" placeholder="${escapeHtml_ACU$1(endPlaceholder)}" style="flex:1;" value="${escapeHtml_ACU$1(rule.end || '')}">
-          <button type="button" class="button acu-exclude-rule-delete" title="删除规则" style="padding:4px 8px;">删除</button>
+          <button type="button" class="button acu-exclude-rule-delete" title="删除规则" style="padding:4px 8px;">Xóa</button>
         </div>
       `;
             $container.append(rowHtml);
@@ -30190,7 +30190,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
       <div class="acu-exclude-rule-row" style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
         <input type="text" class="text_pole acu-exclude-rule-start" placeholder="${escapeHtml_ACU$1(startPlaceholder)}" style="flex:1;" value="">
         <input type="text" class="text_pole acu-exclude-rule-end" placeholder="${escapeHtml_ACU$1(endPlaceholder)}" style="flex:1;" value="">
-        <button type="button" class="button acu-exclude-rule-delete" title="删除规则" style="padding:4px 8px;">删除</button>
+        <button type="button" class="button acu-exclude-rule-delete" title="删除规则" style="padding:4px 8px;">Xóa</button>
       </div>
     `;
         $container.append(rowHtml);
@@ -30414,7 +30414,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
             return;
         const $titleElement = $popupInstance_ACU.find('h2#updater-main-title-acu');
         if ($titleElement.length)
-            $titleElement.html(`当前聊天：${escapeHtml_ACU$1(chatIdentifier || '未知')}`);
+            $titleElement.html(`Cuộc chat hiện tại: ${escapeHtml_ACU$1(chatIdentifier || 'Không rõ')}`);
     }
     // [T175] 检查弹窗是否打开（供 service 层用布尔判断，不暴露 DOM 引用）
     function isPopupOpen_ACU() {
@@ -30462,7 +30462,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         if ($customApiModelInput_ACU)
             $customApiModelInput_ACU.val(s.apiConfig.model || '');
         if ($customApiModelSelect_ACU) {
-            $customApiModelSelect_ACU.empty().append('<option value="">-- 请先加载模型列表 --</option>');
+            $customApiModelSelect_ACU.empty().append('<option value="">-- Vui lòng tải danh sách model trước --</option>');
             if (s.apiConfig.model) {
                 $customApiModelSelect_ACU.append(`<option value="${escapeHtml_ACU$1(s.apiConfig.model)}">${escapeHtml_ACU$1(s.apiConfig.model)}</option>`);
             }
@@ -30569,7 +30569,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                     ? summaryVectorIndexRowCount >= summaryIndexKeywordMinRows
                         ? `交火模式纪要索引已启用；当前可用索引：${summaryVectorIndexRowCount} 条纪要，${summaryVectorIndexChunkCount} 个概要列 chunks，已达到 ${summaryIndexKeywordMinRows} 条门槛。发送前会生成关键词、召回概要列 chunks、执行可选 Rerank，并按纪要表原顺序覆盖原概要索引条目。`
                         : `交火模式纪要索引已启用；当前可用索引：${summaryVectorIndexRowCount}/${summaryIndexKeywordMinRows} 条纪要，${summaryVectorIndexChunkCount} 个概要列 chunks。未达到门槛前，发送时不会触发交火召回，填表保存后仍会立即归档并继续累积外置索引。`
-                    : `交火模式纪要索引已启用，但当前聊天尚无外置纪要向量索引；完成一次纪要表填写后会自动归档，也可点击“立即构建交火纪要索引”手动构建。`
+                    : `交火模式纪要索引已启用，但当前聊天尚无外置纪要向量索引；完成一次纪要表填写后会自动归档，也可点击“Xây dựng chỉ mục ghi chép giao tranh ngay”手动构建。`
                 : '使用前请先配置好 Embedding 模型以及可选 Rerank 模型；开启后会在纪要表填写完成时立即归档外置概要列向量索引，达到门槛后发送前覆盖原概要索引条目。');
         }
         if ($useMainApiCheckbox_ACU) {
@@ -40015,8 +40015,8 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 await openNewVisualizer_ACU();
             }
             catch (e) {
-                logError_ACU('打开可视化表格编辑器失败:', e);
-                showToastr_ACU('error', `打开可视化表格编辑器失败: ${e?.message || '未知错误'}`);
+                logError_ACU('Mở trình chỉnh sửa bảng trực quan失败:', e);
+                showToastr_ACU('error', `Mở trình chỉnh sửa bảng trực quan失败: ${e?.message || '未知错误'}`);
             }
         };
         if ($openNewVisualizerButton_ACU.length) {
@@ -42668,7 +42668,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         return `
     <div id="acu-tab-log-viewer">
       <div class="acu-card">
-        <h3><i class="fa-solid fa-scroll" style="margin-right: 6px;"></i>运行日志</h3>
+        <h3><i class="fa-solid fa-scroll" style="margin-right: 6px;"></i>Nhật ký chạy</h3>
         <p class="notes" style="margin-bottom: 12px;">实时显示所有功能模块的运行日志和报错日志。</p>
 
         <!-- 过滤控件 -->
@@ -43228,99 +43228,99 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 <div id="acu-tab-dashboard" class="acu-tab-content active">
                     <!-- A. 数据库状态 -->
                     <div class="acu-card">
-                        <h3>数据库状态</h3>
+                        <h3>Trạng thái CSDL</h3>
                         <div class="acu-row-between" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--acu-border);">
-                            <span id="${SCRIPT_ID_PREFIX_ACU}-total-messages-display">上下文总层数: N/A (仅计算AI回复楼层)</span>
-                            <span id="${SCRIPT_ID_PREFIX_ACU}-card-update-status-display">正在获取状态...</span>
+                            <span id="${SCRIPT_ID_PREFIX_ACU}-total-messages-display">Tổng số lớp ngữ cảnh: N/A (chỉ tính lượt trả lời AI)</span>
+                            <span id="${SCRIPT_ID_PREFIX_ACU}-card-update-status-display">Đang lấy trạng thái...</span>
                         </div>
                         
                         <table class="acu-table">
                             <thead>
                                 <tr>
-                                    <th>表格名称</th>
-                                    <th>更新频率</th>
-                                    <th>未记录楼层</th>
-                                    <th>上次更新</th>
-                                    <th>下次触发</th>
+                                    <th>Tên bảng</th>
+                                    <th>Tần suất cập nhật</th>
+                                    <th>Lượt chưa ghi</th>
+                                    <th>Lần cập nhật trước</th>
+                                    <th>Lần kích hoạt tiếp</th>
                                 </tr>
                             </thead>
                             <tbody id="${SCRIPT_ID_PREFIX_ACU}-granular-status-table-body">
-                                <tr><td colspan="5" style="text-align: center; padding: 10px;">正在加载数据...</td></tr>
+                                <tr><td colspan="5" style="text-align: center; padding: 10px;">Đang tải dữ liệu...</td></tr>
                             </tbody>
                         </table>
 
-                        <p id="${SCRIPT_ID_PREFIX_ACU}-next-update-display" class="notes" style="border-top: 1px dashed var(--acu-border); padding-top: 10px; margin-top: 10px; text-align: right;">下一次更新: 计算中...</p>
+                        <p id="${SCRIPT_ID_PREFIX_ACU}-next-update-display" class="notes" style="border-top: 1px dashed var(--acu-border); padding-top: 10px; margin-top: 10px; text-align: right;">Lần cập nhật tiếp: Đang tính...</p>
                     </div>
 
                     <!-- B. 快速操作 -->
                     <div class="acu-card">
-                        <h3>快速操作</h3>
+                        <h3>Thao tác nhanh</h3>
                         <div class="acu-row" style="margin-bottom: 10px;">
-                            <label style="white-space: nowrap;">填表API预设:</label>
+                            <label style="white-space: nowrap;">API điền bảng:</label>
                             <select id="${SCRIPT_ID_PREFIX_ACU}-table-api-preset-select" style="flex: 1;">
-                                <option value="">使用当前API配置</option>
+                                <option value="">Dùng cấu hình API hiện tại</option>
                             </select>
                         </div>
                         <div class="button-group" style="margin-bottom: 8px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-update-card" class="primary">立即手动更新</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-update-card" class="primary">Cập nhật thủ công ngay</button>
                         </div>
                         <div class="checkbox-group">
                             <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-manual-extra-hint-checkbox">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-manual-extra-hint-checkbox">额外提示词（仅手动更新时临时追加）</label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-manual-extra-hint-checkbox">Gợi ý thêm (chỉ thêm tạm thời khi cập nhật thủ công)</label>
                         </div>
-                        <p class="notes">手动更新会使用当前UI参数，对勾选的表进行更新；未勾选则默认更新全部表。</p>
+                        <p class="notes">Cập nhật thủ công sẽ dùng tham số UI hiện tại, cập nhật bảng đã chọn; nếu không chọn thì mặc định cập nhật tất cả bảng.</p>
                     </div>
 
                     <!-- C. 手动更新表选择 -->
                     <div class="acu-card">
-                        <h3>手动更新表选择</h3>
-                        <p class="notes" style="margin-bottom:6px;">选择需要手动更新的表（可多选，默认全选新表）：</p>
+                        <h3>Chọn bảng cập nhật thủ công</h3>
+                        <p class="notes" style="margin-bottom:6px;">Chọn bảng cần cập nhật thủ công (có thể chọn nhiều, mặc định chọn tất cả bảng mới):</p>
                         <div class="button-group" style="justify-content:flex-start; margin-bottom:8px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-all" class="button">全选</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-none" class="button">全不选</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-all" class="button">Chọn tất cả</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-manual-table-select-none" class="button">Bỏ chọn tất cả</button>
                         </div>
-                        <div id="${SCRIPT_ID_PREFIX_ACU}-manual-table-selector" style="min-height:60px;">加载表格列表中...</div>
+                        <div id="${SCRIPT_ID_PREFIX_ACU}-manual-table-selector" style="min-height:60px;">Đang tải danh sách bảng...</div>
                     </div>
 
                     <!-- D. 核心功能开关 -->
                     <div class="acu-card">
-                        <h3>核心功能开关</h3>
+                        <h3>Công tắc tính năng cốt lõi</h3>
                         <div class="acu-col">
                             <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-enabled-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-enabled-checkbox">启用自动更新</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-enabled-checkbox">Bật tự động cập nhật</label>
                             </div>
                             <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-standardized-table-fill-enabled-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-standardized-table-fill-enabled-checkbox">规范填表功能（总结表与总体大纲必须同步新增）</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-standardized-table-fill-enabled-checkbox">Tính năng điền bảng chuẩn (bảng tóm tắt và đại cương phải đồng bộ thêm mới)</label>
                             </div>
                             <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-toast-mute-enabled-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-toast-mute-enabled-checkbox">静默提示框（除填表/规划/导入/报错外，其它提示不弹窗）</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-toast-mute-enabled-checkbox">Im lặng thông báo (ngoài điền bảng/lập kế hoạch/nhập/báo lỗi, thông báo khác không hiện popup)</label>
                             </div>
                             <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-prompt-template-enabled-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-prompt-template-enabled-checkbox">启用条件模板功能（&lt;if&gt;条件判断）</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-prompt-template-enabled-checkbox">Bật tính năng mẫu điều kiện (&lt;if&gt; phán đoán điều kiện)</label>
                             </div>
                             <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-outline-entry-enabled">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-outline-entry-enabled">0TK占用模式</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-outline-entry-enabled">Chế độ 0TK</label>
                             </div>
-                            <small class="notes">0TK占用模式仍然作用于世界书注入链路，仅迁移到此处以提高可见性。</small>
+                            <small class="notes">Chế độ 0TK vẫn tác động đến chuỗi injection worldbook, chỉ chuyển đến đây để tăng tính hiển thị.</small>
 
                             <div class="acu-divider-dashed" style="margin: 4px 0;"></div>
-                            <label class="acu-label">表格存储模式:</label>
+                            <label class="acu-label">Chế độ lưu trữ bảng:</label>
                             <div class="acu-row" style="gap: 16px;">
                                 <label class="acu-row" style="cursor: pointer; gap: 6px;">
                                     <input type="radio" name="${SCRIPT_ID_PREFIX_ACU}-storage-mode" value="native" checked>
-                                    <span>原生模式 (JSON/DSL)</span>
+                                    <span>Chế độ gốc (JSON/DSL)</span>
                                 </label>
                                 <label class="acu-row" style="cursor: pointer; gap: 6px;">
                                     <input type="radio" name="${SCRIPT_ID_PREFIX_ACU}-storage-mode" value="sqlite">
                                     <span>SQLite 模式 (SQL)</span>
                                 </label>
                             </div>
-                            <small class="notes">原生模式使用 JSON 二维数组 + DSL 指令；SQLite 模式使用内存数据库 + 标准 SQL 语句。切换后会自动重新加载数据。</small>
+                            <small class="notes">Chế độ gốc dùng mảng 2D JSON + lệnh DSL; chế độ SQLite dùng CSDL bộ nhớ + câu lệnh SQL chuẩn. Sau khi chuyển sẽ tự động tải lại dữ liệu.</small>
                         </div>
                     </div>
                 </div>`;
@@ -43338,111 +43338,111 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 <div id="acu-tab-update" class="acu-tab-content">
                     <!-- A. 基础设置 -->
                     <div class="acu-card">
-                        <h3>基础设置</h3>
+                        <h3>Cài đặt cơ bản</h3>
                         <div class="acu-grid-2x2">
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-threshold">AI读取上下文层数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-threshold">Số lớp ngữ cảnh AI đọc:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-threshold" min="0" step="1" placeholder="${DEFAULT_AUTO_UPDATE_THRESHOLD_ACU}">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-frequency">每N层自动更新一次:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-frequency">Tự động cập nhật mỗi N lớp:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-frequency" min="1" step="1" placeholder="${DEFAULT_AUTO_UPDATE_FREQUENCY_ACU}">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-update-batch-size">每批次更新楼层数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-update-batch-size">Số lượt cập nhật mỗi lô:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-update-batch-size" min="1" step="1" placeholder="2">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-max-concurrent-groups">最大并发数:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-max-concurrent-groups">Số luồng song song tối đa:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-max-concurrent-groups" min="1" step="1" placeholder="1">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-skip-update-floors">保留X层楼不更新:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-skip-update-floors">Giữ X lượt không cập nhật:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-skip-update-floors" min="0" step="1" placeholder="0">
                                 </div>
                             </div>
                             <div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers">保留最近N层数据:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers">Giữ dữ liệu N lượt gần nhất:</label>
                                 <div class="input-group">
-                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers" min="0" step="1" placeholder="空=全部保留">
+                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-retain-recent-layers" min="0" step="1" placeholder="Để trống = giữ tất cả">
                                 </div>
-                                <div class="notes" style="margin-top:4px;font-size:11px;opacity:0.7;">按AI楼层计数，自动更新后清理超出层数的旧数据</div>
+                                <div class="notes" style="margin-top:4px;font-size:11px;opacity:0.7;">Đếm theo lượt AI, sau cập nhật tự động sẽ xóa dữ liệu cũ vượt quá số lượt</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- B. 内容筛选 -->
                     <div class="acu-card">
-                        <h3>内容筛选</h3>
+                        <h3>Lọc nội dung</h3>
                         <div class="acu-grid">
                             <div>
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-token-threshold">跳过更新最小回复长度:</label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-auto-update-token-threshold">Độ dài phản hồi tối thiểu để bỏ qua cập nhật:</label>
                                 <div class="input-group">
                                 <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-auto-update-token-threshold" min="0" step="100" placeholder="${DEFAULT_AUTO_UPDATE_TOKEN_THRESHOLD_ACU}">
                                 </div>
-                                <small class="notes" style="font-size: 0.85em; color: #888;">AI回复少于此长度时跳过自动填表</small>
+                                <small class="notes" style="font-size: 0.85em; color: #888;">Bỏ qua tự động điền bảng khi phản hồi AI ngắn hơn độ dài này</small>
                             </div>
                             <div>
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-table-max-retries">填表自动重试次数:</label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-table-max-retries">Số lần tự động thử lại điền bảng:</label>
                                 <div class="input-group">
                                 <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-table-max-retries" min="1" max="10" step="1" value="3">
                                 </div>
-                                <small class="notes" style="font-size: 0.85em; color: #888;">错误或空回时自动重试的次数（默认3次）</small>
+                                <small class="notes" style="font-size: 0.85em; color: #888;">Số lần tự động thử lại khi có lỗi hoặc trả lời trống (mặc định 3 lần)</small>
                             </div>
                         </div>
-                        <p class="notes">当自动更新时，若上下文Token（约等于字符数）低于此值，则跳过本次更新。</p>
+                        <p class="notes">Khi tự động cập nhật, nếu token ngữ cảnh (khoảng bằng số ký tự) thấp hơn giá trị này, bỏ qua lần cập nhật này.</p>
 
                         <hr>
 
                         <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <label style="white-space: nowrap; font-size: 0.9em;">正文标签提取规则:</label>
+                            <label style="white-space: nowrap; font-size: 0.9em;">Quy tắc trích xuất thẻ nội dung:</label>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-table-context-extract-rules"></div>
-                            <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-extract-add-rule" class="button" style="align-self: flex-start;">添加规则</button>
-                            <small class="notes">每条规则填写开始词和结束词，仅提取最后一组匹配内容（不影响注入词规则）。</small>
+                            <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-extract-add-rule" class="button" style="align-self: flex-start;">Thêm quy tắc</button>
+                            <small class="notes">Mỗi quy tắc điền từ bắt đầu và từ kết thúc, chỉ trích xuất nhóm khớp cuối cùng (không ảnh hưởng đến quy tắc từ injection).</small>
                         </div>
 
                         <hr>
 
                         <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <label style="white-space: nowrap; font-size: 0.9em;">标签排除规则:</label>
+                            <label style="white-space: nowrap; font-size: 0.9em;">Quy tắc loại trừ thẻ:</label>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-rules"></div>
-                            <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-add-rule" class="button" style="align-self: flex-start;">添加规则</button>
-                            <small class="notes">每条规则填写开始词与结束词，仅移除最后一组匹配内容。</small>
+                            <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-table-context-exclude-add-rule" class="button" style="align-self: flex-start;">Thêm quy tắc</button>
+                            <small class="notes">Mỗi quy tắc điền từ bắt đầu và từ kết thúc, chỉ xóa nhóm khớp cuối cùng.</small>
                         </div>
 
                         <hr>
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-tableedit-last-pair-only-checkbox">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-tableedit-last-pair-only-checkbox">仅识别最后一对 &lt;tableEdit&gt; 标签（忽略前面的思维链/草稿）</label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-tableedit-last-pair-only-checkbox">Chỉ nhận diện cặp thẻ &lt;tableEdit&gt; cuối cùng (bỏ qua chuỗi suy nghĩ/bản nháp phía trước)</label>
                         </div>
                     </div>
 
                     <!-- C. 更新任务提示词（原prompt页） -->
                     <div class="acu-card">
-                        <h3>更新任务提示词</h3>
-                        <p class="notes">数据库更新预设的任务指令。这些提示词在每次填表时发送给AI。</p>
+                        <h3>Gợi ý nhiệm vụ cập nhật</h3>
+                        <p class="notes">Lệnh nhiệm vụ đặt trước cho cập nhật CSDL. Những gợi ý này được gửi đến AI mỗi lần điền bảng.</p>
                         <div id="${SCRIPT_ID_PREFIX_ACU}-prompt-constructor-area">
-                            <div class="button-group" style="margin-bottom: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="top" title="在上方添加对话轮次">+</button></div>
+                            <div class="button-group" style="margin-bottom: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="top" title="Thêm lượt hội thoại ở trên">+</button></div>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-prompt-segments-container">
                                 <!-- Segments will be dynamically inserted here -->
                             </div>
-                            <div class="button-group" style="margin-top: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="bottom" title="在下方添加对话轮次">+</button></div>
+                            <div class="button-group" style="margin-top: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-add-prompt-segment-btn" data-position="bottom" title="Thêm lượt hội thoại ở dưới">+</button></div>
                         </div>
                         <div class="button-group">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-save-char-card-prompt" class="primary">保存</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-load-char-card-prompt-from-json">读取JSON模板</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-char-card-prompt-to-json">导出JSON模板</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-char-card-prompt">恢复默认</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-save-char-card-prompt" class="primary">Lưu</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-load-char-card-prompt-from-json">Đọc mẫu JSON</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-char-card-prompt-to-json">Xuất mẫu JSON</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-char-card-prompt">Khôi phục mặc định</button>
                         </div>
                     </div>
                 </div>`;
@@ -43457,83 +43457,83 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
         return `
                 <div id="acu-tab-api" class="acu-tab-content">
                      <div class="acu-card">
-                        <h3>API设置</h3>
+                        <h3>Cài đặt API</h3>
                         <div class="qrf_settings_block_radio">
-                            <label>API模式:</label>
+                            <label>Chế độ API:</label>
                             <div class="qrf_radio_group">
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-api-mode-custom" name="${SCRIPT_ID_PREFIX_ACU}-api-mode" value="custom" checked>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-custom">自定义API</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-custom">API tùy chỉnh</label>
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-api-mode-tavern" name="${SCRIPT_ID_PREFIX_ACU}-api-mode" value="tavern">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-tavern">使用酒馆连接预设</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-mode-tavern">Dùng cài đặt trước kết nối quán</label>
                             </div>
                         </div>
 
                         <div id="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-block" style="display: none; margin-top: 12px;">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select">酒馆连接预设:</label>
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select">Cài đặt trước kết nối quán:</label>
                              <div class="input-group">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-tavern-api-profile-select"></select>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-tavern-api-profiles" title="刷新预设列表">刷新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-tavern-api-profiles" title="Làm mới danh sách cài đặt trước">Làm mới</button>
                             </div>
-                            <small class="notes">选择一个你在酒馆主设置中已经配置好的连接预设。</small>
+                            <small class="notes">Chọn cài đặt trước kết nối đã cấu hình trong cài đặt chính của quán.</small>
                         </div>
 
                         <div id="${SCRIPT_ID_PREFIX_ACU}-custom-api-settings-block" style="margin-top: 12px;">
                              <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-use-main-api-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-use-main-api-checkbox">使用主API (直接使用酒馆当前API和模型)</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-use-main-api-checkbox">Dùng API chính (trực tiếp dùng API và model hiện tại của quán)</label>
                             </div>
                              <div class="checkbox-group">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-streaming-enabled-checkbox">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-streaming-enabled-checkbox">启用流式传输 (Streaming)</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-streaming-enabled-checkbox">Bật truyền phát (Streaming)</label>
                             </div>
-                            <small class="notes">开启后，所有AI调用将使用流式传输，可减少首字节响应时间。默认关闭。</small>
+                            <small class="notes">Sau khi bật, tất cả lệnh gọi AI sẽ dùng truyền phát, giảm thời gian phản hồi byte đầu. Mặc định tắt.</small>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-custom-api-fields">
-                                <p class="notes" style="color: var(--acu-warning);"><b>安全提示:</b> API密钥将保存在浏览器本地存储中。</p>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-url">API基础URL:</label>
+                                <p class="notes" style="color: var(--acu-warning);"><b>Lưu ý bảo mật:</b> Khóa API sẽ được lưu trong bộ nhớ cục bộ của trình duyệt.</p>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-url">URL cơ sở API:</label>
                                 <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-url">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-key">API密钥(可选):</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-key">Khóa API (tùy chọn):</label>
                                 <input type="password" id="${SCRIPT_ID_PREFIX_ACU}-api-key">
                                 <div class="acu-grid" style="margin-top: 10px;">
                                     <div>
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-max-tokens">最大Tokens:</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-max-tokens">Tokens tối đa:</label>
                                         <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-max-tokens" min="1" step="1" placeholder="120000">
                                     </div>
                                     <div>
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-temperature">温度:</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-temperature">Nhiệt độ:</label>
                                         <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-temperature" min="0" max="2" step="0.05" placeholder="0.9">
                                     </div>
                                 </div>
                                 <div class="button-group" style="margin-top: 10px;">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-load-models">加载模型列表</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-load-models">Tải danh sách model</button>
                                 </div>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-input" style="margin-top: 10px;">模型名称 (手动输入):</label>
-                                <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-model-input" class="text_pole" placeholder="输入模型名称或从下方选择">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-select" style="margin-top: 8px;">或从列表选择:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-input" style="margin-top: 10px;">Tên model (nhập thủ công):</label>
+                                <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-model-input" class="text_pole" placeholder="Nhập tên model hoặc chọn bên dưới">
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-api-model-select" style="margin-top: 8px;">Hoặc chọn từ danh sách:</label>
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-api-model-select" class="text_pole">
-                                    <option value="">-- 请先加载模型列表 --</option>
+                                    <option value="">-- Vui lòng tải danh sách model trước --</option>
                                 </select>
                             </div>
-                            <div id="${SCRIPT_ID_PREFIX_ACU}-api-status" class="notes" style="margin-top:12px;">状态: 未配置</div>
+                            <div id="${SCRIPT_ID_PREFIX_ACU}-api-status" class="notes" style="margin-top:12px;">Trạng thái: Chưa cấu hình</div>
                             <div class="button-group">
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-save-config" class="primary">保存API</button>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-clear-config">清除API</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-save-config" class="primary">Lưu API</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-clear-config">Xóa API</button>
                             </div>
                             
                             <!-- API预设管理 -->
                             <div class="acu-divider-dashed" style="margin: 16px 0 12px 0;"></div>
-                            <label class="acu-label">API预设管理</label>
+                            <label class="acu-label">Quản lý cài đặt trước API</label>
                             <div class="acu-row" style="margin-bottom: 8px;">
-                                <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-preset-name" placeholder="预设名称" style="flex: 1;">
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-save-api-preset" class="primary">保存为预设</button>
+                                <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-api-preset-name" placeholder="Tên cài đặt trước" style="flex: 1;">
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-save-api-preset" class="primary">Lưu làm cài đặt trước</button>
                             </div>
                             <div class="acu-row">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-api-preset-select" style="flex: 1;">
-                                    <option value="">-- 选择预设 --</option>
+                                    <option value="">-- Chọn cài đặt trước --</option>
                                 </select>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-load-api-preset">加载</button>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-delete-api-preset" style="background: var(--acu-danger); color: white; border-color: var(--acu-danger);">删除</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-load-api-preset">Tải</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-delete-api-preset" style="background: var(--acu-danger); color: white; border-color: var(--acu-danger);">Xóa</button>
                             </div>
-                            <small class="notes">保存当前API配置为预设，可在填表和剧情推进中分别选用。</small>
+                            <small class="notes">Lưu cấu hình API hiện tại làm cài đặt trước, có thể chọn riêng cho điền bảng và tiến triển cốt truyện.</small>
                         </div>
                      </div>
                  </div>`;
@@ -43551,118 +43551,118 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 <div id="acu-tab-table" class="acu-tab-content">
                     <!-- A. 表格模板预设 -->
                     <div class="acu-card">
-                        <h3>表格模板预设</h3>
+                        <h3>Cài đặt trước mẫu bảng</h3>
                         <div class="acu-template-presets" style="background: var(--acu-bg-2); padding: 12px; border-radius: 8px;">
                             <div class="acu-data-template-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start;">
                                 <div style="padding: 16px; background: var(--acu-bg-1); border-radius: 8px; border: 1px solid var(--acu-border); display: flex; flex-direction: column; gap: 12px;">
                                     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
                                         <div>
-                                            <div style="font-weight: 600; color: var(--acu-text-1);">全局正在使用</div>
-                                            <small id="${SCRIPT_ID_PREFIX_ACU}-template-global-scope-status" class="notes">新聊天会默认继承这里的表格模板</small>
+                                            <div style="font-weight: 600; color: var(--acu-text-1);">Đang dùng toàn cục</div>
+                                            <small id="${SCRIPT_ID_PREFIX_ACU}-template-global-scope-status" class="notes">Chat mới sẽ mặc định kế thừa mẫu bảng ở đây</small>
                                         </div>
-                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); font-size: 12px; font-weight: 600;">全局</span>
+                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); font-size: 12px; font-weight: 600;">Toàn cục</span>
                                     </div>
                                     <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-template-preset-select" style="font-weight: 500;">全局模板预设</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-template-preset-select" style="font-weight: 500;">Cài đặt trước mẫu toàn cục</label>
                                         <select id="${SCRIPT_ID_PREFIX_ACU}-template-preset-select" class="text_pole" style="width: 100%; margin-top: 5px;">
-                                            <option value="${DEFAULT_TEMPLATE_PRESET_OPTION_VALUE_ACU}">默认预设</option>
+                                            <option value="${DEFAULT_TEMPLATE_PRESET_OPTION_VALUE_ACU}">Cài đặt trước mặc định</option>
                                         </select>
                                     </div>
                                     <div class="acu-template-preset-toolbar" style="display: flex; flex-direction: column; gap: 10px;">
                                         <div class="acu-template-preset-left">
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-template" class="acu-mini-btn" title="导入模板到全局模板库，并切换为当前全局模板；已有当前聊天本地预设的聊天不会被自动清除。">
-                                                <i class="fa-solid fa-file-import"></i><span>导入</span>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-template" class="acu-mini-btn" title="Nhập mẫu vào thư viện mẫu toàn cục và chuyển làm mẫu toàn cục hiện tại; chat đã có cài đặt trước cục bộ sẽ không bị tự động xóa.">
+                                                <i class="fa-solid fa-file-import"></i><span>Nhập</span>
                                             </button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-template" class="acu-mini-btn" title="导出当前全局模板（优先导出当前选中的全局预设）">
-                                                <i class="fa-solid fa-file-export"></i><span>导出</span>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-template" class="acu-mini-btn" title="Xuất mẫu toàn cục hiện tại (ưu tiên xuất cài đặt trước toàn cục đang chọn)">
+                                                <i class="fa-solid fa-file-export"></i><span>Xuất</span>
                                             </button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-template" class="acu-mini-btn" title="恢复全局默认模板；未做本地保存或导入的聊天会继续跟随全局模板。">
-                                                <i class="fa-solid fa-undo"></i><span>恢复默认</span>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-template" class="acu-mini-btn" title="Khôi phục mẫu toàn cục mặc định; chat chưa lưu hoặc nhập cục bộ sẽ tiếp tục theo mẫu toàn cục.">
+                                                <i class="fa-solid fa-undo"></i><span>Khôi phục mặc định</span>
                                             </button>
                                         </div>
                                         <div class="acu-template-preset-actions">
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-saveas" class="acu-mini-btn" title="将当前运行中的模板另存为新的全局预设">
-                                                <i class="fa-solid fa-copy"></i><span>另存为</span>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-saveas" class="acu-mini-btn" title="Lưu mẫu đang chạy hiện tại dưới tên mới thành cài đặt trước toàn cục">
+                                                <i class="fa-solid fa-copy"></i><span>Lưu dưới tên khác</span>
                                             </button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-rename" class="acu-mini-btn" title="重命名当前选中的全局预设">
-                                                <i class="fa-solid fa-i-cursor"></i><span>重命名</span>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-rename" class="acu-mini-btn" title="Đổi tên cài đặt trước toàn cục đang chọn">
+                                                <i class="fa-solid fa-i-cursor"></i><span>Đổi tên</span>
                                             </button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-delete" class="acu-mini-btn danger" title="删除当前选中的全局预设">
-                                                <i class="fa-solid fa-trash"></i><span>删除</span>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-template-preset-delete" class="acu-mini-btn danger" title="Xóa cài đặt trước toàn cục đang chọn">
+                                                <i class="fa-solid fa-trash"></i><span>Xóa</span>
                                             </button>
                                         </div>
                                     </div>
-                                    <small class="notes">这里仅做全局模板预设库管理（导入 / 导出 / 另存为 / 重命名 / 删除）；需要覆盖保存全局模板时，请使用可视化编辑器顶部的"保存到全局"。</small>
+                                    <small class="notes">Đây chỉ quản lý thư viện cài đặt trước mẫu toàn cục (nhập / xuất / lưu tên khác / đổi tên / xóa); khi cần lưu ghi đè mẫu toàn cục, hãy dùng "Lưu vào toàn cục" ở đầu trình chỉnh sửa trực quan.</small>
                                 </div>
                                 <div style="padding: 16px; background: var(--acu-bg-1); border-radius: 8px; border: 1px solid var(--acu-border); display: flex; flex-direction: column; gap: 12px;">
                                     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
                                         <div>
-                                            <div style="font-weight: 600; color: var(--acu-text-1);">当前聊天正在使用</div>
-                                            <small id="${SCRIPT_ID_PREFIX_ACU}-template-chat-scope-status" class="notes">未做聊天级保存时，这里会直接跟随全局模板</small>
+                                            <div style="font-weight: 600; color: var(--acu-text-1);">Đang dùng cho chat hiện tại</div>
+                                            <small id="${SCRIPT_ID_PREFIX_ACU}-template-chat-scope-status" class="notes">Khi chưa lưu ở cấp chat, đây sẽ theo dõi thẳng mẫu toàn cục</small>
                                         </div>
-                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--acu-success) 14%, transparent); color: var(--acu-success); font-size: 12px; font-weight: 600;">聊天</span>
+                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--acu-success) 14%, transparent); color: var(--acu-success); font-size: 12px; font-weight: 600;">Chat</span>
                                     </div>
                                     <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-template-chat-preset-select" style="font-weight: 500;">当前聊天模板预设</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-template-chat-preset-select" style="font-weight: 500;">Cài đặt trước mẫu chat hiện tại</label>
                                         <select id="${SCRIPT_ID_PREFIX_ACU}-template-chat-preset-select" class="text_pole" style="width: 100%; margin-top: 5px;">
-                                            <option value="${DEFAULT_TEMPLATE_PRESET_OPTION_VALUE_ACU}">默认预设</option>
+                                            <option value="${DEFAULT_TEMPLATE_PRESET_OPTION_VALUE_ACU}">Cài đặt trước mặc định</option>
                                         </select>
                                     </div>
                                     <div class="acu-template-preset-actions">
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-template-chat-import-preset" class="acu-mini-btn" title="导入模板到当前聊天预设列表；同名预设会直接覆盖">
-                                            <i class="fa-solid fa-file-import"></i><span>导入到当前聊天</span>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-template-chat-import-preset" class="acu-mini-btn" title="Nhập mẫu vào danh sách cài đặt trước chat hiện tại; cài đặt trước cùng tên sẽ bị ghi đè trực tiếp">
+                                            <i class="fa-solid fa-file-import"></i><span>Nhập vào chat hiện tại</span>
                                         </button>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-template-chat-export-preset" class="acu-mini-btn" title="导出当前聊天正在使用的模板预设">
-                                            <i class="fa-solid fa-download"></i><span>导出当前聊天</span>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-template-chat-export-preset" class="acu-mini-btn" title="Xuất cài đặt trước mẫu mà chat hiện tại đang dùng">
+                                            <i class="fa-solid fa-download"></i><span>Xuất chat hiện tại</span>
                                         </button>
                                     </div>
                                     <input type="file" id="${SCRIPT_ID_PREFIX_ACU}-template-chat-preset-file-input" style="display: none;" accept=".json">
-                                    <small id="${SCRIPT_ID_PREFIX_ACU}-template-chat-origin-status" class="notes">这里仅做当前聊天模板预设的导入 / 导出；需要覆盖保存时，请在可视化编辑器中使用"保存到当前聊天"或"保存到全局"。</small>
+                                    <small id="${SCRIPT_ID_PREFIX_ACU}-template-chat-origin-status" class="notes">Đây chỉ nhập / xuất cài đặt trước mẫu chat hiện tại; khi cần lưu ghi đè, hãy dùng "Lưu vào chat hiện tại" hoặc "Lưu vào toàn cục" trong trình chỉnh sửa trực quan.</small>
                                 </div>
                             </div>
                         </div>
-                        <p class="notes" style="margin-top: 10px;">模板预设分为全局和当前聊天两个作用域。新聊天默认继承全局模板，也可为每个聊天单独配置。</p>
+                        <p class="notes" style="margin-top: 10px;">Cài đặt trước mẫu có hai phạm vi: toàn cục và chat hiện tại. Chat mới mặc định kế thừa mẫu toàn cục, cũng có thể cấu hình riêng cho từng chat.</p>
                     </div>
 
                     <!-- B. 世界书注入（从原worldbook页迁入，不含0TK） -->
                     <div class="acu-card">
-                        <h3>世界书注入</h3>
-                        <p class="notes">配置数据库条目注入到哪个世界书，以及AI读取上下文时使用哪些世界书。</p>
+                        <h3>Injection Worldbook</h3>
+                        <p class="notes">Cấu hình injection mục CSDL vào worldbook nào, và worldbook nào được dùng khi AI đọc ngữ cảnh.</p>
                         <div>
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target">数据注入目标:</label>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target">Mục tiêu injection dữ liệu:</label>
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target-filter" placeholder="Lọc worldbook..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                             <div class="input-group">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-worldbook-injection-target" style="width: 100%;"></select>
                             </div>
-                            <small class="notes">选择数据库条目（如全局、人物、大纲等）将被创建或更新到哪个世界书里。</small>
+                            <small class="notes">Chọn worldbook nào sẽ tạo hoặc cập nhật các mục CSDL (như toàn cục, nhân vật, đại cương v.v.).</small>
                         </div>
                         <hr>
                          <div class="qrf_settings_block_radio">
-                            <label>世界书来源 (用于AI读取上下文):</label>
+                            <label>Nguồn worldbook (dùng cho AI đọc ngữ cảnh):</label>
                             <div class="qrf_radio_group">
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-character" name="${SCRIPT_ID_PREFIX_ACU}-worldbook-source" value="character" checked>
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-character">角色卡绑定</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-character">Liên kết thẻ nhân vật</label>
                                 <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-manual" name="${SCRIPT_ID_PREFIX_ACU}-worldbook-source" value="manual">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-manual">手动选择</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-source-manual">Chọn thủ công</label>
                             </div>
                         </div>
                         <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-manual-select-block" style="display: none; margin-top: 10px;">
-                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-select">选择世界书 (可多选):</label>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-select">Chọn worldbook (có thể chọn nhiều):</label>
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-filter" placeholder="Lọc worldbook..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                             <div class="input-group">
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select" class="qrf_worldbook_list"></div>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-worldbooks" title="刷新世界书列表">刷新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-worldbooks" title="Làm mới danh sách worldbook">Làm mới</button>
                             </div>
                         </div>
                         <div style="margin-top: 15px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                <label style="margin-bottom: 0;">启用的世界书条目:</label>
+                                <label style="margin-bottom: 0;">Mục worldbook đã bật:</label>
                                 <div class="button-group" style="margin: 0;">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全选</button>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全不选</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Chọn tất cả</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Bỏ chọn tất cả</button>
                                 </div>
                             </div>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-filter" placeholder="筛选条目/世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-filter" placeholder="Lọc mục/worldbook..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                             <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-entry-list" class="qrf_worldbook_entry_list">
                                 <!-- 条目将动态加载于此 -->
                             </div>
@@ -43673,55 +43673,55 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <div style="flex: 1 1 280px; min-width: 240px;">
                                     <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-summary-vector-index-mode-enabled" style="font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                         <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-summary-vector-index-mode-enabled" style="width: 14px; height: 14px; cursor: pointer;">
-                                        <span>启用向量混合增强交火方案</span>
+                                        <span>Bật phương án tăng cường vector giao tranh</span>
                                     </label>
-                                    <small class="notes">开启后会随纪要表更新自动累积外置向量索引；聊天记录只保存 manifest，向量分片写入 /user/files。下方配置 Embedding、Rerank 与召回参数。</small>
+                                    <small class="notes">Sau khi bật sẽ tự động tích lũy chỉ mục vector ngoài theo cập nhật bảng ghi chép; lịch sử chat chỉ lưu manifest, phân đoạn vector ghi vào /user/files. Cấu hình Embedding, Rerank và tham số gọi lại bên dưới.</small>
                                 </div>
                                 <label id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-enabled-toggle-row" style="display: none; align-items: center; gap: 8px; margin: 0; white-space: nowrap;">
                                     <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-enabled">
-                                    <span>启用向量记忆</span>
+                                    <span>Bật bộ nhớ vector</span>
                                 </label>
                             </div>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-config-block" style="display: none; margin-top: 12px;">
                                 <div class="acu-section" style="margin-bottom: 12px;">
-                                    <div class="acu-section-title">交火模式纪要索引参数</div>
+                                    <div class="acu-section-title">Tham số chỉ mục ghi chép chế độ giao tranh</div>
                                     <div class="acu-grid-auto">
                                         <input type="hidden" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-threshold">
                                         <input type="hidden" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-archive-trigger-count">
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-summary-index-keyword-min-rows">发送前交火触发阈值</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-summary-index-keyword-min-rows">Ngưỡng kích hoạt giao tranh trước khi gửi</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-summary-index-keyword-min-rows" min="1" step="1" placeholder="100">
                                             <small class="notes">纪要表有效行数达到该值后，发送前会生成关键词并召回概要列 chunk；未达到时保留原概要索引流程。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-topk">最终覆盖 TopK</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-topk">TopK phủ cuối cùng</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-topk" min="1" step="1" placeholder="10">
                                             <small class="notes">Rerank 后选中的纪要数量上限；写入原概要索引条目时会重新按纪要表原始顺序排列。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-min-score">Embedding 预筛最小分数</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-min-score">Điểm tối thiểu lọc trước Embedding</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-min-score" min="0" max="1" step="0.01" placeholder="0.40">
                                             <small class="notes">发送前先用 query embedding 对纪要 chunk 预筛；Rerank 只会处理通过预筛的候选。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-recall-candidate-limit">预筛候选上限</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-recall-candidate-limit">Giới hạn ứng viên lọc trước</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-recall-candidate-limit" min="1" step="1" placeholder="1000">
                                             <small class="notes">Embedding 本地预筛后保留的候选数量，也是 Rerank 的最大输入数；不能小于 TopK。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-recent-fixed-inject-count">最近固定注入条数</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-recent-fixed-inject-count">Số mục injection cố định gần nhất</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-recent-fixed-inject-count" min="0" step="1" placeholder="50">
                                             <small class="notes">最近 X 条纪要固定注入，不参与排序；X 计入触发阈值但不计入 TopK。例如阈值200、X=50，则最近50条固定注入，较早的行参与向量召回。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-namespace">索引命名空间前缀</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-namespace">Tiền tố không gian tên chỉ mục</label>
                                             <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-namespace" placeholder="chat">
                                             <small class="notes">用于区分不同聊天的外置索引缓存；会与当前聊天标识拼接。</small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="acu-section" style="margin-bottom: 12px;">
-                                    <div class="acu-section-title">Embedding 设置</div>
+                                    <div class="acu-section-title">Cài đặt Embedding</div>
                                     <div class="acu-grid-auto">
                                         <div class="acu-col-sm">
                                             <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-embedding-endpoint">Embedding Endpoint</label>
@@ -43741,7 +43741,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                     </div>
                                 </div>
                                 <div class="acu-section" style="margin-bottom: 12px;">
-                                    <div class="acu-section-title">Rerank 设置（可选）</div>
+                                    <div class="acu-section-title">Cài đặt Rerank (tùy chọn)</div>
                                     <div class="acu-grid-auto">
                                         <div class="acu-col-sm">
                                             <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-rerank-endpoint">Rerank Endpoint</label>
@@ -43762,15 +43762,15 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                     <small class="notes" style="display: block; margin-top: 8px;">启用真实 Rerank 后，Embedding 仍负责召回预筛，TopK 仍控制最终注入数量；这三者不是互相替代关系。</small>
                                 </div>
                                 <div class="acu-section" style="margin-bottom: 12px;">
-                                    <div class="acu-section-title">外置索引写入参数</div>
+                                    <div class="acu-section-title">Tham số ghi chỉ mục ngoài</div>
                                     <div class="acu-grid-auto">
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-overview-sentence-limit">概要列分块句数</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-overview-sentence-limit">Số câu mỗi khối cột tóm tắt</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-overview-sentence-limit" min="1" step="1" placeholder="2">
                                             <small class="notes">仅对纪要表概要列文本分块。数值越小召回越精细，但外置分片数量会增加。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-archive-max-concurrency">每批归档行数</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-archive-max-concurrency">Số hàng lưu trữ mỗi lô</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-archive-max-concurrency" min="1" step="1" placeholder="30">
                                             <small class="notes">填表保存完成后会立即归档；多条新增/变更纪要按该数量拆分 embedding 批次。</small>
                                         </div>
@@ -43779,22 +43779,22 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                     <input type="hidden" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-archive-without-summary">
                                 </div>
                                 <div class="acu-section" style="margin-bottom: 0;">
-                                    <div class="acu-section-title">关键词生成</div>
+                                    <div class="acu-section-title">Tạo từ khóa</div>
                                     <div class="acu-grid-auto">
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-api-preset">关键词 API 预设</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-api-preset">Cài đặt trước API từ khóa</label>
                                             <select id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-api-preset" class="text_pole" style="width: 100%;">
-                                                <option value="">使用当前API配置</option>
+                                                <option value="">Dùng cấu hình API hiện tại</option>
                                             </select>
                                             <small class="notes">仅用于发送前“关键词生成”阶段；留空则使用当前主 API 配置。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-context-pair-count">关键词上下文读取层数</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-context-pair-count">Số lớp ngữ cảnh đọc từ khóa</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-context-pair-count" min="1" step="1" placeholder="1">
                                             <small class="notes">关键词生成时读取的最近对话层数；1 层 = 1 条 AI 回复 + 其上方 1 条用户输入，不再截断。</small>
                                         </div>
                                         <div class="acu-col-sm">
-                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-generation-max-attempts">关键词生成最大尝试次数</label>
+                                            <label for="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-generation-max-attempts">Số lần thử tối đa tạo từ khóa</label>
                                             <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-generation-max-attempts" min="1" step="1" placeholder="3">
                                             <small class="notes">关键词生成失败时会回退到用户输入本身参与召回，不阻断原始发送。</small>
                                         </div>
@@ -43802,10 +43802,10 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 </div>
                                 <div class="acu-section" style="margin-bottom: 12px;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-                                        <div class="acu-section-title" style="margin-bottom: 0;">关键词生成提示词</div>
+                                        <div class="acu-section-title" style="margin-bottom: 0;">Gợi ý tạo từ khóa</div>
                                         <div style="display: flex; gap: 6px;">
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-prompt-reset" class="acu-btn-small" style="font-size: 12px;">重置为默认</button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-prompt-add" class="acu-btn-small" style="font-size: 12px;">添加段落</button>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-prompt-reset" class="acu-btn-small" style="font-size: 12px;">Đặt lại về mặc định</button>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-worldbook-vector-memory-keyword-prompt-add" class="acu-btn-small" style="font-size: 12px;">Thêm đoạn</button>
                                         </div>
                                     </div>
                                     <small class="notes" style="margin-bottom: 8px; display: block;">可用占位符：$RECENT_CONTEXT（最近上下文）、$USER_INPUT（当前用户输入）。</small>
@@ -43822,17 +43822,17 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
 
                     <!-- C. 表格工具入口 -->
                     <div class="acu-card">
-                        <h3>表格工具</h3>
+                        <h3>Công cụ bảng</h3>
                         <div class="button-group" style="margin-top: 0; display: flex; flex-direction: column; gap: 10px;">
                             <button id="${SCRIPT_ID_PREFIX_ACU}-open-new-visualizer" class="primary acu-btn-medium" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                                <i class="fa-solid fa-table-columns"></i> 打开可视化表格编辑器
+                                <i class="fa-solid fa-table-columns"></i> Mở trình chỉnh sửa bảng trực quan
                             </button>
                             <button id="${SCRIPT_ID_PREFIX_ACU}-build-vector-index-now" class="acu-btn-medium" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                                <i class="fa-solid fa-brain"></i> 立即构建交火纪要索引
+                                <i class="fa-solid fa-brain"></i> Xây dựng chỉ mục ghi chép giao tranh ngay
                             </button>
                         </div>
-                        <p class="notes" style="text-align: center; margin-top: 10px;">点击上方按钮打开全新的可视化界面，支持直接编辑数据、修改表头及更新参数。</p>
-                        <p class="notes" style="text-align: center; margin-top: 6px;">“立即构建交火纪要索引”会把当前纪要表生成外置向量索引文件；后续纪要增删改会同步更新对应索引分片。</p>
+                        <p class="notes" style="text-align: center; margin-top: 10px;">Nhấp nút trên để mở giao diện trực quan mới, hỗ trợ chỉnh sửa dữ liệu trực tiếp, sửa tiêu đề bảng và cập nhật tham số.</p>
+                        <p class="notes" style="text-align: center; margin-top: 6px;">“Xây dựng chỉ mục ghi chép giao tranh ngay”会把当前纪要表生成外置向量索引文件；后续纪要增删改会同步更新对应索引分片。</p>
                     </div>
                 </div>`;
     }
@@ -43854,10 +43854,10 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                         
                         <div>
                             <label for="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target">导入数据注入目标世界书:</label>
-                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                            <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target-filter" placeholder="Lọc worldbook..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                             <div class="input-group">
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-import-worldbook-injection-target" style="width: 100%;"></select>
-                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-import-worldbooks" title="刷新世界书列表">刷新</button>
+                                <button id="${SCRIPT_ID_PREFIX_ACU}-refresh-import-worldbooks" title="Làm mới danh sách worldbook">Làm mới</button>
                             </div>
                             <small class="notes">选择导入的数据将被注入到哪个世界书里（独立于常规更新的世界书设置）。<strong>注意：不推荐使用角色卡绑定世界书，建议使用新建的其它世界书。</strong></small>
                         </div>
@@ -43875,7 +43875,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <label for="${SCRIPT_ID_PREFIX_ACU}-import-split-size">每段字符数:</label>
                                 <div class="input-group">
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-import-split-size" min="100" step="100" value="10000">
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-save-import-split-size">保存</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-save-import-split-size">Lưu</button>
                                 </div>
                             </div>
                             <div>
@@ -43896,10 +43896,10 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                         <div style="margin: 10px 0 8px 0; font-weight: 700;">注入表选择（自选表格）</div>
                         <div class="notes" style="margin-bottom:6px;">选择需要写入世界书的表（可多选；未曾选择过则默认全选）。</div>
                         <div class="button-group" style="justify-content:flex-start; gap:8px; margin-bottom:6px;">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-all" class="button">全选</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-none" class="button">全不选</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-all" class="button">Chọn tất cả</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-table-select-none" class="button">Bỏ chọn tất cả</button>
                         </div>
-                        <div id="${SCRIPT_ID_PREFIX_ACU}-import-table-selector" style="min-height:60px;">加载表格列表中...</div>
+                        <div id="${SCRIPT_ID_PREFIX_ACU}-import-table-selector" style="min-height:60px;">Đang tải danh sách bảng...</div>
 
                         <div class="button-group" style="margin-top: 10px;">
                             <button id="${SCRIPT_ID_PREFIX_ACU}-inject-imported-txt-button" disabled>2. 注入（自选表格）</button>
@@ -43929,11 +43929,11 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                         <!-- 顶部标题和开关区域 -->
                         <div class="acu-plot-header-row" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--acu-border);">
                             <div>
-                                <h3 style="margin: 0; color: var(--acu-text-1);">剧情推进设置</h3>
-                                <p class="notes" style="margin: 5px 0 0 0;">通过AI预处理用户输入，增强故事叙述质量和剧情连贯性</p>
+                                <h3 style="margin: 0; color: var(--acu-text-1);">Cài đặt tiến triển cốt truyện</h3>
+                                <p class="notes" style="margin: 5px 0 0 0;">Xử lý trước đầu vào của người dùng bằng AI, nâng cao chất lượng kể chuyện và độ liên kết cốt truyện</p>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-enabled" style="font-weight: 500; cursor: pointer;">启用功能</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-enabled" style="font-weight: 500; cursor: pointer;">Bật tính năng</label>
                                 <label class="toggle-switch">
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-plot-enabled" type="checkbox" />
                                     <span class="slider"></span>
@@ -43950,51 +43950,51 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <div style="padding: 16px; background: var(--acu-bg-1); border-radius: 8px; border: 1px solid var(--acu-border); display: flex; flex-direction: column; gap: 12px;">
                                     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
                                         <div>
-                                            <div style="font-weight: 600; color: var(--acu-text-1);">全局正在使用</div>
-                                            <small id="${SCRIPT_ID_PREFIX_ACU}-plot-global-scope-status" class="notes">新聊天会默认继承这里的剧情推进配置</small>
+                                            <div style="font-weight: 600; color: var(--acu-text-1);">Đang dùng toàn cục</div>
+                                            <small id="${SCRIPT_ID_PREFIX_ACU}-plot-global-scope-status" class="notes">Chat mới sẽ mặc định kế thừa cấu hình tiến triển cốt truyện ở đây</small>
                                         </div>
-                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); font-size: 12px; font-weight: 600;">全局</span>
+                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); font-size: 12px; font-weight: 600;">Toàn cục</span>
                                     </div>
                                     <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-global-preset-select" style="font-weight: 500;">全局预设</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-global-preset-select" style="font-weight: 500;">Cài đặt trước toàn cục</label>
                                         <select id="${SCRIPT_ID_PREFIX_ACU}-plot-global-preset-select" class="text_pole" style="width: 100%; margin-top: 5px;">
-                                            <option value="${DEFAULT_PRESET_OPTION_VALUE_ACU}">默认预设</option>
+                                            <option value="${DEFAULT_PRESET_OPTION_VALUE_ACU}">Cài đặt trước mặc định</option>
                                         </select>
                                     </div>
                                     <div class="qrf_preset_selector_wrapper acu-plot-preset-wrapper" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-save-preset" class="menu_button" title="覆盖保存到全局预设" style="padding: 8px 12px;"><i class="fa-solid fa-save"></i></button>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-save-as-new-preset" class="menu_button" title="另存为新的全局预设" style="padding: 8px 12px;"><i class="fa-solid fa-file-export"></i></button>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-import-presets" class="menu_button" title="导入到全局预设库" style="padding: 8px 12px;"><i class="fa-solid fa-upload"></i></button>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-export-presets" class="menu_button" title="导出当前全局预设" style="padding: 8px 12px;"><i class="fa-solid fa-download"></i></button>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-reset-defaults" class="menu_button" title="恢复全局默认提示词" style="padding: 8px 12px; background-color: var(--acu-warning); color: white;"><i class="fa-solid fa-undo"></i></button>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-delete-preset" class="menu_button" title="删除当前全局选中的预设" style="display: none; padding: 8px 12px; background-color: var(--acu-danger);"><i class="fa-solid fa-trash-alt"></i></button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-save-preset" class="menu_button" title="Lưu ghi đè vào cài đặt trước toàn cục" style="padding: 8px 12px;"><i class="fa-solid fa-save"></i></button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-save-as-new-preset" class="menu_button" title="Lưu dưới tên mới thành cài đặt trước toàn cục" style="padding: 8px 12px;"><i class="fa-solid fa-file-export"></i></button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-import-presets" class="menu_button" title="Nhập vào thư viện cài đặt trước toàn cục" style="padding: 8px 12px;"><i class="fa-solid fa-upload"></i></button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-export-presets" class="menu_button" title="Xuất cài đặt trước toàn cục hiện tại" style="padding: 8px 12px;"><i class="fa-solid fa-download"></i></button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-reset-defaults" class="menu_button" title="Khôi phục gợi ý mặc định toàn cục" style="padding: 8px 12px; background-color: var(--acu-warning); color: white;"><i class="fa-solid fa-undo"></i></button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-global-delete-preset" class="menu_button" title="Xóa cài đặt trước toàn cục đang chọn" style="display: none; padding: 8px 12px; background-color: var(--acu-danger);"><i class="fa-solid fa-trash-alt"></i></button>
                                         <input type="file" id="${SCRIPT_ID_PREFIX_ACU}-plot-global-preset-file-input" style="display: none;" accept=".json">
                                     </div>
-                                    <small class="notes">全局预设区负责导入、导出、修改与保存；切换这里只会切换全局默认使用的剧情推进预设，不会直接改动当前聊天预设。</small>
+                                    <small class="notes">Khu cài đặt trước toàn cục phụ trách nhập, xuất, sửa đổi và lưu; chuyển ở đây chỉ chuyển cài đặt trước tiến triển cốt truyện mặc định toàn cục, không trực tiếp thay đổi cài đặt trước chat hiện tại.</small>
                                 </div>
                                 <div style="padding: 16px; background: var(--acu-bg-1); border-radius: 8px; border: 1px solid var(--acu-border); display: flex; flex-direction: column; gap: 12px;">
                                     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
                                         <div>
-                                            <div style="font-weight: 600; color: var(--acu-text-1);">当前聊天正在使用</div>
-                                            <small id="${SCRIPT_ID_PREFIX_ACU}-plot-chat-scope-status" class="notes">未单独指定时，这里会直接跟随全局剧情推进预设</small>
+                                            <div style="font-weight: 600; color: var(--acu-text-1);">Đang dùng cho chat hiện tại</div>
+                                            <small id="${SCRIPT_ID_PREFIX_ACU}-plot-chat-scope-status" class="notes">Khi chưa chỉ định riêng, đây sẽ theo dõi thẳng cài đặt trước tiến triển cốt truyện toàn cục</small>
                                         </div>
-                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--acu-success) 14%, transparent); color: var(--acu-success); font-size: 12px; font-weight: 600;">聊天</span>
+                                        <span style="padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--acu-success) 14%, transparent); color: var(--acu-success); font-size: 12px; font-weight: 600;">Chat</span>
                                     </div>
                                     <div class="qrf_settings_block" style="margin-bottom: 0;">
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-chat-preset-select" style="font-weight: 500;">当前聊天预设</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-chat-preset-select" style="font-weight: 500;">Cài đặt trước chat hiện tại</label>
                                         <select id="${SCRIPT_ID_PREFIX_ACU}-plot-chat-preset-select" class="text_pole" style="width: 100%; margin-top: 5px;">
-                                            <option value="${DEFAULT_PRESET_OPTION_VALUE_ACU}">跟随全局</option>
+                                            <option value="${DEFAULT_PRESET_OPTION_VALUE_ACU}">Theo toàn cục</option>
                                         </select>
                                     </div>
-                                    <small id="${SCRIPT_ID_PREFIX_ACU}-plot-chat-origin-status" class="notes">当前聊天预设这里只负责切换当前聊天使用的剧情推进预设；导入、导出、保存与修改统一在全局预设侧处理。</small>
+                                    <small id="${SCRIPT_ID_PREFIX_ACU}-plot-chat-origin-status" class="notes">Cài đặt trước chat hiện tại ở đây chỉ phụ trách chuyển cài đặt trước tiến triển cốt truyện mà chat hiện tại dùng; nhập, xuất, lưu và sửa đổi đều xử lý ở phía cài đặt trước toàn cục.</small>
                                 </div>
                             </div>
                             <div class="qrf_settings_block" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--acu-border);">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select" style="font-weight: 500;">剧情推进API预设</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select" style="font-weight: 500;">Cài đặt trước API tiến triển cốt truyện</label>
                                 <select id="${SCRIPT_ID_PREFIX_ACU}-plot-api-preset-select" class="text_pole" style="width: 100%; margin-top: 5px;">
-                                    <option value="">使用当前API配置</option>
+                                    <option value="">Dùng cấu hình API hiện tại</option>
                                 </select>
-                                <small class="notes">这里控制剧情推进调用时使用的API配置；剧情推进预设本身则分为全局与当前聊天两条作用域链路。</small>
+                                <small class="notes">Đây điều khiển cấu hình API được dùng khi gọi tiến triển cốt truyện; bản thân cài đặt trước tiến triển cốt truyện chia thành hai chuỗi phạm vi toàn cục và chat hiện tại.</small>
                             </div>
                         </div>
 
@@ -44026,7 +44026,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                     <div class="button-group" style="justify-content:flex-start; gap:8px; margin-top:10px;">
                                         <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-task-move-up" class="button">上移</button>
                                         <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-task-move-down" class="button">下移</button>
-                                        <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-task-delete" class="button" style="background:var(--acu-danger); color:#fff;">删除</button>
+                                        <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-task-delete" class="button" style="background:var(--acu-danger); color:#fff;">Xóa</button>
                                     </div>
                                     <small class="notes" style="display:block; margin-top:10px;">每个任务都有独立提示词、独立标签摘取与独立重试次数；任务按阶段号执行：同阶段并发，不同阶段按编号顺序串行。</small>
                                 </div>
@@ -44081,13 +44081,13 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                     </div>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-prompt-constructor-area">
                                         <div class="button-group" style="margin-bottom: 10px; justify-content: center;">
-                                            <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="top" title="在上方添加对话轮次">+</button>
+                                            <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="top" title="Thêm lượt hội thoại ở trên">+</button>
                                         </div>
                                         <div id="${SCRIPT_ID_PREFIX_ACU}-plot-prompt-segments-container">
                                             <!-- Plot segments will be dynamically inserted here -->
                                         </div>
                                         <div class="button-group" style="margin-top: 10px; justify-content: center;">
-                                            <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="bottom" title="在下方添加对话轮次">+</button>
+                                            <button class="${SCRIPT_ID_PREFIX_ACU}-plot-add-prompt-segment-btn" data-position="bottom" title="Thêm lượt hội thoại ở dưới">+</button>
                                         </div>
                                     </div>
                                 </div>
@@ -44191,13 +44191,13 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
                                     <label style="font-weight: 500;">正文标签提取规则</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-add-rule" class="button" style="margin-top: 6px;">添加规则</button>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-extract-add-rule" class="button" style="margin-top: 6px;">Thêm quy tắc</button>
                                     <small class="notes">作用于剧情上下文过滤，不区分任务；每条规则填写开始词和结束词，仅提取最后一组匹配内容</small>
                                 </div>
                                 <div class="qrf_settings_block" style="margin-bottom: 0;">
                                     <label style="font-weight: 500;">标签排除规则</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-add-rule" class="button" style="margin-top: 6px;">添加规则</button>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-plot-context-exclude-add-rule" class="button" style="margin-top: 6px;">Thêm quy tắc</button>
                                     <small class="notes">作用于剧情上下文过滤，不区分任务；仅移除最后一组匹配内容（可与"正文标签提取"叠加）</small>
                                 </div>
                             </div>
@@ -44213,30 +44213,30 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                     <label>世界书来源 (用于剧情推进读取上下文):</label>
                                     <div class="qrf_radio_group">
                                         <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-character" name="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source" value="character" checked>
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-character">角色卡绑定</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-character">Liên kết thẻ nhân vật</label>
                                         <input type="radio" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-manual" name="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source" value="manual">
-                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-manual">手动选择</label>
+                                        <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-source-manual">Chọn thủ công</label>
                                     </div>
                                 </div>
 
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-manual-select-block" style="display: none; margin-top: 10px;">
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select">选择世界书 (可多选):</label>
-                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-filter" placeholder="筛选世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select">Chọn worldbook (có thể chọn nhiều):</label>
+                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-filter" placeholder="Lọc worldbook..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                                     <div class="input-group">
                                         <div id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select" class="qrf_worldbook_list"></div>
-                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-refresh-worldbooks" title="刷新世界书列表">刷新</button>
+                                        <button id="${SCRIPT_ID_PREFIX_ACU}-plot-refresh-worldbooks" title="Làm mới danh sách worldbook">Làm mới</button>
                                     </div>
                                 </div>
 
                                 <div style="margin-top: 15px;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                        <label style="margin-bottom: 0;">启用的世界书条目:</label>
+                                        <label style="margin-bottom: 0;">Mục worldbook đã bật:</label>
                                         <div class="button-group" style="margin: 0;">
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全选</button>
-                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">全不选</button>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-select-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Chọn tất cả</button>
+                                            <button id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-deselect-all" class="button" style="padding: 2px 8px; font-size: 0.8em;">Bỏ chọn tất cả</button>
                                         </div>
                                     </div>
-                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-filter" placeholder="筛选条目/世界书..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                                    <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-filter" placeholder="Lọc mục/worldbook..." style="width: 100%; margin: 6px 0 8px 0; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--acu-border-2); background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-plot-worldbook-entry-list" class="qrf_worldbook_entry_list">
                                         <!-- 条目将动态加载于此 -->
                                     </div>
@@ -44283,80 +44283,80 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 <div id="acu-tab-datamgmt" class="acu-tab-content">
                     <!-- A. 数据隔离 -->
                     <div class="acu-card">
-                        <h3>数据隔离</h3>
-                        <p class="notes">在此处输入特定的标识代码，插件将只读取和保存带有该标识的数据。若留空则使用默认数据。</p>
+                        <h3>Cách ly dữ liệu</h3>
+                        <p class="notes">Nhập mã định danh cụ thể ở đây, plugin chỉ đọc và lưu dữ liệu có định danh đó. Để trống sẽ dùng dữ liệu mặc định.</p>
                         <div class="setting-item" style="margin-bottom: 15px; border-bottom: 1px dashed var(--acu-border-2); padding-bottom: 15px;">
                             <div id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-input-area" style="margin-top: 10px;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code">标识代码:</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code">Mã định danh:</label>
                                 <div class="acu-data-isolation-row" style="display: flex; gap: 10px; margin-top: 5px; align-items: flex-start;">
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-combo" style="position: relative; flex-grow: 1; display: flex; align-items: center;">
-                                        <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code" placeholder="输入标识代码 (留空则不隔离)" style="flex-grow: 1; padding-right: 36px;">
-                                        <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-history-toggle" title="历史标识代码" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 1px solid var(--acu-border-2); background: var(--acu-bg-1); color: var(--acu-text-1); padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; line-height: 1;">▼</button>
+                                        <input type="text" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-code" placeholder="Nhập mã định danh (để trống = không cách ly)" style="flex-grow: 1; padding-right: 36px;">
+                                        <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-history-toggle" title="Lịch sử mã định danh" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 1px solid var(--acu-border-2); background: var(--acu-bg-1); color: var(--acu-text-1); padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; line-height: 1;">▼</button>
                                         <ul id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-history-list" style="display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--acu-bg-0); border: 1px solid var(--acu-border-2); border-radius: 6px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18); list-style: none; margin: 0; padding: 6px 0; max-height: 220px; overflow-y: auto; z-index: 9999;"></ul>
                                     </div>
-                                    <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-save" class="primary" style="white-space: nowrap;">保存并应用</button>
+                                    <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-save" class="primary" style="white-space: nowrap;">Lưu và áp dụng</button>
                                 </div>
-                                <p class="notes" style="margin-top: 5px;">输入代码并点击保存后，将重新载入对应的本地数据。</p>
+                                <p class="notes" style="margin-top: 5px;">Sau khi nhập mã và nhấp lưu, sẽ tải lại dữ liệu cục bộ tương ứng.</p>
                             </div>
                             <div style="margin-top: 10px; text-align: right;">
-                        <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-delete-entries" class="btn-danger" style="padding: 5px 10px; border-radius: 4px; font-size: 0.9em;">删除当前标识的注入条目</button>
+                        <button id="${SCRIPT_ID_PREFIX_ACU}-data-isolation-delete-entries" class="btn-danger" style="padding: 5px 10px; border-radius: 4px; font-size: 0.9em;">Xóa mục injection của định danh hiện tại</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- B. 备份与恢复 -->
                     <div class="acu-card">
-                        <h3>备份与恢复</h3>
-                        <p class="notes">导入/导出当前对话的数据库，或管理全局模板。</p>
+                        <h3>Sao lưu và phục hồi</h3>
+                        <p class="notes">Nhập/xuất CSDL cuộc hội thoại hiện tại, hoặc quản lý mẫu toàn cục.</p>
                         <div class="button-group acu-data-mgmt-buttons">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-combined-settings" class="primary">合并导入(模板+指令)</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-combined-settings" class="primary">合并导出(模板+指令)</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-import-combined-settings" class="primary">Nhập gộp (mẫu + lệnh)</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-combined-settings" class="primary">Xuất gộp (mẫu + lệnh)</button>
                         </div>
                         <hr style="border-color: var(--acu-border-2); margin: 15px 0;">
                         <div class="button-group acu-data-mgmt-buttons">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-json-data">导出JSON数据</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-all-defaults" class="btn-warning">恢复默认模板及提示词</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-override-with-template" class="btn-danger">模板覆盖最新层数据</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-export-json-data">Xuất dữ liệu JSON</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-reset-all-defaults" class="btn-warning">Khôi phục mẫu và gợi ý mặc định</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-override-with-template" class="btn-danger">Mẫu ghi đè dữ liệu lớp mới nhất</button>
                         </div>
                     </div>
 
                     <!-- C. 删除与清理 -->
                     <div class="acu-card">
-                        <h3>删除与清理</h3>
+                        <h3>Xóa và dọn dẹp</h3>
                         <!-- 楼层范围选择 -->
                         <div style="background: var(--acu-bg-2); padding: 12px; border-radius: 6px; margin-bottom: 10px;">
-                            <h4 style="margin: 0 0 8px 0; font-size: 0.9em; color: var(--acu-text-1); font-weight: 500;">删除范围设置</h4>
+                            <h4 style="margin: 0 0 8px 0; font-size: 0.9em; color: var(--acu-text-1); font-weight: 500;">Cài đặt phạm vi xóa</h4>
                             <div class="acu-grid">
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-start-floor" style="font-weight: 500; font-size: 0.85em;">起始AI楼层:</label>
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-start-floor" style="font-weight: 500; font-size: 0.85em;">Lượt AI bắt đầu:</label>
                                     <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-delete-start-floor" min="1" value="1" placeholder="1" style="width: 100%; padding: 4px 8px; border: 1px solid var(--acu-border-2); border-radius: 4px; background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                                 </div>
                                 <div>
-                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" style="font-weight: 500; font-size: 0.85em;">终止AI楼层:</label>
-                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" min="1" placeholder="留空删除到最后" style="width: 100%; padding: 4px 8px; border: 1px solid var(--acu-border-2); border-radius: 4px; background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
+                                    <label for="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" style="font-weight: 500; font-size: 0.85em;">Lượt AI kết thúc:</label>
+                                    <input type="number" id="${SCRIPT_ID_PREFIX_ACU}-delete-end-floor" min="1" placeholder="Để trống = xóa đến cuối" style="width: 100%; padding: 4px 8px; border: 1px solid var(--acu-border-2); border-radius: 4px; background: var(--acu-control-bg, var(--acu-bg-1)); color: var(--acu-control-text, var(--acu-text-1));">
                                 </div>
                             </div>
                             <div style="margin-top: 6px; font-size: 0.8em; color: var(--acu-text-3);">
-                                默认全选所有AI楼层，可设置范围精确删除（只计算AI回复）
+                                Mặc định chọn tất cả lượt AI, có thể đặt phạm vi để xóa chính xác (chỉ tính lượt trả lời AI)
                             </div>
                         </div>
 
                         <div class="button-group acu-data-mgmt-buttons">
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-current-local-data" class="btn-warning">删除当前标识本地数据</button>
-                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-all-local-data" class="btn-danger">删除所有本地数据 (慎用)</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-current-local-data" class="btn-warning">Xóa dữ liệu cục bộ định danh hiện tại</button>
+                            <button id="${SCRIPT_ID_PREFIX_ACU}-delete-all-local-data" class="btn-danger">Xóa tất cả dữ liệu cục bộ (dùng cẩn thận)</button>
                         </div>
                     </div>
 
                     <!-- D. 交火模式索引管理 -->
                     <div class="acu-card">
-                        <h3>交火模式索引管理</h3>
-                        <p class="notes">聊天记录只保存轻量 manifest；向量分片保存在 /user/files，IndexedDB 只作为可丢弃临时缓存。</p>
+                        <h3>Quản lý chỉ mục chế độ giao tranh</h3>
+                        <p class="notes">Lịch sử chat chỉ lưu manifest nhẹ; phân đoạn vector lưu trong /user/files, IndexedDB chỉ là bộ nhớ đệm tạm có thể xóa.</p>
                         <div style="background: var(--acu-bg-2); padding: 12px; border-radius: 6px; margin-bottom: 10px;">
                             <label for="${SCRIPT_ID_PREFIX_ACU}-vector-index-mode-enabled" style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 6px;">
                                 <input type="checkbox" id="${SCRIPT_ID_PREFIX_ACU}-vector-index-mode-enabled" style="width: 14px; height: 14px; cursor: pointer;">
-                                <span style="font-weight: 600;">启用向量混合增强交火方案</span>
+                                <span style="font-weight: 600;">Bật phương án tăng cường vector giao tranh</span>
                             </label>
-                            <small class="notes">这是交火模式的启停入口；开启后会随纪要表数据增删改自动维护外置索引文件。下面的按钮只负责刷新状态、清缓存或删除当前索引资产。</small>
+                            <small class="notes">Đây là cổng bật/tắt chế độ giao tranh; sau khi bật sẽ tự động duy trì file chỉ mục ngoài theo thay đổi dữ liệu bảng ghi chép. Các nút bên dưới chỉ phụ trách làm mới trạng thái, xóa bộ nhớ đệm hoặc xóa tài sản chỉ mục hiện tại.</small>
                         </div>
                         <div id="${SCRIPT_ID_PREFIX_ACU}-vector-index-stats" style="background: var(--acu-bg-2); padding: 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.9em; line-height: 1.7;">
                             <div>状态：<span data-acu-vector-index-field="status">未加载</span></div>
@@ -44398,7 +44398,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <p class="notes">AI生成正文后，自动替换内容（在填表之前执行）</p>
                             </div>
                             <div class="acu-row" style="gap: 8px;">
-                                <label for="${SCRIPT_ID_PREFIX_ACU}-optimization-enabled" style="font-weight: 500; cursor: pointer;">启用功能</label>
+                                <label for="${SCRIPT_ID_PREFIX_ACU}-optimization-enabled" style="font-weight: 500; cursor: pointer;">Bật tính năng</label>
                                 <label class="toggle-switch">
                                     <input id="${SCRIPT_ID_PREFIX_ACU}-optimization-enabled" type="checkbox" />
                                     <span class="slider"></span>
@@ -44413,7 +44413,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <div>
                                     <label class="acu-label" for="${SCRIPT_ID_PREFIX_ACU}-optimization-api-preset">API预设</label>
                                     <select id="${SCRIPT_ID_PREFIX_ACU}-optimization-api-preset" class="text_pole">
-                                        <option value="">使用当前API配置</option>
+                                        <option value="">Dùng cấu hình API hiện tại</option>
                                     </select>
                                     <small class="notes">选择正文替换使用的API配置，留空则使用酒馆当前API</small>
                                 </div>
@@ -44483,13 +44483,13 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 <div>
                                     <label class="acu-label">正文标签提取规则</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-optimization-extract-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-optimization-extract-add-rule" class="button">添加规则</button>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-optimization-extract-add-rule" class="button">Thêm quy tắc</button>
                                     <small class="notes">每条规则填写开始词和结束词，仅提取最后一组匹配内容</small>
                                 </div>
                                 <div>
                                     <label class="acu-label">标签排除规则</label>
                                     <div id="${SCRIPT_ID_PREFIX_ACU}-optimization-exclude-rules"></div>
-                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-optimization-exclude-add-rule" class="button">添加规则</button>
+                                    <button type="button" id="${SCRIPT_ID_PREFIX_ACU}-optimization-exclude-add-rule" class="button">Thêm quy tắc</button>
                                     <small class="notes">每条规则填写开始词和结束词，仅移除最后一组匹配内容</small>
                                 </div>
                             </div>
@@ -44497,7 +44497,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
 
                         <!-- 预设管理 -->
                         <div class="acu-section">
-                            <h4 class="acu-section-title"><i class="fa-solid fa-bookmark"></i> 预设管理</h4>
+                            <h4 class="acu-section-title"><i class="fa-solid fa-bookmark"></i> Quản lý cài đặt trước</h4>
                             <div>
                                 <label class="acu-label" for="${SCRIPT_ID_PREFIX_ACU}-optimization-preset-select">选择预设</label>
                                 <div class="acu-row-wrap" style="margin-top: 4px;">
@@ -44530,9 +44530,9 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                                 </small>
                             </div>
                             <div id="${SCRIPT_ID_PREFIX_ACU}-optimization-prompt-constructor-area">
-                                <div class="button-group" style="margin-bottom: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-optimization-add-prompt-segment-btn" data-position="top" title="在上方添加对话轮次">+</button></div>
+                                <div class="button-group" style="margin-bottom: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-optimization-add-prompt-segment-btn" data-position="top" title="Thêm lượt hội thoại ở trên">+</button></div>
                                 <div id="${SCRIPT_ID_PREFIX_ACU}-optimization-prompt-segments-container"></div>
-                                <div class="button-group" style="margin-top: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-optimization-add-prompt-segment-btn" data-position="bottom" title="在下方添加对话轮次">+</button></div>
+                                <div class="button-group" style="margin-top: 10px; justify-content: center;"><button class="${SCRIPT_ID_PREFIX_ACU}-optimization-add-prompt-segment-btn" data-position="bottom" title="Thêm lượt hội thoại ở dưới">+</button></div>
                             </div>
                             <div class="button-group">
                                 <button id="${SCRIPT_ID_PREFIX_ACU}-optimization-save-prompt-group" class="primary">保存提示词组</button>
@@ -44584,9 +44584,9 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 <div id="acu-tab-advanced" class="acu-tab-content">
                     <!-- 内部子导航 -->
                     <div class="acu-subtabs-nav">
-                    <button class="acu-subtab-button active" data-subtab="advanced-optimization">正文替换</button>
+                    <button class="acu-subtab-button active" data-subtab="advanced-optimization">Thay thế nội dung</button>
                     ${sqlSection}
-                    <button class="acu-subtab-button" data-subtab="advanced-log">运行日志</button>
+                    <button class="acu-subtab-button" data-subtab="advanced-log">Nhật ký chạy</button>
                     </div>
 
                     <!-- 子页面内容 — 保持子模块原始 id 不变 -->
@@ -46186,23 +46186,23 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 <style id="acu-theme-override">${prebuiltThemeCSS}</style>
 
                 <div class="acu-header">
-                    <h2 id="updater-main-title-acu">当前聊天：${escapeHtml_ACU$1(currentChatFileIdentifier_ACU || '未知')}</h2>
+                    <h2 id="updater-main-title-acu">Cuộc chat hiện tại: ${escapeHtml_ACU$1(currentChatFileIdentifier_ACU || '未知')}</h2>
                 </div>
 
                 <div class="acu-layout">
                     <!-- 导航（分组分页） -->
-                    <div class="acu-tabs-nav" aria-label="数据库工具导航">
-                        <div class="acu-nav-section-title">概览</div>
-                    <button class="acu-tab-button active" data-tab="dashboard">仪表盘</button>
-                        <div class="acu-nav-section-title">配置</div>
-                    <button class="acu-tab-button" data-tab="update">更新</button>
+                    <div class="acu-tabs-nav" aria-label="Điều hướng công cụ CSDL">
+                        <div class="acu-nav-section-title">Tổng quan</div>
+                    <button class="acu-tab-button active" data-tab="dashboard">Bảng điều khiển</button>
+                        <div class="acu-nav-section-title">Cấu hình</div>
+                    <button class="acu-tab-button" data-tab="update">Cập nhật</button>
                     <button class="acu-tab-button" data-tab="api">API</button>
-                    <button class="acu-tab-button" data-tab="table">表格</button>
-                        <div class="acu-nav-section-title">功能</div>
-                    <button class="acu-tab-button" data-tab="corefunc">核心功能</button>
-                    <button class="acu-tab-button" data-tab="datamgmt">数据管理</button>
-                        <div class="acu-nav-section-title">工具</div>
-                    <button class="acu-tab-button" data-tab="advanced">高级工具</button>
+                    <button class="acu-tab-button" data-tab="table">Bảng dữ liệu</button>
+                        <div class="acu-nav-section-title">Tính năng</div>
+                    <button class="acu-tab-button" data-tab="corefunc">Tính năng cốt lõi</button>
+                    <button class="acu-tab-button" data-tab="datamgmt">Quản lý dữ liệu</button>
+                        <div class="acu-nav-section-title">Công cụ</div>
+                    <button class="acu-tab-button" data-tab="advanced">Công cụ nâng cao</button>
                 </div>
 
                     <div class="acu-main">
@@ -46215,7 +46215,7 @@ Hãy nghiêm ngặt chỉ trả về một đối tượng JSON có thể đư�
                 ${generateDataMgmtTabHTML()}
                 ${generateAdvancedTabHTML()}
 
-                <p id="${SCRIPT_ID_PREFIX_ACU}-status-message" class="notes">准备就绪</p>
+                <p id="${SCRIPT_ID_PREFIX_ACU}-status-message" class="notes">Sẵn sàng</p>
                     </div>
                 </div>
             </div>`;
