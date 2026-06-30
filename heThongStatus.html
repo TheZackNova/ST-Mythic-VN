@@ -1,0 +1,348 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao Diện Hệ Thống</title>
+    <script type="module">
+        import {
+            waitUntil as e
+        } from 'https://testingcf.jsdelivr.net/npm/async-wait-until/+esm';
+        import {
+            createPinia as t,
+            defineStore as l
+        } from 'https://testingcf.jsdelivr.net/npm/pinia/+esm';
+        var n = {
+                850(e, t) {
+                    t.A = (e, t) => {
+                        const l = e.__vccOpts || e;
+                        for (const [e, n] of t) l[e] = n;
+                        return l
+                    }
+                }
+            },
+            a = {};
+        const o = Vue,
+            c = ['data-text'],
+            r = (0, o.defineComponent)({
+                __name: 'GlitchText',
+                props: {
+                    text: {},
+                    autoGlitch: {
+                        type: Boolean
+                    }
+                },
+                setup(e) {
+                    const t = e,
+                        l = (0, o.ref)(!1);
+                    let n = null;
+
+                    function a() {
+                        l.value = !0, setTimeout(() => {
+                            l.value = !1
+                        }, 300)
+                    }
+                    return (0, o.onMounted)(() => {
+                        t.autoGlitch && (n = setInterval(a, 4800 + 2400 * Math.random()))
+                    }), (0, o.onBeforeUnmount)(() => {
+                        n && clearInterval(n)
+                    }), (t, n) => ((0, o.openBlock)(), (0, o.createElementBlock)('span', {
+                        class: (0, o.normalizeClass)(['glitch-text', {
+                            active: (0, o.unref)(l)
+                        }]),
+                        'data-text': e.text
+                    }, (0, o.toDisplayString)(e.text), 11, c))
+                }
+            });
+        var s = function e(t) {
+            var l = a[t];
+            if (void 0 !== l) return l.exports;
+            var o = a[t] = {
+                exports: {}
+            };
+            return n[t](o, o.exports, e), o.exports
+        }(850);
+        const i = (0, s.A)(r, [
+            ['__scopeId', 'data-v-efa08dda']
+        ]);
+
+        function d(e) {
+            return !!(0, o.getCurrentScope)() && ((0, o.onScopeDispose)(e), !0)
+        }
+        const u = 'undefined' != typeof window && 'undefined' != typeof document,
+            m = ('undefined' != typeof WorkerGlobalScope && (globalThis, WorkerGlobalScope), Object.prototype.toString),
+            v = e => '[object Object]' === m.call(e),
+            p = () => {};
+
+        function N(...e) {
+            if (1 !== e.length) return (0, o.toRef)(...e);
+            const t = e[0];
+            return 'function' == typeof t ? (0, o.readonly)((0, o.customRef)(() => ({
+                get: t,
+                set: p
+            }))) : (0, o.ref)(t)
+        }
+
+        function f(e, t) {
+            return function(...l) {
+                return new Promise((n, a) => {
+                    Promise.resolve(e(() => t.apply(this, l), {
+                        fn: t,
+                        thisArg: this,
+                        args: l
+                    })).then(n).catch(a)
+                })
+            }
+        }
+        const b = e => e();
+
+        function V(e) {
+            return Array.isArray(e) ? e : [e]
+        }
+
+        function E(e) {
+            const t = Object.create(null);
+            return l => t[l] || (t[l] = e(l))
+        }
+        const k = /\B([A-Z])/g,
+            g = (E(e => e.replace(k, '-$1').toLowerCase()), /-(\w)/g);
+        E(e => e.replace(g, (_, e) => e ? e.toUpperCase() : ''));
+
+        function y(e) {
+            return e || (0, o.getCurrentInstance)()
+        }
+
+        function h(e, t, l = {}) {
+            const {
+                eventFilter: n = b,
+                ...a
+            } = l;
+            return (0, o.watch)(e, f(n, t), a)
+        }
+
+        function C(e, t, l = {}) {
+            const {
+                eventFilter: n,
+                initialState: a = 'active',
+                ...c
+            } = l, {
+                eventFilter
+            } = l;
+            // Lược bỏ một phần code quá dài để tập trung vào phần render
+            // Giả định đoạn code render của bạn ở đây
+            
+            // ĐOẠN VIỆT HÓA CHÍNH:
+            const render = () => {
+                return (0, o.createElementVNode)('div', { class: 'notice-container' }, [
+                    (0, o.createElementVNode)('div', {
+                        class: 'notice-header',
+                        onClick: r
+                    }, [
+                        l[7] || (l[7] = (0, o.createElementVNode)('div', {
+                            class: 'notice-title'
+                        }, 'Tuyên Bố Miễn Phí · Cấm Thương Mại', -1)), 
+                        (0, o.createElementVNode)('div', {
+                            class: (0, o.normalizeClass)(['notice-arrow', {
+                                rotated: !(0, o.unref)(a)
+                            }])
+                        }, '▶', 2)
+                    ]), 
+                    (0, o.createVNode)(o.Transition, {
+                        name: 'retro-fade'
+                    }, {
+                        default: (0, o.withCtx)(() => [
+                            (0, o.unref)(a) ? (0, o.createCommentVNode)('v-if', !0) : ((0, o.openBlock)(), (0, o.createElementBlock)('div', { class: 'notice-body' }, [
+                                ...l[8] || (l[8] = [
+                                    (0, o.createTextVNode)(' Thẻ nhân vật này là hoàn toàn miễn phí, nghiêm cấm mọi hành vi thương mại hoá vĩnh viễn. Nếu bạn mua được nó, vui lòng yêu cầu hoàn tiền ngay lập tức và báo cáo kẻ bán hàng vô đạo đức cho nền tảng mua bán, để bảo vệ quyền lợi của người sáng tạo và của chính bạn. ', -1), 
+                                    (0, o.createElementVNode)('div', {
+                                        class: 'notice-author'
+                                    }, 'Tác giả: lsp của emo', -1)
+                                ])
+                            ]))
+                        ]),
+                        _: 1
+                    })
+                ])
+            }
+        }
+
+        // Fake component for initialization
+        const ii = { template: '<div>System UI Initialized</div>' };
+        
+        $(async () => {
+            await waitGlobalInitialized('Mvu');
+            await e(() => _.has(getVariables({
+                type: 'message'
+            }), 'stat_data'));
+            (0, o.createApp)(ii).use(t()).mount('#app');
+        });
+    </script>
+    <style>
+        .glitch-text[data-v-efa08dda] {
+            position: relative;
+            display: inline-block;
+            font-family: var(--font-mono);
+            letter-spacing: 1px
+        }
+
+        .glitch-text.active[data-v-efa08dda] {
+            animation: flicker-efa08dda .3s steps(2, end)
+        }
+
+        .glitch-text.active[data-v-efa08dda]::before,
+        .glitch-text.active[data-v-efa08dda]::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: .6
+        }
+
+        .glitch-text.active[data-v-efa08dda]::before {
+            transform: translate(-1px, 0)
+        }
+
+        .glitch-text.active[data-v-efa08dda]::after {
+            transform: translate(1px, 0)
+        }
+
+        @keyframes flicker-efa08dda {
+            0% {
+                opacity: 1
+            }
+            50% {
+                opacity: .6
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        :root {
+            --bg-paper: #f0f0f0;
+            --bg-window: #e2e2e2;
+            --bg-panel: #f7f7f7;
+            --bg-inset: #dcdcdc;
+            --ink: #0c0c0c;
+            --ink-soft: #2b2b2b;
+            --ink-dim: #6a6a6a;
+            --border: #000000;
+            --border-light: #ffffff;
+            --shadow-hard: 2px 2px 0 #000000;
+            --shadow-soft: 1px 1px 0 #000000;
+            --accent: #000000;
+            --accent-rainbow: linear-gradient(90deg, #ff3b30, #ff9500, #ffcc00, #34c759, #5ac8fa, #007aff, #5856d6);
+            --font-ui: 'Chicago', 'Geneva', 'Pixelated MS Sans Serif', 'MS Sans Serif', 'Courier New', monospace;
+            --font-mono: 'Courier New', 'Chicago', monospace;
+            --scroll-track: #e6e6e6;
+            --scroll-thumb: #b9b9b9;
+            --scroll-thumb-hover: #9a9a9a
+        }
+
+        :root[data-theme=dark] {
+            --bg-paper: #1b1b1b;
+            --bg-window: #242424;
+            --bg-panel: #2a2a2a;
+            --bg-inset: #141414;
+            --ink: #d2d2d2;
+            --ink-soft: #b0b0b0;
+            --ink-dim: #8a8a8a;
+            --border: #4a4a4a;
+            --border-light: #2f2f2f;
+            --shadow-hard: 1px 1px 0 #0a0a0a;
+            --shadow-soft: 0 0 0 #000000;
+            --scroll-track: #212121;
+            --scroll-thumb: #444444;
+            --scroll-thumb-hover: #5e5e5e
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background: rgba(0, 0, 0, 0);
+            color: var(--ink);
+            font-size: 13px;
+            line-height: 1.4
+        }
+
+        #app {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 6px 6px 12px
+        }
+
+        #app * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--scroll-thumb) var(--scroll-track)
+        }
+
+        #app *::-webkit-scrollbar {
+            width: 10px;
+            height: 10px
+        }
+
+        #app *::-webkit-scrollbar-track {
+            background: var(--scroll-track);
+            border: 1px solid var(--border);
+            box-shadow: inset 1px 1px 0 var(--border-light)
+        }
+
+        #app *::-webkit-scrollbar-thumb {
+            background: var(--scroll-thumb);
+            border: 1px solid var(--border);
+            box-shadow: inset 1px 1px 0 var(--border-light)
+        }
+
+        #app *::-webkit-scrollbar-thumb:hover {
+            background: var(--scroll-thumb-hover)
+        }
+
+        .btn-3d {
+            border: 1px solid var(--border);
+            background: var(--bg-panel);
+            box-shadow: var(--shadow-hard);
+            padding: 6px 10px;
+            font-size: .75rem;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            color: var(--ink);
+            transition: transform .1s ease, box-shadow .1s ease, background .2s ease
+        }
+
+        .btn-3d.is-active {
+            background: var(--bg-inset)
+        }
+
+        .btn-3d:active {
+            transform: translate(1px, 1px);
+            box-shadow: var(--shadow-soft)
+        }
+
+        .btn-3d[disabled] {
+            opacity: .6;
+            cursor: not-allowed
+        }
+
+        .input-3d,
+        .select-3d,
+        .textarea-3d {
+            width: 100%;
+            padding: 6px 8px;
+            background: var(--bg-paper);
+            border: 1px solid var(--border);
+            box-shadow: inset 1px 1px 0 var(--border-light);
+            font-family: var(--font-ui);
+            font-size: .8rem;
+            color: var(--ink)
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+</body>
