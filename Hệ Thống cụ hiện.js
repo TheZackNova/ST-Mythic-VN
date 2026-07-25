@@ -13,6 +13,16 @@
     const OVERLAY_ID = 'nlsp-overlay';
     const STYLE_ID = 'nlsp-style';
 
+    /* Lấy script_id của JS-Slash-Runner (bắt buộc cho biến type:'script' ở bản TavernHelper mới) */
+    let SCRIPT_ID = '';
+    try {
+        if (typeof getScriptId === 'function') SCRIPT_ID = getScriptId();
+        else if (typeof TH.getScriptId === 'function') SCRIPT_ID = TH.getScriptId();
+    } catch (e) { SCRIPT_ID = ''; }
+    function scriptVarOpts() {
+        return SCRIPT_ID ? { type: 'script', script_id: SCRIPT_ID } : null;
+    }
+
     const DRAW_COST_ONE = 100;
     const DRAW_COST_TEN = 900;
 
@@ -111,7 +121,8 @@
             console.warn('[Hệ Thống] Lỗi đọc toàn bộ localStorage: ', e);
         }
         try {
-            const vars = TH.getVariables({ type: 'script' });
+            const opts = scriptVarOpts();
+            const vars = opts ? TH.getVariables(opts) : null;
             const data = vars && vars[NS];
             if (data && typeof data === 'object') {
                 const def = getDefaultState();
@@ -163,7 +174,8 @@
 
     function saveState() {
         try {
-            TH.insertOrAssignVariables({ [NS]: state }, { type: 'script' });
+            const opts = scriptVarOpts();
+            if (opts) TH.insertOrAssignVariables({ [NS]: state }, opts);
         } catch (e) {
             console.warn('[Hệ Thống] Lỗi lưu trạng thái: ', e);
         }
@@ -233,11 +245,10 @@ function injectFont() {
 
     function ensureStyle() {
         const doc = getDoc();
-        if (doc.getElementById(STYLE_ID)) return;
         applyTheme(state.theme || 'hl-dark');
-        const css = `*{box-sizing:border-box;margin:0;padding:0}
-a{text-decoration:none;color:inherit}
-#${OVERLAY_ID}{position:fixed;inset:0;z-index:999999;font-family:"Tourney","Microsoft YaHei",sans-serif;pointer-events:none;display:flex;align-items:center;justify-content:center}
+        const css = `#${OVERLAY_ID},#${OVERLAY_ID} *{box-sizing:border-box;margin:0;padding:0}
+#${OVERLAY_ID} a{text-decoration:none;color:inherit}
+#${OVERLAY_ID}{position:fixed;inset:0;z-index:999999;font-family:'Segoe UI',"Microsoft YaHei",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;pointer-events:none;display:flex;align-items:center;justify-content:center}
 #${OVERLAY_ID} .nlsp-shell{pointer-events:auto}
 #OVL .nlsp-topbar{cursor:move}
 #OVL .nlsp-topbar .tr,#OVL .nlsp-topbar .tr *{cursor:default}
@@ -246,7 +257,7 @@ a{text-decoration:none;color:inherit}
 #OVL .nlsp-btn,#OVL .nlsp-app,#OVL .nlsp-close,#OVL .nlsp-icon,#OVL .nlsp-back,#OVL button{cursor:pointer}
 #OVL input,#OVL textarea,#OVL select{cursor:text}
 /** preview 原封不动照搬开始 **/
-.scene,.nlsp-shell{position:relative;width:min(820px,94vw);height:min(580px,88vh);animation:hl-shift 6s ease-in-out infinite}@media(max-width:768px){.scene,.nlsp-shell{width:96vw;height:min(520px,80vh);border-radius:0}.nlsp-topbar{padding:12px 14px 10px}.nlsp-topbar .tname{font-size:11px;letter-spacing:1px}.nlsp-topbar .tsub{font-size:10px}.nlsp-body{padding:12px 14px}.nlsp-app-grid{grid-template-columns:repeat(3,1fr);gap:10px}.nlsp-app .nlsp-app-ic{width:46px;height:46px;font-size:20px}.nlsp-app .nlsp-app-name{font-size:10px}.nlsp-btn{font-size:10px;padding:6px 12px}.nlsp-card{padding:10px 12px}.nlsp-input,.nlsp-select,.nlsp-textarea{padding:8px 10px;font-size:12px}.nlsp-page-title{font-size:11px}.nlsp-pt-pill{font-size:10px;padding:3px 10px}.nlsp-chat{font-size:11px}.nlsp-msg{font-size:11px;padding:8px 10px}}
+.scene,.nlsp-shell{position:relative;width:min(820px,94vw);height:min(580px,88vh);max-width:100vw;max-height:100vh;max-height:100dvh;animation:hl-shift 6s ease-in-out infinite}@media(max-width:768px){.scene,.nlsp-shell{width:100%;height:100%;max-width:100%;max-height:100%;border-radius:0;animation:none}.nlsp-topbar{padding:12px 14px 10px}.nlsp-topbar .tname{font-size:11px;letter-spacing:1px}.nlsp-topbar .tsub{font-size:10px}.nlsp-body{padding:12px 14px}.nlsp-app-grid{grid-template-columns:repeat(3,1fr);gap:10px}.nlsp-app .nlsp-app-ic{width:46px;height:46px;font-size:20px}.nlsp-app .nlsp-app-name{font-size:10px}.nlsp-btn{font-size:10px;padding:6px 12px}.nlsp-card{padding:10px 12px}.nlsp-input,.nlsp-select,.nlsp-textarea{padding:8px 10px;font-size:12px}.nlsp-page-title{font-size:11px}.nlsp-pt-pill{font-size:10px;padding:3px 10px}.nlsp-chat{font-size:11px}.nlsp-msg{font-size:11px;padding:8px 10px}}
 @keyframes hl-shift{0%,100%{transform:translate(0,0)}25%{transform:translate(.3px,-.2px)}50%{transform:translate(-.2px,.3px)}75%{transform:translate(.1px,-.1px)}}
 .frame,.nlsp-frame{position:absolute;inset:-4px;z-index:0;pointer-events:none;border-radius:2px;background:transparent}
 .frame::before,.nlsp-frame::before{content:"";position:absolute;inset:-2px;background:conic-gradient(from 0deg at 0% 0%,transparent 60%,rgba(100,210,255,.15) 60%,rgba(100,210,255,.15) 70%,transparent 70%) no-repeat 0 0/16px 16px,conic-gradient(from 90deg at 100% 0%,transparent 60%,rgba(100,210,255,.15) 60%,rgba(100,210,255,.15) 70%,transparent 70%) no-repeat 100% 0/16px 16px,conic-gradient(from 180deg at 100% 100%,transparent 60%,rgba(100,210,255,.15) 60%,rgba(100,210,255,.15) 70%,transparent 70%) no-repeat 100% 100%/16px 16px,conic-gradient(from 270deg at 0% 100%,transparent 60%,rgba(100,210,255,.15) 60%,rgba(100,210,255,.15) 70%,transparent 70%) no-repeat 0 100%/16px 16px}
@@ -262,21 +273,22 @@ a{text-decoration:none;color:inherit}
 .corner.br,.nlsp-corner.br{bottom:0;right:0}.corner.br::before,.nlsp-corner.br::before{bottom:0;right:0}.corner.br::after,.nlsp-corner.br::after{bottom:0;right:0}
 .corner.bl,.nlsp-corner.bl{bottom:0;left:0}.corner.bl::before,.nlsp-corner.bl::before{bottom:0;left:0}.corner.bl::after,.nlsp-corner.bl::after{bottom:0;left:0}
 .panel,.nlsp-panel{position:relative;z-index:2;width:100%;height:100%;background:radial-gradient(ellipse at 30% 20%,rgba(30,60,120,.12) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(20,50,110,.08) 0%,transparent 55%),var(--t-bg);border:1px solid var(--t-shellBorder);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 1px var(--t-w) inset,0 0 30px rgba(40,100,200,.08) inset}
-.panel::before,.nlsp-panel::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(25deg,transparent 0,transparent 98px,rgba(120,200,255,.03) 98px,rgba(120,200,255,.03) 100px),repeating-linear-gradient(-20deg,transparent 0,transparent 140px,rgba(80,160,240,.02) 140px,rgba(80,160,240,.02) 142px),radial-gradient(circle at 15% 30%,rgba(100,200,255,.06) 0,transparent 30%),radial-gradient(circle at 85% 70%,rgba(60,150,220,.04) 0,transparent 25%);opacity:.7}
-.panel::after,.nlsp-panel::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(0deg,rgba(40,100,180,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(40,100,180,.03) 1px,transparent 1px);background-size:40px 40px;opacity:.4}
+.panel::before,.nlsp-panel::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(25deg,transparent 0,transparent 98px,rgba(120,200,255,.03) 98px,rgba(120,200,255,.03) 100px),repeating-linear-gradient(-20deg,transparent 0,transparent 140px,rgba(80,160,240,.02) 140px,rgba(80,160,240,.02) 142px),radial-gradient(circle at 15% 30%,rgba(100,200,255,.06) 0,transparent 30%),radial-gradient(circle at 85% 70%,rgba(60,150,220,.04) 0,transparent 25%);opacity:.35}
+.panel::after,.nlsp-panel::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(0deg,rgba(40,100,180,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(40,100,180,.03) 1px,transparent 1px);background-size:40px 40px;opacity:.18}
 .header,.nlsp-topbar{position:relative;z-index:2;flex:0 0 auto;padding:16px 24px 14px;border-bottom:1px solid var(--t-inputBorder);display:flex;align-items:center;justify-content:space-between}
-.header .title,.nlsp-topbar .tname{font-family:"Tourney",monospace;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--t-title);text-shadow:0 0 12px rgba(100,180,255,.4),0 0 24px rgba(60,120,220,.2);animation:hl-text-scan 4s ease-in-out infinite}
+.header .title,.nlsp-topbar .tname{font-family:"Tourney",monospace;font-size:14px;font-weight:700;letter-spacing:1.5px;color:var(--t-title);text-shadow:0 0 5px rgba(100,180,255,.22)}
 @keyframes hl-text-scan{0%,20%,100%{text-shadow:0 0 12px rgba(100,180,255,.4),0 0 24px rgba(60,120,220,.2)}21%,30%{text-shadow:0 0 20px rgba(130,210,255,.6),0 0 36px rgba(80,150,230,.35)}}
-.header .sub,.nlsp-topbar .tsub{font-size:12px;color:var(--t-muted);letter-spacing:1px}
+.header .sub,.nlsp-topbar .tsub{font-size:12.5px;color:var(--t-text);opacity:.72;letter-spacing:.3px}
 .nlsp-topbar .tr{display:flex;align-items:center;gap:14px}
 .body,.nlsp-body{position:relative;z-index:2;flex:1 1 auto;overflow:auto;padding:20px 24px}
 .nlsp-pane{position:relative;z-index:2;flex:1 1 auto;overflow:auto}
 .body::-webkit-scrollbar,.nlsp-body::-webkit-scrollbar,.nlsp-pane::-webkit-scrollbar{width:4px}
 .body::-webkit-scrollbar-track,.nlsp-body::-webkit-scrollbar-track,.nlsp-pane::-webkit-scrollbar-track{background:transparent}
 .body::-webkit-scrollbar-thumb,.nlsp-body::-webkit-scrollbar-thumb,.nlsp-pane::-webkit-scrollbar-thumb{background:rgba(40,100,180,.3);border-radius:3px}
-.hl-text,.nlsp-page-sub{color:var(--t-text);font-size:13px;line-height:1.7;letter-spacing:.5px;text-shadow:0 0 6px rgba(60,140,220,.3)}
-.hl-text.accent,.nlsp-task-card .tgoal,.nlsp-card .icate,.nlsp-icon,.nlsp-back,.nlsp-pt-pill,.nlsp-section-title,.nlsp-label{color:var(--t-accent);text-shadow:0 0 10px rgba(80,180,240,.5)}
-.hl-text.mute,.nlsp-muted,.nlsp-card .idesc,.nlsp-task-card .tdesc,.nlsp-wb-box .wb-sum,.nlsp-close,.nlsp-app .nlsp-app-name,.nlsp-page-sub.mute{color:var(--t-muted);text-shadow:0 0 6px rgba(60,140,220,.2)}
+.hl-text,.nlsp-page-sub{color:var(--t-text);font-size:13.5px;line-height:1.65;letter-spacing:.2px;font-weight:500;text-shadow:none}
+.hl-text.accent,.nlsp-task-card .tgoal,.nlsp-card .icate,.nlsp-icon,.nlsp-back,.nlsp-pt-pill,.nlsp-section-title,.nlsp-label{color:var(--t-accent);text-shadow:0 0 4px rgba(80,180,240,.3)}
+.hl-text.mute,.nlsp-muted,.nlsp-card .idesc,.nlsp-task-card .tdesc,.nlsp-wb-box .wb-sum,.nlsp-close,.nlsp-app .nlsp-app-name,.nlsp-page-sub.mute{color:var(--t-muted);text-shadow:none}
+.nlsp-card .idesc,.nlsp-task-card .tdesc,.nlsp-wb-box .wb-sum{color:var(--t-text);opacity:.85;font-weight:500}
 .hl-card,.nlsp-card{background:var(--t-cardBg);border:1px solid var(--t-cardBorder);border-radius:4px;padding:14px 16px;margin:8px 0;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.3),inset 0 1px 0 rgba(60,140,220,.08);transition:box-shadow .3s ease}
 .hl-card:hover,.nlsp-card:hover{box-shadow:0 2px 16px rgba(40,100,200,.15),inset 0 1px 0 rgba(60,140,220,.15)}
 .hl-card .seq,.nlsp-task-card .tmeta .seq{position:absolute;top:10px;right:12px;font-size:10px;color:rgba(100,180,240,.5);letter-spacing:1px}
@@ -361,9 +373,47 @@ a{text-decoration:none;color:inherit}
 .nlsp-flow::after{content:"";position:absolute;top:-150%;left:-150%;width:300%;height:300%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.04) 45%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 55%,transparent 60%);animation:nlsp-flow-sweep 5s ease-in-out infinite}
 @keyframes nlsp-flow-sweep{0%{transform:translate(-30%,-30%) rotate(15deg)}50%{transform:translate(30%,30%) rotate(15deg)}100%{transform:translate(-30%,-30%) rotate(15deg)}}
 `;
-        const style = doc.createElement('style');
-        style.id = STYLE_ID;
-        style.textContent = css;        style.textContent = css;        doc.head.appendChild(style);
+        let style = doc.getElementById(STYLE_ID);
+        if (!style) {
+            style = doc.createElement('style');
+            style.id = STYLE_ID;
+            doc.head.appendChild(style);
+        }
+        style.textContent = scopeCss(css, '#' + OVERLAY_ID);
+    }
+
+    /* Giới hạn mọi luật CSS vào trong overlay để không rò rỉ ra giao diện SillyTavern (document cha).
+       Chừa @keyframes/@font-face; đệ quy vào @media/@supports; bỏ qua selector đã chứa scope. */
+    function scopeCss(css, scope) {
+        return splitTopLevelRules(css).map(function (rule) {
+            rule = rule.trim();
+            if (!rule) return '';
+            const braceIdx = rule.indexOf('{');
+            if (braceIdx < 0) return rule;
+            const prelude = rule.slice(0, braceIdx).trim();
+            const body = rule.slice(braceIdx + 1, rule.lastIndexOf('}'));
+            if (prelude.charAt(0) === '@') {
+                if (/^@(media|supports)/i.test(prelude)) return prelude + '{' + scopeCss(body, scope) + '}';
+                return prelude + '{' + body + '}';
+            }
+            const sels = prelude.split(',').map(function (sel) {
+                sel = sel.trim();
+                if (!sel || sel === scope || sel.indexOf(scope) !== -1) return sel;
+                return scope + ' ' + sel;
+            });
+            return sels.join(',') + '{' + body + '}';
+        }).join('\n');
+    }
+    function splitTopLevelRules(css) {
+        const rules = [];
+        let depth = 0, start = 0;
+        for (let i = 0; i < css.length; i++) {
+            const c = css[i];
+            if (c === '{') depth++;
+            else if (c === '}') { depth--; if (depth === 0) { rules.push(css.slice(start, i + 1)); start = i + 1; } }
+        }
+        if (start < css.length) rules.push(css.slice(start));
+        return rules;
     }
 
     function getDoc() {
@@ -385,8 +435,35 @@ a{text-decoration:none;color:inherit}
         
         overlay.id = OVERLAY_ID;
         overlay.addEventListener('click', (ev) => { if (ev.target === overlay) overlay.remove(); });
-        doc.body.appendChild(overlay);
+        /* Gắn vào <html> để thoát phần tử cha bị transform (mobile ST làm hỏng position:fixed) */
+        (doc.documentElement || doc.body).appendChild(overlay);
+        pinOverlayToViewport(overlay);
         render();
+    }
+
+    /* Ghim overlay đúng vùng nhìn thấy thật sự (visualViewport), tránh lỗi tràn khi cha bị transform
+       hoặc khi có thanh công cụ trình duyệt trên mobile. */
+    function pinOverlayToViewport(ov) {
+        try {
+            const vv = (window.parent && window.parent.visualViewport) || window.visualViewport;
+            if (!vv) return;
+            const apply = () => {
+                const el = getDoc().getElementById(OVERLAY_ID);
+                if (!el) return;
+                el.style.position = 'fixed';
+                el.style.inset = 'auto';
+                el.style.left = (vv.offsetLeft || 0) + 'px';
+                el.style.top = (vv.offsetTop || 0) + 'px';
+                el.style.width = vv.width + 'px';
+                el.style.height = vv.height + 'px';
+            };
+            apply();
+            if (!ov._nlspVVBound) {
+                ov._nlspVVBound = true;
+                vv.addEventListener('resize', apply);
+                vv.addEventListener('scroll', apply);
+            }
+        } catch (e) {}
     }
 
     function closePanel() {
@@ -408,11 +485,23 @@ a{text-decoration:none;color:inherit}
         return shell;
     }
 
+    function isMobileView() {
+        try { return getDoc().documentElement.clientWidth <= 768; } catch (e) { return false; }
+    }
     function applyPanelResize(shell) {
         if (!shell) shell = getDoc().querySelector('.nlsp-shell');
         if (!shell) return;
-        if (state.panelW > 200) shell.style.width = state.panelW + 'px';
-        if (state.panelH > 150) shell.style.height = state.panelH + 'px';
+        /* Mobile: full màn hình theo CSS, bỏ mọi inline size đã lưu từ desktop để tránh tràn/cắt */
+        if (isMobileView()) {
+            shell.style.width = '';
+            shell.style.height = '';
+            shell.style.resize = '';
+            return;
+        }
+        var docEl = getDoc().documentElement;
+        var maxW = docEl.clientWidth - 8, maxH = docEl.clientHeight - 8;
+        if (state.panelW > 200) shell.style.width = Math.min(state.panelW, maxW) + 'px';
+        if (state.panelH > 150) shell.style.height = Math.min(state.panelH, maxH) + 'px';
         if (!state.scaleLocked) {
             shell.style.resize = 'both';
             shell.style.overflow = 'hidden';
@@ -423,6 +512,7 @@ a{text-decoration:none;color:inherit}
                 shell._nlspResizeBound = true;
                 var saveTimer = null;
                 var ro = new ResizeObserver(function(){
+                    if (isMobileView()) return; /* không lưu kích thước khi ở mobile */
                     var r = shell.getBoundingClientRect();
                     state.panelW = Math.round(r.width);
                     state.panelH = Math.round(r.height);
@@ -486,13 +576,13 @@ a{text-decoration:none;color:inherit}
     /* ---------- Bước 1: Có muốn bật hệ thống không ---------- */
     function renderEnable() {
         setShell(`
-            ${shellTopBar('Bảng Hệ Thống', 'Bước 1 · Có muốn bật hệ thống không?', '<span class=”nlsp-close” id=”nlsp-enable-close”>×</span>')}
-            <div class=”nlsp-body”>
-                <div class=”nlsp-pane nlsp-center”>
-                    <p class=”nlsp-page-sub”>Sau khi bật sẽ hướng dẫn bạn kết nối giao diện tương thích OpenAI và khởi tạo một “hệ thống” có thể tương tác.</p>
-                    <div style=”margin-top:16px; display:flex; gap:10px; justify-content:center;”>
-                        <button class=”nlsp-btn ghost” id=”nlsp-enable-no”>Không</button>
-                        <button class=”nlsp-btn” id=”nlsp-enable-yes”>Có</button>
+            ${shellTopBar('Bảng Hệ Thống', 'Bước 1 · Có muốn bật hệ thống không?', '<span class="nlsp-close" id="nlsp-enable-close">×</span>')}
+            <div class="nlsp-body">
+                <div class="nlsp-pane nlsp-center">
+                    <p class="nlsp-page-sub">Sau khi bật sẽ hướng dẫn bạn kết nối giao diện tương thích OpenAI và khởi tạo một "hệ thống" có thể tương tác.</p>
+                    <div style="margin-top:16px; display:flex; gap:10px; justify-content:center;">
+                        <button class="nlsp-btn ghost" id="nlsp-enable-no">Không</button>
+                        <button class="nlsp-btn" id="nlsp-enable-yes">Có</button>
                     </div>
                 </div>
             </div>
@@ -973,6 +1063,7 @@ a{text-decoration:none;color:inherit}
         if (activeView === 'shop') return renderAppView(pane, 'shop', 'Cửa Hàng Hệ Thống', 'Gọi mô hình để tạo và làm mới sản phẩm', renderShopBody);
         if (activeView === 'draw') return renderAppView(pane, 'draw', 'Quay Thưởng Hệ Thống', 'Quay 1 lần ' + DRAW_COST_ONE + ' / 10 lần ' + DRAW_COST_TEN, renderDrawBody);
         if (activeView === 'decompose') return renderAppView(pane, 'decompose', 'Phân Giải Vật Phẩm', 'Nhập tên vật phẩm để phân giải', renderDecomposeBody);
+        if (activeView === 'inventory') return renderAppView(pane, 'inventory', 'Kho Đồ', 'Nhấn "Sử Dụng" để dùng vật phẩm', renderInventoryBody);
         if (activeView === 'chat') return renderChatView(pane);
         if (activeView.indexOf('excl')===0){var idx=parseInt(activeView.slice(4))||0;var excls=state.exclusiveFunctions||[];var ef=excls[idx]||{};return renderAppView(pane,'excl'+idx,ef.name||'Chức Năng Riêng',ef.desc||'',function(b){renderExclBody(b,idx)});}
     }
@@ -986,6 +1077,7 @@ ${state.system.greeting?'<div class="nlsp-banner"><div>SYSTEM.GREETING</div><div
 <a class="nlsp-app" data-app="shop"><span class="nlsp-app-ic">🛒</span><span class="nlsp-app-name">Cửa Hàng</span></a>
 <a class="nlsp-app" data-app="draw"><span class="nlsp-app-ic">🎁</span><span class="nlsp-app-name">Quay Thưởng</span></a>
 <a class="nlsp-app" data-app="decompose"><span class="nlsp-app-ic">♻</span><span class="nlsp-app-name">Phân Giải</span></a>
+<a class="nlsp-app" data-app="inventory"><span class="nlsp-app-ic">🎒</span><span class="nlsp-app-name">Kho Đồ</span></a>
 <a class="nlsp-app" data-app="chat"><span class="nlsp-app-ic">💬</span><span class="nlsp-app-name">Đối Thoại</span></a>
 ${exclIcons}
 </div>
@@ -1111,23 +1203,23 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
         const list = getDoc().getElementById('nlsp-task-list');
         if (!list) return;
         if (!state.tasks.length) {
-            list.innerHTML = '<div class=”nlsp-muted”>Chưa có nhiệm vụ, nhấn “Làm Mới Nhiệm Vụ” ở góc trên bên phải để tạo.</div>';
+            list.innerHTML = '<div class="nlsp-muted">Chưa có nhiệm vụ, nhấn "Làm Mới Nhiệm Vụ" ở góc trên bên phải để tạo.</div>';
             return;
         }
-        list.innerHTML = '<div class=”nlsp-rows”>' + state.tasks.map((t, i) => `
-            <div class=”nlsp-card nlsp-task-card” style=”margin-bottom:10px;”>
-                <div class=”tmeta”>
-                    <span class=”seq”>#${i + 1}</span>
-                    <span class=”iname”>${escapeText(t.name || 'Nhiệm vụ chưa đặt tên')}</span>
-                    ${t.status === 'done' ? '<span class=”status-done”>Đã hoàn thành</span>' : (t.status === 'doing' ? '<span class=”status-doing”>Đang tiến hành</span>' : '<span class=”nlsp-page-sub”>Chưa bắt đầu</span>')}
+        list.innerHTML = '<div class="nlsp-rows">' + state.tasks.map((t, i) => `
+            <div class="nlsp-card nlsp-task-card" style="margin-bottom:10px;">
+                <div class="tmeta">
+                    <span class="seq">#${i + 1}</span>
+                    <span class="iname">${escapeText(t.name || 'Nhiệm vụ chưa đặt tên')}</span>
+                    ${t.status === 'done' ? '<span class="status-done">Đã hoàn thành</span>' : (t.status === 'doing' ? '<span class="status-doing">Đang tiến hành</span>' : '<span class="nlsp-page-sub">Chưa bắt đầu</span>')}
                 </div>
-                <div class=”tdesc” style=”margin-top:4px;”>${escapeText(t.desc || '')}</div>
-                <div class=”tgoal” style=”margin-top:4px;”>Mục tiêu: ${escapeText(t.goal || '')}</div>
-                <div class=”treward” style=”margin-top:2px;”>Phần thưởng: <span class=”nlsp-pt”>${Number(t.reward || 0)} điểm</span>${t.itemReward ? ' · ' + escapeText(t.itemReward) : ''}</div>
-                <div class=”tactions”>
-                    ${t.status === 'done' ? '<span class=”status-done” style=”padding:4px;”>Đã nhận thưởng</span>' :
-                        `<button class=”nlsp-btn ghost” data-task-start=”${i}” ${t.status === 'doing' ? 'disabled' : ''}>${t.status === 'doing' ? 'Đang tiến hành' : 'Bắt Đầu'}</button>
-                         <button class=”nlsp-btn” data-task-done=”${i}” ${t.status !== 'doing' ? 'disabled' : ''}>Hoàn Thành</button>`}
+                <div class="tdesc" style="margin-top:4px;">${escapeText(t.desc || '')}</div>
+                <div class="tgoal" style="margin-top:4px;">Mục tiêu: ${escapeText(t.goal || '')}</div>
+                <div class="treward" style="margin-top:2px;">Phần thưởng: <span class="nlsp-pt">${Number(t.reward || 0)} điểm</span>${t.itemReward ? ' · ' + escapeText(t.itemReward) : ''}</div>
+                <div class="tactions">
+                    ${t.status === 'done' ? '<span class="status-done" style="padding:4px;">Đã nhận thưởng</span>' :
+                        `<button class="nlsp-btn ghost" data-task-start="${i}" ${t.status === 'doing' ? 'disabled' : ''}>${t.status === 'doing' ? 'Đang tiến hành' : 'Bắt Đầu'}</button>
+                         <button class="nlsp-btn" data-task-done="${i}" ${t.status !== 'doing' ? 'disabled' : ''}>Hoàn Thành</button>`}
                 </div>
             </div>`).join('') + '</div>';
         bindTask('data-task-start', (i) => {
@@ -1174,11 +1266,11 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
         if (Array.isArray(items)) for (const it of items) {
             if (!it || !it.name) continue;
             norm.push({
-                name: String(it.name).slice(0, 60),
-                category: String(it.category || '').slice(0, 30),
-                desc: String(it.desc || it.function || '').slice(0, 200),
+                name: String(it.name).slice(0, 100),
+                category: String(it.category || '').slice(0, 40),
+                desc: String(it.desc || it.function || '').slice(0, 400),
                 rarity: String(it.rarity || 'Thường').slice(0, 12),
-                from: String(it.from || 'Cửa Hàng').slice(0, 20),
+                from: String(it.from || 'Cửa Hàng').slice(0, 40),
                 time: Date.now()
             });
         }
@@ -1191,18 +1283,18 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
     /* ---------- Cửa hàng ---------- */
     function renderShopBody(body) {
         body.innerHTML = `
-            <div class=”nlsp-page-head”>
-                <span class=”nlsp-page-sub”>Điểm hiện tại <span class=”nlsp-pt”>${state.points}</span></span>
-                <button class=”nlsp-btn ghost” id=”nlsp-shop-refresh”>Làm Mới Sản Phẩm</button>
+            <div class="nlsp-page-head">
+                <span class="nlsp-page-sub">Điểm hiện tại <span class="nlsp-pt">${state.points}</span></span>
+                <button class="nlsp-btn ghost" id="nlsp-shop-refresh">Làm Mới Sản Phẩm</button>
             </div>
-            <div id=”nlsp-shop-list”></div>
+            <div id="nlsp-shop-list"></div>
         `;
         paintShop();
         on('nlsp-shop-refresh', 'click', async () => {
             const btn = getDoc().getElementById('nlsp-shop-refresh');
             if (btn) btn.disabled = true;
             const list = getDoc().getElementById('nlsp-shop-list');
-            if (list) list.innerHTML = '<div class=”nlsp-loading”>Đang tạo sản phẩm…</div>';
+            if (list) list.innerHTML = '<div class="nlsp-loading">Đang tạo sản phẩm…</div>';
             try {
                 const items = await apiGenerateShop(state);
                 state.shop = items;
@@ -1211,7 +1303,7 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
                 renderMainTop();
                 toast('Cửa hàng đã được làm mới', 'success');
             } catch (e) {
-                if (list) list.innerHTML = `<div class=”nlsp-muted”>Làm mới thất bại: ${escapeText(e && e.message || e)}</div>`;
+                if (list) list.innerHTML = `<div class="nlsp-muted">Làm mới thất bại: ${escapeText(e && e.message || e)}</div>`;
                 toast('Làm mới thất bại', 'error');
             } finally {
                 if (btn) btn.disabled = false;
@@ -1222,15 +1314,15 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
     function paintShop() {
         const list = getDoc().getElementById('nlsp-shop-list');
         if (!list) return;
-        if (!state.shop.length) { list.innerHTML = '<div class=”nlsp-muted”>Chưa có sản phẩm, nhấn “Làm Mới Sản Phẩm” để tạo.</div>'; return; }
-        list.innerHTML = `<div class=”nlsp-grid3”>` + state.shop.map((it, i) => `
-            <div class=”nlsp-card”>
-                <div class=”iname”>${escapeText(it.name || 'Chưa đặt tên')}</div>
-                <span class=”icate”>${escapeText(it.category || 'Chưa phân loại')}</span>
-                <div class=”idesc”>${escapeText(it.desc || it.function || '')}</div>
-                <div class=”ibot”>
-                    <span class=”nlsp-pt”>${Number(it.cost || 0)} điểm</span>
-                    <button class=”nlsp-btn” data-buy=”${i}” ${state.points < (it.cost || 0) ? 'disabled' : ''}>Mua</button>
+        if (!state.shop.length) { list.innerHTML = '<div class="nlsp-muted">Chưa có sản phẩm, nhấn "Làm Mới Sản Phẩm" để tạo.</div>'; return; }
+        list.innerHTML = `<div class="nlsp-grid3">` + state.shop.map((it, i) => `
+            <div class="nlsp-card">
+                <div class="iname">${escapeText(it.name || 'Chưa đặt tên')}</div>
+                <span class="icate">${escapeText(it.category || 'Chưa phân loại')}</span>
+                <div class="idesc">${escapeText(it.desc || it.function || '')}</div>
+                <div class="ibot">
+                    <span class="nlsp-pt">${Number(it.cost || 0)} điểm</span>
+                    <button class="nlsp-btn" data-buy="${i}" ${state.points < (it.cost || 0) ? 'disabled' : ''}>Mua</button>
                 </div>
             </div>`).join('') + `</div>`;
         list.querySelectorAll('[data-buy]').forEach((b) => b.addEventListener('click', () => buyItem(Number(b.getAttribute('data-buy')))));
@@ -1247,6 +1339,60 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
         toast(`Đã mua「${item.name}」`, 'success');
         insertIntoChat('✅ Đã mua「' + (item.name || '') + '」', 'Giới thiệu: ' + (item.desc || item.function || '') + (item.category ? '\nLoại: ' + item.category : '') + (item.rarity ? '\nĐộ hiếm: ' + item.rarity : ''));
         renderMainTop(); paintShop();
+    }
+
+    /* ---------- Kho đồ ---------- */
+    function renderInventoryBody(body) {
+        body.innerHTML = `
+            <div class="nlsp-page-head">
+                <span class="nlsp-page-sub">Nhấn "Sử Dụng" để dùng vật phẩm; vật phẩm sẽ được ghi vào nội dung và biến khỏi kho.</span>
+            </div>
+            <div id="nlsp-inv-list"></div>
+        `;
+        paintInventory();
+    }
+
+    function paintInventory() {
+        const list = getDoc().getElementById('nlsp-inv-list');
+        if (!list) return;
+        const inv = state.inventory || [];
+        if (!inv.length) {
+            list.innerHTML = '<div class="nlsp-muted">Kho đồ trống. Mua ở cửa hàng, quay thưởng hoặc hoàn thành nhiệm vụ để nhận vật phẩm.</div>';
+            return;
+        }
+        /* Hiển thị mới nhất lên đầu, giữ chỉ số thật để xoá đúng phần tử */
+        const rows = inv.map((it, i) => ({ it, i })).reverse();
+        list.innerHTML = rows.map(({ it, i }) => {
+            const rar = it.rarity || 'Thường';
+            let when = '';
+            try { if (it.time) when = new Date(it.time).toLocaleString('vi-VN'); } catch (e) {}
+            return `
+            <div class="nlsp-card" style="margin-bottom:10px;">
+                <div class="tmeta" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <span class="iname">${escapeText(it.name || 'Vật phẩm')}</span>
+                    <span class="nlsp-rarity nlsp-r-${escapeAttr(rar)}">${escapeText(rar)}</span>
+                    <span class="icate">${escapeText(it.category || 'Chưa phân loại')}</span>
+                </div>
+                <div class="idesc" style="margin-top:4px;">${escapeText(it.desc || '')}</div>
+                <div class="ibot" style="margin-top:6px;">
+                    <span class="nlsp-page-sub">Nguồn: ${escapeText(it.from || '')}${when ? ' · ' + escapeText(when) : ''}</span>
+                    <button class="nlsp-btn" data-use="${i}">Sử Dụng</button>
+                </div>
+            </div>`;
+        }).join('');
+        list.querySelectorAll('[data-use]').forEach((b) => b.addEventListener('click', () => useInventoryItem(Number(b.getAttribute('data-use')))));
+    }
+
+    async function useInventoryItem(idx) {
+        const item = state.inventory && state.inventory[idx];
+        if (!item) return;
+        state.inventory.splice(idx, 1);
+        saveState();
+        toast('Đã sử dụng「' + (item.name || '') + '」', 'success');
+        await insertIntoChat('🎒 Sử dụng vật phẩm: ' + (item.name || ''),
+            'Tác dụng: ' + (item.desc || '') + (item.category ? '\nLoại: ' + item.category : '') + (item.rarity ? '\nĐộ hiếm: ' + item.rarity : ''),
+            'use');
+        paintInventory();
     }
 
     /* ---------- Quay thưởng ---------- */
@@ -1640,14 +1786,16 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
             const isDraw = kind === 'draw';
             const isExcl = kind === 'excl';
             const isDecomp = kind === 'decompose';
+            const isUse = kind === 'use';
             try {
                 const ta = window.parent && window.parent.document && window.parent.document.querySelector('#send_textarea');
                 if (ta && ta.value.indexOf('[SYS_PANEL]') < 0) {
-                    if (isTask) ta.value = '（Nhiệm vụ trong thẻ [SYS_PANEL] cuối đoạn văn trên là nhiệm vụ tôi nhận được trong hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính）';
-                    else if (isDraw) ta.value = '（Vật phẩm trong thẻ [SYS_PANEL] cuối đoạn văn trên là vật phẩm tôi quay thưởng được trong hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính và đưa các vật phẩm này vào biến số）';
-                    else if (isExcl) ta.value = '（Kết quả trong thẻ [SYS_PANEL] cuối đoạn văn trên là kết quả thực thi chức năng riêng của hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính）';
-                    else if (isDecomp) ta.value = '（Nội dung trong thẻ [SYS_PANEL] cuối đoạn văn trên là kết quả phân giải vật phẩm trong hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính）';
-                    else ta.value = '（Vật phẩm trong thẻ [SYS_PANEL] cuối đoạn văn trên là vật phẩm tôi mua được trong hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính và đưa các vật phẩm này vào biến số）';
+                    if (isTask) ta.value = '<user> thực hiện nhiệm vụ trong thẻ [SYS_PANEL] ở cuối đoạn văn trên của hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính.';
+                    else if (isDraw) ta.value = '<user> quay thưởng được vật phẩm trong thẻ [SYS_PANEL] ở cuối đoạn văn trên của hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính và đưa các vật phẩm này vào biến số.';
+                    else if (isExcl) ta.value = '<user> sử dụng chức năng riêng của hệ thống ' + sysName + ', kết quả nằm trong thẻ [SYS_PANEL] ở cuối đoạn văn trên, hãy khéo léo lồng ghép tình tiết này vào nội dung chính.';
+                    else if (isDecomp) ta.value = '<user> phân giải vật phẩm trong hệ thống ' + sysName + ', kết quả nằm trong thẻ [SYS_PANEL] ở cuối đoạn văn trên, hãy khéo léo lồng ghép tình tiết này vào nội dung chính.';
+                    else if (isUse) ta.value = '<user> sử dụng vật phẩm trong thẻ [SYS_PANEL] ở cuối đoạn văn trên của hệ thống ' + sysName + ', hãy khéo léo lồng ghép tác dụng của vật phẩm này vào nội dung chính và cập nhật biến số.';
+                    else ta.value = '<user> mua được vật phẩm trong thẻ [SYS_PANEL] ở cuối đoạn văn trên của hệ thống ' + sysName + ', hãy khéo léo lồng ghép tình tiết này vào nội dung chính và đưa các vật phẩm này vào biến số.';
                     ta.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             } catch (e) {}
@@ -1680,6 +1828,15 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
     }
     async function safeRead(res) { try { return await res.text(); } catch (e) { return ''; } }
 
+    /* Model suy luận (vd gemini-3-*-preview) tiêu tốn token "thinking" trong max_tokens,
+       khiến JSON bị cắt ngang nếu ngân sách quá nhỏ. Đặt sàn tối thiểu và giới hạn theo cấu hình người dùng. */
+    const MIN_TOKEN_FLOOR = 36000;
+    function effectiveMaxTokens(st, want) {
+        const userMax = (st.api && st.api.maxTokens) ? st.api.maxTokens : 128000;
+        const target = Math.max(Number(want) || 1400, MIN_TOKEN_FLOOR);
+        return Math.min(target, userMax);
+    }
+
     async function apiListModels(st) {
         const base = normalizeBase(st.api.url);
         if (!base) throw new Error('Chưa nhập địa chỉ API');
@@ -1705,18 +1862,31 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
         const body = {
             model: st.api.model, messages,
             temperature: typeof opts.temperature === 'number' ? opts.temperature : 0.85,
-            max_tokens: Math.min(opts.maxTokens || 1400, (st.api && st.api.maxTokens) ? st.api.maxTokens : 128000)
+            max_tokens: effectiveMaxTokens(st, opts.maxTokens)
         };
         if (opts.json) body.response_format = { type: 'json_object' };
+        console.log('[Hệ Thống][debug] apiChat gửi', {
+            model: st.api.model,
+            promptChars: (opts.system || '').length + (opts.user || '').length,
+            maxTokens: body.max_tokens
+        });
         const res = await fetch(base + '/chat/completions', {
             method: 'POST',
             headers: { 'Authorization': 'Bearer ' + st.api.key, 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
         });
-        if (!res.ok) throw new Error('HTTP ' + res.status + ' ' + (await safeRead(res)).slice(0, 300));
+        if (!res.ok) {
+            const errBody = (await safeRead(res)).slice(0, 500);
+            console.error('[Hệ Thống][debug] apiChat HTTP lỗi', res.status, errBody);
+            throw new Error('HTTP ' + res.status + ' ' + errBody.slice(0, 300));
+        }
         const data = await res.json().catch(() => ({}));
         const text = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-        if (typeof text !== 'string') throw new Error('API không trả về văn bản hợp lệ');
+        if (typeof text !== 'string') {
+            console.error('[Hệ Thống][debug] apiChat phản hồi không có text', data);
+            throw new Error('API không trả về văn bản hợp lệ');
+        }
+        console.log('[Hệ Thống][debug] apiChat nhận', text.length, 'ký tự. 200 ký tự đầu:', text.slice(0, 200));
         return text;
     }
 
@@ -1743,7 +1913,55 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
         }
         const r = tryParse(s.trim());
         if (r !== undefined) return r;
+        const repaired = repairTruncatedJson(s);
+        if (repaired !== undefined) {
+            console.warn('[Hệ Thống][debug] extractJson: JSON bị cắt, đã vá tự động');
+            return repaired;
+        }
         return {};
+    }
+
+    /* Vá JSON bị cắt ngang (do phản hồi bị giới hạn token): đóng chuỗi/ngoặc còn mở, bỏ phần dở dang cuối. */
+    function repairTruncatedJson(text) {
+        const s = String(text || '');
+        const start = s.search(/[\[{]/);
+        if (start < 0) return undefined;
+        // Xác định vị trí phần tử/cặp hoàn chỉnh cuối cùng (kết thúc bằng } ] hoặc ngay trước dấu ,)
+        let inStr = false, esc = false, lastComplete = -1;
+        for (let i = start; i < s.length; i++) {
+            const c = s[i];
+            if (inStr) {
+                if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') inStr = false;
+                continue;
+            }
+            if (c === '"') { inStr = true; continue; }
+            else if (c === '}' || c === ']') lastComplete = i;
+            else if (c === ',') lastComplete = i - 1;
+        }
+        const candidates = [];
+        if (lastComplete > start) candidates.push(closeOpenBrackets(s.slice(start, lastComplete + 1)));
+        candidates.push(closeOpenBrackets(s.slice(start)));
+        for (const cand of candidates) {
+            try { return JSON.parse(cand); } catch (e) {}
+        }
+        return undefined;
+    }
+    /* Đóng mọi chuỗi/ngoặc còn mở của một đoạn JSON dở dang. */
+    function closeOpenBrackets(str) {
+        let open = false, esc = false;
+        const stk = [];
+        for (let i = 0; i < str.length; i++) {
+            const c = str[i];
+            if (open) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') open = false; continue; }
+            if (c === '"') { open = true; continue; }
+            if (c === '{' || c === '[') stk.push(c === '{' ? '}' : ']');
+            else if (c === '}' || c === ']') stk.pop();
+        }
+        let out = str;
+        if (open) out += '"';
+        out = out.replace(/,\s*$/, '').replace(/:\s*$/, ': null');
+        for (let i = stk.length - 1; i >= 0; i--) out += stk[i];
+        return out;
     }
 
     /* ---------- 业务：模型上下文 ---------- */
@@ -1832,12 +2050,12 @@ function paintHomeTasks(){var list=document.getElementById('nlsp-task-list-home'
 
     /* ---------- Nghiệp vụ: Khởi tạo hệ thống ---------- */
     async function apiInitSystem(st) {
-        const sys = 'Bạn là trợ lý khởi tạo hệ thống, dựa trên thiết lập nhân vật và cốt truyện trò chuyện để tạo dữ liệu khởi tạo phù hợp với bối cảnh câu chuyện hiện tại cho “Bảng Hệ Thống” tương tác. Phải xuất JSON nghiêm ngặt.';
+        const sys = 'Bạn là trợ lý khởi tạo hệ thống, dựa trên thiết lập nhân vật và cốt truyện trò chuyện để tạo dữ liệu khởi tạo phù hợp với bối cảnh câu chuyện hiện tại cho "Bảng Hệ Thống" tương tác. Phải xuất JSON nghiêm ngặt.';
         const user = `Hãy tạo thông tin khởi tạo cho hệ thống sau, chỉ trả về JSON:
 {
-  “summary”: “1-3 câu giới thiệu hệ thống, thể hiện bầu không khí và cách chơi, phù hợp bối cảnh sách thế giới”,
-  “greeting”: “Lời chào mở đầu của hệ thống, ngôi thứ nhất, 2-4 câu, không quá 120 ký tự”,
-  “initialPoints”: 0
+  "summary": "1-3 câu giới thiệu hệ thống, thể hiện bầu không khí và cách chơi, phù hợp bối cảnh sách thế giới",
+  "greeting": "Lời chào mở đầu của hệ thống, ngôi thứ nhất, 2-4 câu, không quá 120 ký tự",
+  "initialPoints": 0
 }
 Tên hệ thống: ${st.system.name}
 Chức năng cốt lõi: ${st.system.purpose}
@@ -1864,11 +2082,11 @@ Nhiệm vụ đầu tiên nên là nhiệm vụ dẫn đường đơn giản. Đ
         const obj = extractJson(text);
         const arr = obj.tasks || (Array.isArray(obj) ? obj : []);
         return arr.filter(Boolean).map((t) => ({
-            name: String(t.name || 'Nhiệm vụ không tên').slice(0, 40),
-            desc: String(t.desc || '').slice(0, 200),
-            goal: String(t.goal || '').slice(0, 120),
+            name: String(t.name || 'Nhiệm vụ không tên').slice(0, 100),
+            desc: String(t.desc || '').slice(0, 500),
+            goal: String(t.goal || '').slice(0, 300),
             reward: Math.max(1, Math.min(9999, Math.floor(Number(t.reward || 100)))),
-            itemReward: String(t.itemReward || '').slice(0, 40),
+            itemReward: String(t.itemReward || '').slice(0, 100),
             status: 'todo'
         }));
     }
@@ -1886,9 +2104,9 @@ Nguyên tắc định giá: dựa trên lịch sử trò chuyện để đánh g
         const obj = extractJson(text);
         const items = obj.products || obj.shop || obj.items || (Array.isArray(obj) ? obj : []);
         return items.filter(Boolean).map((it) => ({
-            name: String(it.name || 'Sản phẩm không tên').slice(0, 40),
-            category: String(it.category || 'Chưa phân loại').slice(0, 20),
-            desc: String(it.desc || it.function || '').slice(0, 120),
+            name: String(it.name || 'Sản phẩm không tên').slice(0, 100),
+            category: String(it.category || 'Chưa phân loại').slice(0, 40),
+            desc: String(it.desc || it.function || '').slice(0, 300),
             cost: Math.max(1, Math.floor(Number(it.cost || it.price || 100))),
             rarity: ['Thường', 'Hiếm', 'SửThi', 'HuyềnThoại'].includes(it.rarity) ? it.rarity : 'Thường'
         }));
@@ -1906,9 +2124,9 @@ Xác suất độ hiếm: đa số là Thường/Hiếm, SửThi khoảng 10%, H
         const arr = obj.items || obj.results || (Array.isArray(obj) ? obj : []);
         const valid = ['Thường', 'Hiếm', 'SửThi', 'HuyềnThoại', 'ThầnThoại'];
         return arr.filter(Boolean).slice(0, n).map((it) => ({
-            name: String(it.name || 'Vật phẩm không rõ').slice(0, 40),
-            category: String(it.category || '').slice(0, 20),
-            desc: String(it.desc || '').slice(0, 120),
+            name: String(it.name || 'Vật phẩm không rõ').slice(0, 100),
+            category: String(it.category || '').slice(0, 40),
+            desc: String(it.desc || '').slice(0, 300),
             rarity: valid.includes(it.rarity) ? it.rarity : 'Thường'
         }));
     }
@@ -1954,10 +2172,10 @@ async function apiGenerateExclusive(st, pref, complexity){
             }
         }catch(e){}
     }
-    name=String(name||'').slice(0,20)||sn.slice(0,6);
+    name=String(name||'').slice(0,40)||sn.slice(0,12);
     icon=String(icon||'').slice(0,4)||'✨';
-    desc=String(desc||'').slice(0,40)||sp.slice(0,12);
-    if(!actions.length)actions=[];for(var i=0;i<actions.length;i++)actions[i]=String(actions[i]||'').slice(0,10);
+    desc=String(desc||'').slice(0,80)||sp.slice(0,40);
+    if(!actions.length)actions=[];for(var i=0;i<actions.length;i++)actions[i]=String(actions[i]||'').slice(0,24);
     if(!html||html.length<30){
         var btnHtml='';for(var j=0;j<actions.length;j++){btnHtml+='<button class="nlsp-btn" data-excl-act="'+actions[j]+'" style="margin:6px">'+actions[j]+'</button>';}
         html='<div class="nlsp-result"><div class="nlsp-section-title">'+name+'</div><div class="nlsp-page-sub">'+desc+'</div><div style="font-size:22px;color:var(--t-accent);font-weight:700;margin:8px 0">{% points %}</div>'+btnHtml+'</div>';
@@ -1997,7 +2215,7 @@ async function apiGenerateExclusive(st, pref, complexity){
             model: st.api.model,
             messages: [system ? { role: 'system', content: system } : null, ...messages].filter(Boolean),
             temperature: typeof opts.temperature === 'number' ? opts.temperature : 0.85,
-            max_tokens: opts.maxTokens || 1400
+            max_tokens: effectiveMaxTokens(st, opts.maxTokens)
         };
         const res = await fetch(base + '/chat/completions', {
             method: 'POST',
