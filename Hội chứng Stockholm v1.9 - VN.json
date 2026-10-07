@@ -110,6 +110,22 @@
                     "info-block-render-0001": {
                         "groupId": "__ungrouped",
                         "order": 20
+                    },
+                    "ja-hide-0001": {
+                        "groupId": "__ungrouped",
+                        "order": 21
+                    },
+                    "name-label-render-0001": {
+                        "groupId": "__ungrouped",
+                        "order": 22
+                    },
+                    "selection-render-0001": {
+                        "groupId": "__ungrouped",
+                        "order": 23
+                    },
+                    "selection-strip-0001": {
+                        "groupId": "__ungrouped",
+                        "order": 24
                     }
                 },
                 "ungrouped": {
@@ -475,6 +491,74 @@
                 "scriptName": "📜 Làm đẹp info_block (thẻ đầu chính văn)",
                 "substituteRegex": 0,
                 "trimStrings": []
+            },
+            {
+                "id": "ja-hide-0001",
+                "scriptName": "💬 Song ngữ Việt-Nhật · Ẩn tiếng Nhật (chỉ hiển thị)",
+                "disabled": false,
+                "runOnEdit": false,
+                "findRegex": "/<(?:ja|zh)>([^<]*?)<\\/(?:ja|zh)>/gm",
+                "trimStrings": [],
+                "replaceString": "",
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "name-label-render-0001",
+                "scriptName": "💬 Song ngữ Việt-Nhật · Làm đẹp nhãn tên [[Tên]] (chỉ hiển thị)",
+                "findRegex": "/\\[\\[([^\\[\\]\\n]{1,40})\\]\\]/g",
+                "replaceString": "<span style=\"display:inline-block;margin-right:6px;padding:0 7px;border-radius:4px;background:#efe6d6;border:1px solid #d8c7a8;color:#6b5230;font-size:0.82em;font-weight:700;\">$1</span>",
+                "trimStrings": [],
+                "placement": [
+                    2
+                ],
+                "disabled": false,
+                "markdownOnly": true,
+                "promptOnly": false,
+                "runOnEdit": true,
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null
+            },
+            {
+                "id": "selection-render-0001",
+                "scriptName": "📊 Hiển thị tùy chọn tương tác <selection>",
+                "disabled": false,
+                "runOnEdit": false,
+                "findRegex": "/<selection>((?:(?!<selection>)[\\s\\S])*?)<\\/selection>/",
+                "trimStrings": [],
+                "replaceString": "\n```html\n<!DOCTYPE html>\n<html lang=\"vi-VN\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\">\n<title>Tùy chọn</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box;}\nhtml,body{background:transparent;height:auto;min-height:0;overflow:hidden;}\nbody{padding:6px;font-family:sans-serif;}\n\n.hjm-box{position:relative;border:1px solid #3d3d3d;background-color:#1a0a28;padding:12px 15px 12px 18px;border-radius:10px;color:#e6e6fa;font-size:0.9em;line-height:1.6;box-shadow:inset 0 0 10px rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.3),0 0 12px rgba(136,68,255,0.15);margin:0;}\n.hjm-box::before{content:\"\";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:10px 0 0 10px;background:linear-gradient(180deg,#8844ff,#00cccc,#8844ff,#00cccc,#8844ff);background-size:100% 200%;}\n.hjm-title{color:#c0a0ff;font-weight:bold;font-size:1.05em;letter-spacing:0.5px;margin-bottom:8px;display:block;}\n.hjm-title .hjm-sheep{display:inline-block;margin-right:4px;font-size:0.95em;}\n\n.hjm-list{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;padding-right:4px;}\n.hjm-list::-webkit-scrollbar{width:5px;}\n.hjm-list::-webkit-scrollbar-track{background:rgba(136,68,255,0.08);border-radius:3px;}\n.hjm-list::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#8844ff,#00cccc);border-radius:3px;}\n\n.hjm-c-btn{position:relative;border:1px solid #3d3d3d;background-color:#150820;padding:8px 12px 8px 15px;border-radius:4px;color:#e6e6fa;font-family:inherit;font-size:1em;line-height:1.6;cursor:pointer;text-align:left;white-space:normal;word-break:break-word;outline:none;box-shadow:inset 0 0 6px rgba(0,0,0,0.4);overflow:hidden;flex-shrink:0;}\n.hjm-c-btn::before{content:\"\";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#8844ff,#00cccc,#8844ff,#00cccc,#8844ff);background-size:100% 200%;}\n.hjm-c-btn:hover{background-color:#1f1035;box-shadow:inset 0 0 6px rgba(0,0,0,0.4),0 0 10px rgba(136,68,255,0.25);}\n.hjm-c-btn:active{transform:scale(0.98);}\n.hjm-c-btn .hjm-arrow{color:#c0a0ff;font-weight:bold;text-shadow:0 0 6px rgba(136,68,255,0.4),1px 1px 2px #000;margin-right:6px;font-size:0.9em;pointer-events:none;}\n.hjm-c-btn .hjm-txt{text-shadow:1px 1px 1.5px rgba(0,0,0,0.9);letter-spacing:0.5px;pointer-events:none;}\n.hjm-c-btn b{color:#c0a0ff;margin-right:4px;pointer-events:none;font-weight:bold;text-shadow:0 0 6px rgba(136,68,255,0.4),1px 1px 2px #000;}\n.hjm-cap{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:linear-gradient(90deg,#8844ff,#00cccc,#8844ff);background-size:200% auto;color:#0a001a;font-size:9px;font-weight:bold;padding:2px 6px;border-radius:8px;opacity:0;box-shadow:0 2px 4px rgba(0,0,0,0.4),0 0 8px rgba(136,68,255,0.4);pointer-events:none;}\n</style>\n</head>\n<body>\n\n<div class=\"hjm-box\" id=\"hjm-box-mini\">\n  <span class=\"hjm-title\"><span class=\"hjm-sheep\">🐑</span>Vui lòng chọn hành động tiếp theo</span>\n  <div class=\"hjm-list\" id=\"hjm-opt-ctn-mini\"></div>\n</div>\n<textarea id=\"hjm-raw-mini\" style=\"display:none;\">$1</textarea>\n\n<script>\nfunction hjmSend(text) {\n  try {\n    if (window.parent && typeof window.parent.triggerSlash === 'function') {\n      window.parent.triggerSlash('/send ' + text + '|/trigger');\n      return;\n    }\n  } catch(e) {}\n  try {\n    const ta = window.parent.document.querySelector('#send_textarea');\n    if (ta) {\n      const cur = ta.value;\n      ta.value = cur && cur.trim() !== '' ? (cur.includes(text) ? cur : cur + '\\n' + text) : text;\n      ta.dispatchEvent(new Event('input', { bubbles: true }));\n      ta.focus();\n      return;\n    }\n  } catch(e) {}\n  try {\n    window.parent.postMessage({ type: 'sendChat', text: text }, '*');\n  } catch(e) {}\n}\n\nfunction hjmCp(el) {\n  const s = el.querySelector('.hjm-txt');\n  if (!s) return;\n  hjmSend(s.innerText);\n  if (!el.querySelector('.hjm-cap')) {\n    const c2 = document.createElement('div');\n    c2.className = 'hjm-cap';\n    c2.innerText = '✨Đã chọn';\n    el.appendChild(c2);\n    setTimeout(() => c2.remove(), 800);\n  }\n}\n\n(function(){\n  const r = document.getElementById('hjm-raw-mini');\n  const c = document.getElementById('hjm-opt-ctn-mini');\n  if (!r || !c) return;\n  const rawData = r.value || r.textContent || '';\n  const ls = rawData.trim().split(/\\r?\\n/).filter(e => e.trim() !== '');\n  ls.forEach(l => {\n    const m = l.trim().match(/^([A-Z])\\.\\s*(.*)/i);\n    if (m) {\n      const d = document.createElement('div');\n      d.className = 'hjm-c-btn';\n      d.setAttribute('onclick', 'hjmCp(this)');\n      let txt = m[2]\n        .replace(/<q[^>]*>/gi, '\"')\n        .replace(/<\\/q>/gi, '\"')\n        .replace(/<em[^>]*>/gi, '（')\n        .replace(/<\\/em>/gi, '）')\n        .replace(/&quot;/gi, '\"')\n        .replace(/<[^>]+>/g, '');\n      d.innerHTML = '<span class=\"hjm-arrow\">➤</span><b>' + m[1].toUpperCase() + '.</b><span class=\"hjm-txt\"></span>';\n      d.querySelector('.hjm-txt').textContent = txt;\n      c.appendChild(d);\n    }\n  });\n  updateIframeHeight();\n})();\n\nfunction updateIframeHeight() {\n  const h = document.documentElement.scrollHeight || document.body.scrollHeight;\n  if (window.parent && window.parent !== window) {\n    try { window.parent.postMessage({ type: 'resizeIframe', height: h }, '*'); } catch(e) {}\n  }\n}\nwindow.addEventListener('load', updateIframeHeight);\nwindow.addEventListener('resize', updateIframeHeight);\n</script>\n\n</body>\n</html>\n```\n",
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": 5,
+                "markdownOnly": true,
+                "promptOnly": false
+            },
+            {
+                "id": "selection-strip-0001",
+                "scriptName": "[Bắt buộc] Xóa selection cũ (không gửi cho AI)",
+                "disabled": false,
+                "runOnEdit": false,
+                "findRegex": "/<selection>[\\s\\S]*?<\\/selection>/g",
+                "trimStrings": [],
+                "replaceString": "",
+                "placement": [
+                    2
+                ],
+                "substituteRegex": 0,
+                "minDepth": null,
+                "maxDepth": null,
+                "markdownOnly": false,
+                "promptOnly": true
             }
         ]
     },
@@ -613,6 +697,26 @@
                     "identifier": "lang-en"
                 },
                 {
+                    "identifier": "lang-ja-vi-full",
+                    "enabled": false
+                },
+                {
+                    "identifier": "lang-ja-vi-dialogue",
+                    "enabled": false
+                },
+                {
+                    "identifier": "lang-ja-vi-hide",
+                    "enabled": false
+                },
+                {
+                    "identifier": "lang-ja-vi-hide-mod",
+                    "enabled": false
+                },
+                {
+                    "identifier": "lang-ja-vi-hide-mod2",
+                    "enabled": false
+                },
+                {
                     "enabled": false,
                     "identifier": "nsfw"
                 },
@@ -711,6 +815,10 @@
                 {
                     "enabled": false,
                     "identifier": "choices"
+                },
+                {
+                    "identifier": "selection-ako",
+                    "enabled": false
                 },
                 {
                     "enabled": false,
@@ -929,7 +1037,7 @@
             "system_prompt": false
         },
         {
-            "content": "【Định dạng đầu ra】\n\n<liwe>\nTriển khai theo các bước của flow-guide, viết từng bước, không nén thành một dòng.\n</liwe>\n<content>\n<info_block>\n(nội dung info_block)\n</info_block>\n\n(chính văn)\n</content>\n<state>\n[Tóm tắt] R{N}: sự kiện | lời thoại \"……\" | kết quả\n[Chương] N\n[Lượt] N\n[Thời gian] ngày D tháng M năm YYYY, buổi\n[Cảnh] địa điểm cụ thể\n[Có mặt] địa điểm: NPC1, NPC2 | địa điểm: NPC3\n[Ngoài cảnh] Tên NPC: không có mặt đang làm gì | thông tin: ai biết được gì\n[Chênh lệch tin] Tên NPC: biết X | tưởng lầm Y | không biết Z\n[Quan hệ] Tên NPC→user: nhận thức|thiện chí|ranh giới|dựa trên: sự kiện|lần đổi trước: R{N}\n[Mạch ngầm] R{N}: nhân vật/thế giới/nguyên tác|ai|nội dung|dự kiến R{N+k}|trạng thái\n[Đồng nhân] R{N}: thời gian|địa điểm|mốc nguyên tác|sự kiện|nên xuất hiện|độ lệch (viết khi bật canon-lite/canon-full, không bật thì không viết)\n[Siêu tri thức] R{N}: tuyên bố→kiểm chứng→sự thật→nhận thức NPC (chỉ viết khi có siêu tri thức)\n[Độ lệch nguyên tác] chưa lệch/nhẹ/vừa/hoàn toàn (chỉ viết khi bật mô-đun đồng nhân)\n[Không thể đảo ngược] R{N}: sự kiện→ảnh hưởng (không viết nhãn nhân vật)\n</state>\n<anchor>\n[Neo nhân vật] Tên NPC: tuổi|khát vọng|nỗi sợ|giới hạn|tự dối|nhận thức về user\n[Vị thế xã hội] Tên NPC: nhan sắc/học vấn/giai tầng/xuất thân\n[Hảo cảm] Tên NPC: N\n[Neo nhân vật] Tên NPC: ...\n[Vị thế xã hội] Tên NPC: ...\n[Hảo cảm] Tên NPC: N\n</anchor>\n\n【Tóm tắt · quy tắc】\n- Chỉ ghi sự thật, không khái quát, không trữ tình, không viết tâm lý.\n- Lời thoại đưa vào tóm tắt, lồng trong dòng sự kiện bằng ngoặc kép. Không viết \"Đối thoại quan trọng: ……\".\n- Theo thứ tự thời gian: ai làm gì → ai nói gì → kết quả ra sao.\n- Độ dài 3-5 câu.\n- Ví dụ: [Tóm tắt] R5: Gã thần kinh đăng bài bêu ảnh {{user}} | bị quản trị viên xóa | nhắn riêng \"mày đợi đấy\" | {{user}} không trả lời | tối đó bị ba tài khoản lạ quấy rối\n\n【Quy tắc anchor】\n- Giữ lại toàn bộ neo nhân vật và hảo cảm dài hạn đã đăng ký.\n- Người xuất hiện lượt này ghi giá trị cập nhật; người không xuất hiện ghi giá trị cũ.\n- Nhận thức về user chỉ ghi quan sát sự thật, không ghi nhãn (từ cấm xem constraints).\n- Nhân vật đã có thì lượt sau bổ sung tuổi, vị thế xã hội; các trường khác giữ giá trị cũ.\n- Đóng thẻ.\n\n【Quy tắc state】\n- [Quan hệ] chỉ ghi nhân vật có biến động lượt này. Không biến động thì không ghi. Khi quan hệ biến động, nếu nhân vật đó có trong anchor thì đồng bộ cập nhật [Hảo cảm].\n\n【Không thể đảo ngược · quy tắc】\nChỉ ghi sự kiện cụ thể và ảnh hưởng.\nKhông ghi nhãn nhân vật: kiểu \"bậc thầy sonar\", \"thiên tài chiến thuật\", \"cao thủ ẩn mình\" đều không cho phép.\n\n【Định dạng info_block】\nĐặt ở đầu <content>, bọc trong <info_block>…</info_block>, đúng 4 dòng, thứ tự cố định, không thêm dòng trống:\n<info_block>\nChương N · Lượt N · Tiêu đề\nĐịa điểm: Khu vực lớn · địa điểm cụ thể | trong nhà/ngoài trời\nThời gian: DD.MM.YYYY Thứ X | HH:MM | buổi | thời tiết\nCó mặt: NPC1, NPC2 (nhân vật nền có thể ghi \"v.v.\")\n</info_block>\nSố Chương / Lượt khớp với [Chương] / [Lượt] trong <state> của lượt này.\n\n【Thứ tự thẻ · thiết luật】\nliwe → content → state → anchor → coda (nếu bật) → commentary (nếu bật) → choices (nếu bật) → theater (nếu bật).\n\n【Thiết luật】\n1. Bốn thẻ cốt lõi bắt buộc (liwe/content/state/anchor), thứ tự như trên. Mọi thẻ phải đóng. (Khi bật mô-đun coda thì bỏ state)\n2. Chính văn không xuất hiện giọng của Liwe.\n3. Cảnh nhiều người, trước mỗi câu thoại có chủ ngữ rõ ràng.\n4. Tại điểm lựa chọn then chốt, dừng trước lựa chọn.\n5. Đầu vào của {{user}} bắt đầu bằng 【Lệnh hệ thống】/ (hậu trường) / Liwe → chỉ xuất <liwe>…</liwe> (đóng thẻ), không xuất content và state.\n\n【Thiết luật về {{user}}】\n□ Không viết độc thoại nội tâm, quyết định, lời thoại chủ động của {{user}}\n□ {{user}} là thực thể vật lý. {{user}} mà NPC cảm nhận được (giọng nói, hơi thở, động tác, phản ứng sinh lý) bắt buộc phải viết, viết qua góc nhìn NPC\n□ Không dùng lời dẫn kể thẳng trạng thái của {{user}}. Mọi mô tả về {{user}} đều là cảm nhận của NPC\n□ Không dùng góc nhìn {{user}}\n□ Không trau chuốt, không viết lại lời {{user}} đã viết ra\n□ Được viết {{user}} trong mắt NPC\n□ Dừng trước lựa chọn",
+            "content": "【Định dạng đầu ra】\n\n<liwe>\nTriển khai theo các bước của flow-guide, viết từng bước, không nén thành một dòng.\n</liwe>\n<content>\n<info_block>\n(nội dung info_block)\n</info_block>\n\n(chính văn)\n</content>\n<state>\n[Tóm tắt] R{N}: sự kiện | lời thoại \"……\" | kết quả\n[Chương] N\n[Lượt] N\n[Thời gian] ngày D tháng M năm YYYY, buổi\n[Cảnh] địa điểm cụ thể\n[Có mặt] địa điểm: NPC1, NPC2 | địa điểm: NPC3\n[Ngoài cảnh] Tên NPC: không có mặt đang làm gì | thông tin: ai biết được gì\n[Chênh lệch tin] Tên NPC: biết X | tưởng lầm Y | không biết Z\n[Quan hệ] Tên NPC→user: nhận thức|thiện chí|ranh giới|dựa trên: sự kiện|lần đổi trước: R{N}\n[Mạch ngầm] R{N}: nhân vật/thế giới/nguyên tác|ai|nội dung|dự kiến R{N+k}|trạng thái\n[Đồng nhân] R{N}: thời gian|địa điểm|mốc nguyên tác|sự kiện|nên xuất hiện|độ lệch (viết khi bật canon-lite/canon-full, không bật thì không viết)\n[Siêu tri thức] R{N}: tuyên bố→kiểm chứng→sự thật→nhận thức NPC (chỉ viết khi có siêu tri thức)\n[Độ lệch nguyên tác] chưa lệch/nhẹ/vừa/hoàn toàn (chỉ viết khi bật mô-đun đồng nhân)\n[Không thể đảo ngược] R{N}: sự kiện→ảnh hưởng (không viết nhãn nhân vật)\n</state>\n<anchor>\n[Neo nhân vật] Tên NPC: tuổi|khát vọng|nỗi sợ|giới hạn|tự dối|nhận thức về user\n[Vị thế xã hội] Tên NPC: nhan sắc/học vấn/giai tầng/xuất thân\n[Hảo cảm] Tên NPC: N\n[Neo nhân vật] Tên NPC: ...\n[Vị thế xã hội] Tên NPC: ...\n[Hảo cảm] Tên NPC: N\n</anchor>\n\n【Tóm tắt · quy tắc】\n- Chỉ ghi sự thật, không khái quát, không trữ tình, không viết tâm lý.\n- Lời thoại đưa vào tóm tắt, lồng trong dòng sự kiện bằng ngoặc kép. Không viết \"Đối thoại quan trọng: ……\".\n- Theo thứ tự thời gian: ai làm gì → ai nói gì → kết quả ra sao.\n- Độ dài 3-5 câu.\n- Ví dụ: [Tóm tắt] R5: Gã thần kinh đăng bài bêu ảnh {{user}} | bị quản trị viên xóa | nhắn riêng \"mày đợi đấy\" | {{user}} không trả lời | tối đó bị ba tài khoản lạ quấy rối\n\n【Quy tắc anchor】\n- Giữ lại toàn bộ neo nhân vật và hảo cảm dài hạn đã đăng ký.\n- Người xuất hiện lượt này ghi giá trị cập nhật; người không xuất hiện ghi giá trị cũ.\n- Nhận thức về user chỉ ghi quan sát sự thật, không ghi nhãn (từ cấm xem constraints).\n- Nhân vật đã có thì lượt sau bổ sung tuổi, vị thế xã hội; các trường khác giữ giá trị cũ.\n- Đóng thẻ.\n\n【Quy tắc state】\n- [Quan hệ] chỉ ghi nhân vật có biến động lượt này. Không biến động thì không ghi. Khi quan hệ biến động, nếu nhân vật đó có trong anchor thì đồng bộ cập nhật [Hảo cảm].\n\n【Không thể đảo ngược · quy tắc】\nChỉ ghi sự kiện cụ thể và ảnh hưởng.\nKhông ghi nhãn nhân vật: kiểu \"bậc thầy sonar\", \"thiên tài chiến thuật\", \"cao thủ ẩn mình\" đều không cho phép.\n\n【Định dạng info_block】\nĐặt ở đầu <content>, bọc trong <info_block>…</info_block>, đúng 4 dòng, thứ tự cố định, không thêm dòng trống:\n<info_block>\nChương N · Lượt N · Tiêu đề\nĐịa điểm: Khu vực lớn · địa điểm cụ thể | trong nhà/ngoài trời\nThời gian: DD.MM.YYYY Thứ X | HH:MM | buổi | thời tiết\nCó mặt: NPC1, NPC2 (nhân vật nền có thể ghi \"v.v.\")\n</info_block>\nSố Chương / Lượt khớp với [Chương] / [Lượt] trong <state> của lượt này.\n\n【Thứ tự thẻ · thiết luật】\nliwe → content → state → anchor → coda (nếu bật) → commentary (nếu bật) → choices / selection (nếu bật) → theater (nếu bật).\n\n【Thiết luật】\n1. Bốn thẻ cốt lõi bắt buộc (liwe/content/state/anchor), thứ tự như trên. Mọi thẻ phải đóng. (Khi bật mô-đun coda thì bỏ state)\n2. Chính văn không xuất hiện giọng của Liwe.\n3. Cảnh nhiều người, trước mỗi câu thoại có chủ ngữ rõ ràng.\n4. Tại điểm lựa chọn then chốt, dừng trước lựa chọn.\n5. Đầu vào của {{user}} bắt đầu bằng 【Lệnh hệ thống】/ (hậu trường) / Liwe → chỉ xuất <liwe>…</liwe> (đóng thẻ), không xuất content và state.\n\n【Thiết luật về {{user}}】\n□ Không viết độc thoại nội tâm, quyết định, lời thoại chủ động của {{user}}\n□ {{user}} là thực thể vật lý. {{user}} mà NPC cảm nhận được (giọng nói, hơi thở, động tác, phản ứng sinh lý) bắt buộc phải viết, viết qua góc nhìn NPC\n□ Không dùng lời dẫn kể thẳng trạng thái của {{user}}. Mọi mô tả về {{user}} đều là cảm nhận của NPC\n□ Không dùng góc nhìn {{user}}\n□ Không trau chuốt, không viết lại lời {{user}} đã viết ra\n□ Được viết {{user}} trong mắt NPC\n□ Dừng trước lựa chọn",
             "enabled": true,
             "forbid_overrides": false,
             "identifier": "output-format",
@@ -1586,6 +1694,84 @@
             "name": "Enhance Definitions",
             "role": "system",
             "system_prompt": true
+        },
+        {
+            "content": "【Song ngữ Việt-Nhật】\n\nNgôn ngữ chung của câu chuyện là tiếng Nhật.\n- Tất cả văn bản đều phải dùng tiếng Nhật, sau đó thêm bản dịch tiếng Việt.\n- Xuất ra nguyên bản tiếng Nhật phù hợp với ngữ cảnh Nhật Bản, ngay sau đó sử dụng ngoặc nhọn {} để bọc bản dịch tiếng Việt.\n- Bản dịch tiếng Việt phải thống nhất với nguyên bản tiếng Nhật, không cần tô vẽ.\n- Đối thoại của nhân vật, sử dụng dấu ngoặc kép kiểu Nhật: 「うっさい！あんたなんかに私の気持ち、わかるわけないでしょ！」\n- Bảng hiệu và bảng biểu UI, sử dụng dấu ngoặc kép góc vuông kép kiểu Nhật 『』:\n『秋葉原メイド喫茶　絶対領域』\n- Lời dẫn truyện: 夕暮れの教室には、誰もいなかった。窓から差し込むオレンジ色の光が、彼女の横顔をそっと染めていた。\n\nVí dụ hoàn chỉnh:\n向かいのビルには、見慣れた看板が掛かっている。\n{Tòa nhà đối diện, treo một bảng hiệu quen thuộc.}\n\n『純喫茶　ひだまり』\n{『Quán cà phê thuần túy　Hướng Dương』}\n\n「……あのさ」\n{“……Này nhé”}\n\n声は、夕風に攫われそうなくらい小さかった。\n{Giọng nói nhỏ đến mức gần như bị gió đêm cuốn đi.}\n\n【Phạm vi trong preset này】\n- Chỉ áp dụng cho chính văn trong <content> (kể cả <info_block> giữ tiếng Việt). <liwe>, <state>, <anchor>, <choices>, <selection> vẫn viết tiếng Việt.\n- Lời {{user}} đã viết: giữ nguyên văn, không dịch sang tiếng Nhật, không thêm bản dịch (tuân theo 【Chống cướp lời · Khóa nguyên câu】).\n- Chọn một trong các mục \"Song ngữ Việt-Nhật\", không bật cùng lúc với nhau hoặc với ✹ Thoại song ngữ / ✹ Xuất bằng tiếng Anh.",
+            "enabled": false,
+            "forbid_overrides": false,
+            "identifier": "lang-ja-vi-full",
+            "injection_depth": 4,
+            "injection_order": 100,
+            "injection_position": 0,
+            "marker": false,
+            "name": "💬 Song ngữ Việt-Nhật · Toàn văn (Chọn một)",
+            "role": "system",
+            "system_prompt": false
+        },
+        {
+            "content": "【Song ngữ Việt-Nhật】\n\nNgôn ngữ chung của câu chuyện là tiếng Nhật.\n- Đối thoại của nhân vật, bảng hiệu cửa hàng, bảng biểu UI, thư từ tài liệu, tên chiêu thức, v.v. sử dụng tiếng Nhật và thêm bản dịch tiếng Việt.\n- Xuất ra nguyên bản tiếng Nhật phù hợp với ngữ cảnh Nhật Bản, ngay sau đó sử dụng ngoặc nhọn {} để bọc bản dịch tiếng Việt.\n- Bản dịch tiếng Việt phải thống nhất với nguyên bản tiếng Nhật, không cần tô vẽ.\n\nVí dụ A (Đối thoại của nhân vật, sử dụng dấu ngoặc kép kiểu Nhật 「」):\n「うっさい！あんたなんかに私の気持ち、わかるわけないでしょ！」\n{“Ồn ào quá! Loại người như anh, làm sao mà hiểu được tâm trạng của tôi chứ!”}\n\nVí dụ B (Bảng hiệu và bảng biểu UI, sử dụng dấu ngoặc kép góc vuông kép kiểu Nhật 『』):\n『秋葉原メイド喫茶　絶対領域』\n{『Quán cà phê hầu gái Akihabara　Tuyệt đối lĩnh vực』}\n\n【Phạm vi trong preset này】\n- Chỉ áp dụng cho chính văn trong <content> (kể cả <info_block> giữ tiếng Việt). <liwe>, <state>, <anchor>, <choices>, <selection> vẫn viết tiếng Việt.\n- Lời {{user}} đã viết: giữ nguyên văn, không dịch sang tiếng Nhật, không thêm bản dịch (tuân theo 【Chống cướp lời · Khóa nguyên câu】).\n- Chọn một trong các mục \"Song ngữ Việt-Nhật\", không bật cùng lúc với nhau hoặc với ✹ Thoại song ngữ / ✹ Xuất bằng tiếng Anh.",
+            "enabled": false,
+            "forbid_overrides": false,
+            "identifier": "lang-ja-vi-dialogue",
+            "injection_depth": 4,
+            "injection_order": 100,
+            "injection_position": 0,
+            "marker": false,
+            "name": "💬 Song ngữ Việt-Nhật · Chỉ đánh dấu đối thoại (Chọn một)",
+            "role": "system",
+            "system_prompt": false
+        },
+        {
+            "content": "【Song ngữ Việt-Nhật】\n\nNgôn ngữ chung của câu chuyện là tiếng Nhật.\n- Tiếng Nhật thêm bản dịch tiếng Việt.\n- Xuất ra nguyên bản tiếng Nhật phù hợp với ngữ cảnh Nhật Bản.\n- Tất cả nguyên bản tiếng Nhật được bọc nghiêm ngặt bằng thẻ <ja>.\n- Bản dịch tiếng Việt tiếp nối ngay sau thẻ </ja>.\n- Giữa thẻ tiếng Nhật và tiếng Việt không được có khoảng ngắt dòng hay ký tự phân cách thừa.\n- Bản dịch tiếng Việt phải thống nhất với nguyên bản tiếng Nhật, không cần tô vẽ.\n- Đối thoại của nhân vật, sử dụng dấu ngoặc kép kiểu Nhật: 「うっさい！あんたなんかに私の気持ち、わかるわけないでしょ！」\n- Bảng hiệu và bảng biểu UI, sử dụng dấu ngoặc kép góc vuông kép kiểu Nhật 『』:\n『秋葉原メイド喫茶　絶対領域』\n- Lời dẫn truyện: 夕暮れの教室には、誰もいなかった。窓から差し込むオレンジ色の光が、彼女の横顔をそっと染めていた。\n\nVí dụ hoàn chỉnh:\n<ja>向かいのビルには、見慣れた看板が掛かっている。</ja>Tòa nhà đối diện, treo một bảng hiệu quen thuộc.\n\n<ja>『純喫茶　ひだまり』</ja>『Quán cà phê thuần túy　Hướng Dương』\n\n<ja>「……あのさ」</ja>“……Này nhé”\n\n<ja>声は、夕風に攫われそうなくらい小さかった。</ja>Giọng nói nhỏ đến mức gần như bị gió đêm cuốn đi.\n\n【Phạm vi trong preset này】\n- Chỉ áp dụng cho chính văn trong <content> (kể cả <info_block> giữ tiếng Việt). <liwe>, <state>, <anchor>, <choices>, <selection> vẫn viết tiếng Việt.\n- Lời {{user}} đã viết: giữ nguyên văn, không dịch sang tiếng Nhật, không thêm bản dịch (tuân theo 【Chống cướp lời · Khóa nguyên câu】).\n- Chọn một trong các mục \"Song ngữ Việt-Nhật\", không bật cùng lúc với nhau hoặc với ✹ Thoại song ngữ / ✹ Xuất bằng tiếng Anh.",
+            "enabled": false,
+            "forbid_overrides": false,
+            "identifier": "lang-ja-vi-hide",
+            "injection_depth": 4,
+            "injection_order": 100,
+            "injection_position": 0,
+            "marker": false,
+            "name": "💬 Song ngữ Việt-Nhật · Toàn văn, chỉ hiện tiếng Việt (Chọn một)",
+            "role": "system",
+            "system_prompt": false
+        },
+        {
+            "content": "【Song ngữ Việt-Nhật】\n\nBối cảnh câu chuyện là Nhật Bản.\n- Lời dẫn truyện, miêu tả cảnh vật, tự sự và độc thoại nội tâm: CHỈ viết bằng tiếng Việt. Không xuất tiếng Nhật, không dùng thẻ <ja>.\n- Chỉ đối thoại của nhân vật, bảng hiệu cửa hàng, bảng biểu UI, thư từ tài liệu, tên chiêu thức, v.v. mới xuất nguyên bản tiếng Nhật kèm bản dịch tiếng Việt.\n- Nguyên bản tiếng Nhật được bọc nghiêm ngặt bằng thẻ <ja></ja>, bản dịch tiếng Việt tiếp nối ngay sau thẻ </ja>.\n- Giữa thẻ </ja> và bản dịch tiếng Việt không được có khoảng ngắt dòng hay ký tự phân cách thừa.\n- Bản dịch tiếng Việt phải thống nhất với nguyên bản tiếng Nhật, không cần tô vẽ.\n- Đối thoại của nhân vật dùng dấu ngoặc kép kiểu Nhật 「」, bản dịch tiếng Việt dùng “”.\n- Bảng hiệu và bảng biểu UI dùng dấu ngoặc góc vuông kép kiểu Nhật 『』, bản dịch tiếng Việt giữ nguyên 『』.\nVí dụ hoàn chỉnh:\nTòa nhà đối diện treo một bảng hiệu quen thuộc.\n<ja>『純喫茶　ひだまり』</ja>『Quán cà phê thuần túy　Hướng Dương』\n<ja>「……あのさ」</ja>“……Này nhé”\nGiọng nói nhỏ đến mức gần như bị gió chiều cuốn đi.\nTrong lớp học lúc hoàng hôn không còn một ai. Ánh sáng màu cam hắt qua cửa sổ nhuộm nhẹ lên gương mặt nghiêng của cô.\n\n【Phạm vi trong preset này】\n- Chỉ áp dụng cho chính văn trong <content> (kể cả <info_block> giữ tiếng Việt). <liwe>, <state>, <anchor>, <choices>, <selection> vẫn viết tiếng Việt.\n- Lời {{user}} đã viết: giữ nguyên văn, không dịch sang tiếng Nhật, không thêm bản dịch (tuân theo 【Chống cướp lời · Khóa nguyên câu】).\n- Chọn một trong các mục \"Song ngữ Việt-Nhật\", không bật cùng lúc với nhau hoặc với ✹ Thoại song ngữ / ✹ Xuất bằng tiếng Anh.",
+            "enabled": false,
+            "forbid_overrides": false,
+            "identifier": "lang-ja-vi-hide-mod",
+            "injection_depth": 4,
+            "injection_order": 100,
+            "injection_position": 0,
+            "marker": false,
+            "name": "💬 Song ngữ Việt-Nhật · Chỉ thoại, chỉ hiện tiếng Việt · MOD (Chọn một)",
+            "role": "system",
+            "system_prompt": false
+        },
+        {
+            "content": "【Song ngữ Việt-Nhật】\n\nBối cảnh câu chuyện là Nhật Bản.\n- Lời dẫn truyện, miêu tả cảnh vật, tự sự và độc thoại nội tâm: CHỈ viết bằng tiếng Việt. Không xuất tiếng Nhật, không dùng thẻ <ja>.\n- Chỉ đối thoại của nhân vật, bảng hiệu cửa hàng, bảng biểu UI, thư từ tài liệu, tên chiêu thức, v.v. mới xuất nguyên bản tiếng Nhật kèm bản dịch tiếng Việt.\n- Nguyên bản tiếng Nhật được bọc nghiêm ngặt bằng thẻ <ja></ja>, bản dịch tiếng Việt tiếp nối ngay sau thẻ </ja>.\n- Giữa thẻ </ja> và bản dịch tiếng Việt không được có khoảng ngắt dòng hay ký tự phân cách thừa.\n- Bản dịch tiếng Việt phải thống nhất với nguyên bản tiếng Nhật, không cần tô vẽ. Cấm dịch xưng hô theo kiểu thuần việt, địa phương hoá, thô tục như: mày, tao, đéo, địt, u, mợ... \n## Định dạng đối thoại (quy tắc sắt)\n- MỌI câu thoại BẮT BUỘC mở đầu bằng nhãn tên nhân vật đặt trong cặp ngoặc vuông đôi: [[Tên]]\n- Trình tự cố định, tất cả trên MỘT dòng:\n  [[Tên]]<ja>「nguyên bản tiếng Nhật」</ja>“bản dịch tiếng Việt”\n- Nhãn chỉ ghi tên gọi, không ghi họ: Rudeus·Greyrat → [[Rudeus]]\n- Thoại của {{user}} cũng dùng nhãn tên, không có ngoại lệ.\n- Bảng hiệu và bảng biểu UI dùng 『』 và KHÔNG mang nhãn tên.\n\nVÍ DỤ SAI (thiếu nhãn tên):\n<ja>「……あのさ」</ja>“……Này nhé”\n\nVÍ DỤ ĐÚNG:\n[[Sylphy]]<ja>「……あのさ」</ja>“……Này nhé”\n\nVí dụ hoàn chỉnh:\nTòa nhà đối diện treo một bảng hiệu quen thuộc.\n<ja>『純喫茶　ひだまり』</ja>『Quán cà phê thuần túy　Hướng Dương』\n[[Sylphy]]<ja>「……あのさ」</ja>“……Này nhé”\nGiọng nói nhỏ đến mức gần như bị gió chiều cuốn đi.\n[[Rudeus]]<ja>「どうした？」</ja>“Sao thế?”\nTrong lớp học lúc hoàng hôn không còn một ai. Ánh sáng màu cam hắt qua cửa sổ nhuộm nhẹ lên gương mặt nghiêng của cô.\n\n【Phạm vi trong preset này】\n- Chỉ áp dụng cho chính văn trong <content> (kể cả <info_block> giữ tiếng Việt). <liwe>, <state>, <anchor>, <choices>, <selection> vẫn viết tiếng Việt.\n- Lời {{user}} đã viết: giữ nguyên văn, không dịch sang tiếng Nhật, không thêm bản dịch (tuân theo 【Chống cướp lời · Khóa nguyên câu】).\n- Chọn một trong các mục \"Song ngữ Việt-Nhật\", không bật cùng lúc với nhau hoặc với ✹ Thoại song ngữ / ✹ Xuất bằng tiếng Anh.",
+            "enabled": false,
+            "forbid_overrides": false,
+            "identifier": "lang-ja-vi-hide-mod2",
+            "injection_depth": 4,
+            "injection_order": 100,
+            "injection_position": 0,
+            "marker": false,
+            "name": "💬 Song ngữ Việt-Nhật · Chỉ thoại + nhãn tên, chỉ hiện tiếng Việt · MOD 2 (Chọn một)",
+            "role": "system",
+            "system_prompt": false
+        },
+        {
+            "content": "【Tùy chọn tương tác (kiểu Ako)】\n\nSau mỗi lần miêu tả cốt truyện hoặc kết thúc quyết toán hiệp, bắt buộc phải tạo tùy chọn hành động cho người dùng.\nYêu cầu:\n- Nội dung tùy chọn bắt buộc phải sử dụng tiếng Việt. Tạo 8 tuỳ chọn mỗi lượt.\n- Bám sát vào nội dung văn bản trước đó, dẫn dắt đến những nhánh hoàn toàn khác nhau (tích cực thúc đẩy thời gian và tiến trình câu chuyện). Tùy chọn cuối cùng cố định cung cấp thao tác kỳ quặc/tấu hài.\n- Cảnh chiến đấu chú trọng: Đối kích kỹ năng/Né tránh chiến thuật/Tận dụng môi trường/Bố trí cạm bẫy.\n- Cảnh đời thường chú trọng: Tu luyện/Nhận nhiệm vụ/Kết giao nhân vật/Khám phá/Bước nhảy thời gian.\n- Luôn có một tuỳ chọn đưa ra giải pháp tối ưu cho vấn đề gặp phải, một tuỳ chọn chuyển sang góc nhìn nhân vật khác và một tuỳ chọn timeskip, chuyển cảnh bỏ qua hoạt động lặp lại, cần nhiều thời gian\n- Phong cách hành động và lời nói cần phù hợp với thiết lập nhân vật của '{{user}}'.\n- Ví dụ: \"Đây là lời nói của {{user}}\" Đây là hành động của {{user}}\n\nĐịnh dạng đầu ra:\n<selection>\nA.xxx\nB.xxx\nC.xxx\nD.xxx\nE.xxx\nF.xxx\nG.xxx\nH.xxx\n</selection>\n\n【Vị trí trong preset này】\n- Xuất <selection> sau </anchor> (sau <commentary> nếu bật), không ghi vào <state>.\n- Thay thế cho ✹ Lựa chọn cốt truyện (<choices>): chỉ bật một trong hai.\n- Không xuất hiện giọng của Liwe trong tùy chọn.",
+            "enabled": false,
+            "forbid_overrides": false,
+            "identifier": "selection-ako",
+            "injection_depth": 4,
+            "injection_order": 100,
+            "injection_position": 0,
+            "marker": false,
+            "name": "📊 Tùy chọn tương tác · 8 lựa chọn kiểu Ako",
+            "role": "system",
+            "system_prompt": false
         }
     ],
     "reasoning_effort": "auto",
